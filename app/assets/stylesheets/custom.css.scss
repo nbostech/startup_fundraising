@@ -1,0 +1,159 @@
+
+ @font-face {
+  font-family: 'Glyphicons Halflings';
+  src: font-url('glyphicons-halflings-regular.woff'),
+       font-url('glyphicons-halflings-regular.ttf');
+}
+.navbar-inverse{
+    background-color: #D44518;
+    border-color: #D44518;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li>a{
+    color: #FFB;
+}
+.panel-heading{	
+    padding: 10px;
+    line-height: 16px;
+    font-size: 13px;
+    //text-shadow: -1px -1px #e87c19;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 1px solid #2993d1;
+    width: 100%;
+    //background: #D44518;
+    //background: -moz-linear-gradient(top, #D44518 0%, #D44518 50%, #D44518 51%, #D44518 100%);
+    //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#D44518), color-stop(50%,#D44518), color-stop(51%,#D44518), color-stop(100%,#D44518));
+    //background: -webkit-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+    //background: -o-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+    //background: -ms-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+    //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D44518', endColorstr='#D44518',GradientType=0 );
+   // background: linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+}
+.panel-heading .panel-title{
+	//color: #fff;
+}
+.panel-body .btn-success{
+	padding: 10px;
+    line-height: 16px;
+    font-size: 13px;
+    //text-shadow: -1px -1px #e87c19;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 1px solid #2993d1;
+    //background: #D44518;
+    //border-color: #D44518;
+    //background: -moz-linear-gradient(top, #D44518 0%, #D44518 50%, #D44518 51%, #D44518 100%);
+    //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#D44518), color-stop(50%,#D44518), color-stop(51%,#D44518), color-stop(100%,#D44518));
+    //background: -webkit-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+    //background: -o-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+   // background: -ms-linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+    //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D44518', endColorstr='#D44518',GradientType=0 );
+    //background: linear-gradient(top, #D44518 0%,#D44518 50%,#D44518 51%,#D44518 100%);
+}
+
+ .field_with_errors {
+   // border: 1px solid red;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px red, 0 0 8px red;
+    box-shadow: inset 0 1px 1px red, 0 0 0px red;
+    border-radius: 4px; 
+}
+.field_with_errors input.form-control{
+   box-shadow: none;
+   border-color: red;
+}
+.showProfileTable{
+    width: 100%;
+}
+.showProfileTable tr, .showProfileTable tr td{padding: 5px;}
+
+
+/*=========================
+  Icons
+ ================= */
+
+/* footer social icons */
+ul.social-network {
+    list-style: none;
+    display: inline;
+    margin-left:0 !important;
+    padding: 0;
+}
+ul.social-network li {
+    display: inline;
+    margin: 0 5px;
+}
+
+
+/* footer social icons */
+
+.social-network a.icoFacebook:hover {
+    background-color:#3B5998;
+}
+.social-network a.icoTwitter:hover {
+    background-color:#33ccff;
+}
+.social-network a.icoGoogle:hover {
+    background-color:#BD3518;
+}
+.social-network a.icoLinkedin:hover {
+    background-color:#007bb7;
+}
+.social-network a.icoInstagram:hover {
+    background-color: #125688;
+}
+.social-network a.icoGithub:hover {
+    background-color: #22263D;
+}
+
+
+.social-network a.icoGithub:hover i, .social-network a.icoFacebook:hover i, .social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i, .social-network a.icoLinkedin:hover i,
+.social-network a.icoInstagram:hover i {
+    color:#fff;
+}
+a.socialIcon:hover, .socialHoverClass {
+    color:#44BCDD;
+}
+
+.social-circle li a {
+    display:inline-block;
+    position:relative;
+    margin:0 auto 0 auto;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    border-radius:50%;
+    text-align:center;
+    width: 50px;
+    height: 50px;
+    font-size:20px;
+}
+.social-circle li i {
+    margin:0;
+    line-height:50px;
+    text-align: center;
+}
+
+.social-circle li a:hover i, .triggeredHover {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms--transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    transition: all 0.2s;
+}
+.social-circle i {
+    color: #fff;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -o-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    transition: all 0.8s;
+}
+
+.social-circle a {
+ background-color: #D3D3D3;   
+}

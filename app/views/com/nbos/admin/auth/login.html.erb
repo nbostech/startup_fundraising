@@ -1,0 +1,56 @@
+
+<% if (@login.present? && @login.message.present?) || flash[:notice] %>
+    <%= render partial: "com/nbos/admin/shared/alerts", locals: {obj: @login, notice: flash[:notice]} %>
+<% end %>
+
+<div class="container">    
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+    <div class="panel panel-info" >
+      <div class="panel-heading">
+        <div class="panel-title">Sign In</div>
+        <div style="float:right; font-size: 80%; position: relative; top:-10px;">
+          <%#= link_to "Forgot passsword?", com_nbos_core_forgot_password_path, style: "color: #fff " %>
+        </div>
+      </div>     
+
+      <div class="panel-body" style="padding: 30px 30px 0 30px;">
+        <%= form_for(@login, url: com_nbos_admin_login_path, method: 'post', html: { role: "form", id: "loginForm", class: "form-horizontal" }) do |f| %>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <%= f.text_field :username, autofocus: true, class: "form-control", id: "username", title: "Please enter your username", placeholder: "UserName", required: true  %>
+              <%= errors_for @login, :username %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <%= f.password_field :password, autofocus: true, class: "form-control", id: "password", title: "Please enter your password", placeholder: "******" , required: true%>
+                <%= errors_for @login, :password %>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <!-- Button -->
+
+            <div class="controls">
+              <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-success" %>       
+            </div>
+          </div>
+          <div class="form-group controls">
+            <%#= render partial: "com/nbos/core/shared/social_login_links" %>
+          </div>   
+        <% end %>     
+      </div> 
+      <div class="panel-footer">      
+        <div class="form-group">
+          <div class="col-md-12 control">
+            <div style="font-size:85%">
+              <%#= link_to "Sign Up Here", com_nbos_core_sign_up_path, style: "color: font-size:85% " %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+    </div>
+</div>
