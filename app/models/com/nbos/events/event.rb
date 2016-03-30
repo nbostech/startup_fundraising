@@ -9,6 +9,8 @@ module Com
        validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 			 
 			 scope :active_events, -> { where(is_active: true) }
+
+			 validates :name, :address, :start_date, :location, presence: true
 			end
 		end
 	end

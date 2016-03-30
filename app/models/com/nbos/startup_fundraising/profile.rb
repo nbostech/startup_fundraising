@@ -9,6 +9,8 @@ module Com
                             :content_type => { 
                             	:content_type => %w(application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document) 
                               }
+			 validates :email, :full_name, :phone, presence: true
+			 validates :email, uniqueness: true
 			end
 		end
 	end

@@ -23,7 +23,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 	 data = {user: member, user_profile: member.profile, role: member.roles.first.name}
 				 render :json => {status: 200, data: data}
 			 else
-				 render :json => {status: 500, message: "Internal Server Error"}
+				 render :json => {status: 500, message: member.errors.messages}
 			 end  
 		 else
 			 render :json => {status: 400, message: "Bad Request"}

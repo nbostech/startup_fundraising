@@ -52,7 +52,9 @@ RailsAdmin.config do |config|
 
   #User model configuration
   config.model Com::Nbos::User do
+    navigation_icon 'icon-user'
     list do
+      scopes [:total, :active_users, :investors, :startups, :premium_investors]
       field :id
       field :is_active
       field :email do
@@ -87,6 +89,9 @@ RailsAdmin.config do |config|
 
     edit do
       exclude_fields :favourites, :events, :event_rsvps, :investments, :favourite_profiles
+      group :default do
+        label "User information"
+      end
       field :uuid do
         read_only true
       end
@@ -94,8 +99,20 @@ RailsAdmin.config do |config|
         read_only true
       end  
     end  
+  end 
+
+  config.model Com::Nbos::StartupFundraising::Role do
+    navigation_icon 'icon-user'
   end
-  
+
+  config.model Com::Nbos::StartupFundraising::Profile do
+    navigation_icon 'icon-user'
+  end
+
+  config.model Com::Nbos::Events::Event do
+    navigation_icon 'icon-calendar'
+  end
+
   #Custom Authentication 
   require "rails_admin/application_controller"
 
@@ -113,5 +130,23 @@ RailsAdmin.config do |config|
       end 
     end
   end
+
+
+  #Overriding rails admin view helpers
+
+  require "rails_admin/application_helper"
+    module RailsAdmin
+      module ApplicationHelper
+        def static_navigation
+          li_stack = RailsAdmin::Config.navigation_static_links.collect do |title, url|
+            content_tag(:li, link_to(title.to_s, url))
+          end.join
+
+          label = RailsAdmin::Config.navigation_static_label || t('admin.misc.navigation_static_label')
+          li_stack = %(<li class='dropdown-header'>#{label}</li>#{li_stack}).html_safe if li_stack.present?
+          li_stack
+        end
+      end
+    end    
 
 end

@@ -11,6 +11,13 @@ module Com
       has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
 
       scope :active_users, -> { where(is_active: true) }
+      scope :total, -> { all }
+      scope :investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 3} ) }
+      scope :startups, -> { all.joins(:user_roles).where(user_roles: {role_id: 4}) }
+      scope :premium_investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 2})}
+      
+      validates :uuid, :tenant_id, presence: true
+      validates_associated :profile
 
       def self.getUsers(user_type, tenantId)
       	role_id = Com::Nbos::StartupFundraising::Role.where(name: user_type).first.id
