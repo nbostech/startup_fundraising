@@ -128,11 +128,11 @@ ActiveRecord::Schema.define(version: 20160404113118) do
   add_index "favourites", ["favouritable_type", "favouritable_id"], name: "index_favourites_on_favouritable_type_and_favouritable_id", using: :btree
 
   create_table "investments", force: :cascade do |t|
-    t.integer  "user_id",         limit: 4
-    t.integer  "company_id",      limit: 4
-    t.integer  "invested_amount", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "user_id",                  limit: 4
+    t.integer  "current_funding_round_id", limit: 4
+    t.integer  "invested_amount",          limit: 4
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   create_table "profiles", force: :cascade do |t|
