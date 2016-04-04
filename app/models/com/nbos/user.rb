@@ -6,14 +6,14 @@ module Com
 			has_many :events, through: :event_rsvps
 			has_many :user_roles, class_name: "Com::Nbos::StartupFundraising::UserRole", inverse_of: :user, dependent: :destroy
 			has_many :roles, through: :user_roles
-			has_many :favourites, class_name: "Com::Nbos::StartupFundraising::Favourite", inverse_of: :user, dependent: :destroy
-			has_many :favourite_profiles, through: :favourites, source: :favourited, source_type: "Com::Nbos::StartupFundraising::Profile"
+
+			has_many :favourites, class_name: "Com::Nbos::StartupFundraising::Favourite", dependent: :destroy
+
       has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
 
       scope :active_users, -> { where(is_active: true) }
       scope :total, -> { all }
       scope :investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 3} ) }
-      scope :startups, -> { all.joins(:user_roles).where(user_roles: {role_id: 4}) }
       scope :premium_investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 2})}
       
       validates :uuid, :tenant_id, presence: true

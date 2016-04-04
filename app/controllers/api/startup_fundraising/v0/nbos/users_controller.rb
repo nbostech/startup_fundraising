@@ -121,8 +121,8 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 def add_to_favourite
 	 	 if params[:id].present? && params[:startup_id].present?
      	 investor = Com::Nbos::User.find(params[:id])
-     	 startup = Com::Nbos::User.find(params[:startup_id])
-       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favourited: startup, user: investor)
+     	 company = Com::Nbos::StartupFundraising::Compnay.find(params[:startup_id])
+       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favouritable: company, user: investor)
 			 if add_to_favorite
 				 render :json => {status: 200, message: "Success"}
 			 else
@@ -137,7 +137,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 	 if params[:id].present?
      	 investor = Com::Nbos::User.find(params[:id])
 			 if investor.present?
-			 	 favourite_startups_list = investor.favourite_profiles
+			 	 favourite_startups_list = investor.favourites.companies
 				 render :json => {status: 200, data: favourite_startups_list}
 			 else
 				 render :json => {status: 404, message: "No Favourite Startups Found"}
@@ -159,7 +159,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 profile.email = user_params["details"]["email"]
 		 profile.contact_number = user_params["details"]["contact_number"]
 
-		 api_response = getMediaApi.get_media(user_params["id"], "profile", @auth_token])
+		 api_response = getMediaApi.get_media(user_params["id"], "profile", @auth_token)
 		 if api_response[:status] == 200
 			media = api_response[:media]
 			profile_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]

@@ -1,8 +1,8 @@
 class CreateFavourites < ActiveRecord::Migration
   def change
     create_table :favourites do |t|
-      t.references :favourited, polymorphic: true, index: true
-      t.references :user, index: true
+    	t.references :favouritable, polymorphic: true, index: true
+      t.integer :user_id
 
       t.timestamps null: false
     end

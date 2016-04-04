@@ -24,14 +24,24 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role']
+      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
+            'Com::Nbos::StartupFundraising::Investment',
+            'Com::Nbos::StartupFundraising::CompanyStage',
+            'Com::Nbos::StartupFundraising::Category',
+            'Com::Nbos::StartupFundraising::CurrentFundingRound'
+          ]
     end  
     export
     bulk_delete
     show
     edit
     delete do
-      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role']
+      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
+            'Com::Nbos::StartupFundraising::Investment',
+            'Com::Nbos::StartupFundraising::CompanyStage',
+            'Com::Nbos::StartupFundraising::Category',
+            'Com::Nbos::StartupFundraising::CurrentFundingRound'
+          ]
     end  
     show_in_app
 
@@ -40,8 +50,8 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  # Excluded Models from RAils Admin Navigation
-  ["Com::Nbos::StartupFundraising::UserRole", "Com::Nbos::StartupFundraising::Investment", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite"].each do |m|
+  # Excluded Models from Rails Admin Navigation
+  ["Com::Nbos::StartupFundraising::UserRole", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite"].each do |m|
     config.excluded_models << m
   end
 
@@ -54,7 +64,7 @@ RailsAdmin.config do |config|
   config.model Com::Nbos::User do
     navigation_icon 'icon-user'
     list do
-      scopes [:total, :active_users, :investors, :startups, :premium_investors]
+      scopes [:total, :active_users, :investors, :premium_investors]
       field :id
       field :is_active
       field :email do
@@ -88,10 +98,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      exclude_fields :favourites, :events, :event_rsvps, :investments, :favourite_profiles
-      group :default do
-        label "User information"
-      end
+      exclude_fields :favourites, :events, :event_rsvps, :investments, :favourites, :current_funding_rounds
       field :uuid do
         read_only true
       end
