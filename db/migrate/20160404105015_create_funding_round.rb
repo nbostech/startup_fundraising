@@ -1,6 +1,6 @@
-class CreateCurrentFundingRound < ActiveRecord::Migration
+class CreateFundingRound < ActiveRecord::Migration
   def change
-    create_table :current_funding_rounds do |t|
+    create_table :funding_rounds do |t|
       t.integer :seeking_amount
       t.date :closing_date
       t.boolean :is_closed, default: false

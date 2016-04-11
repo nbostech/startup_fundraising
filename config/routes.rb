@@ -60,12 +60,11 @@ Rails.application.routes.draw do
 				namespace :v0, path: 'v0' do
 					namespace :nbos, path: nil do
 						get '/users' => "users#index", path: '/users', param: 'user_type'
-						get '/users' => "users#portfolio", path: '/portfolio'
 						post '/users' => "users#sign_up", path: 'users/signup'
 						post '/users' => "users#login", path: 'users/login'
 						get '/about' => "home#about", path: '/about'
 						get '/dealbank' => "usesrs#dealbank", path: '/dealbank'
-						get '/fund_in_progress' => "usesrs#fund_in_progress", path: '/fund_in_progress'
+						get '/fund_in_progress' => "usesrs#fund_in_progress", path: '/companies/fund_in_progress'
 						post '/add_to_favourite' => "usesrs#add_to_favourite", path: '/add_to_favourite'
 						get '/favorite_startups' => "usesrs#favorite_startups", path: '/favorite_startups'
 						resource :users, only: [:show, :update]

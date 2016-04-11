@@ -11,7 +11,7 @@ module Com
         
         belongs_to :company_stage, class_name: "Com::Nbos::StartupFundraising::CompanyStage"
 
-        has_many :current_funding_rounds, class_name: "Com::Nbos::StartupFundraising::CurrentFundingRound", dependent: :destroy
+        has_many :funding_rounds, class_name: "Com::Nbos::StartupFundraising::FundingRound", dependent: :destroy
   			
         scope :active_companies, -> { where(is_active: true) }
         scope :total, -> { all }

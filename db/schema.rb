@@ -73,16 +73,6 @@ ActiveRecord::Schema.define(version: 20160404113118) do
     t.datetime "updated_at",                            null: false
   end
 
-  create_table "current_funding_rounds", force: :cascade do |t|
-    t.integer  "seeking_amount", limit: 4
-    t.date     "closing_date"
-    t.boolean  "is_closed",                default: false
-    t.integer  "company_id",     limit: 4
-    t.boolean  "is_deleted",               default: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-  end
-
   create_table "event_rsvps", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "event_id",   limit: 4
@@ -126,6 +116,16 @@ ActiveRecord::Schema.define(version: 20160404113118) do
   end
 
   add_index "favourites", ["favouritable_type", "favouritable_id"], name: "index_favourites_on_favouritable_type_and_favouritable_id", using: :btree
+
+  create_table "funding_rounds", force: :cascade do |t|
+    t.integer  "seeking_amount", limit: 4
+    t.date     "closing_date"
+    t.boolean  "is_closed",                default: false
+    t.integer  "company_id",     limit: 4
+    t.boolean  "is_deleted",               default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
 
   create_table "investments", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
