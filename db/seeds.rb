@@ -5,10 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-roles = ["Moderator", "Premium Investor", "Investor", "Startup", "Member"]
+roles = [["Moderator", "md"], ["Premium Investor", "pi"], ["Investor", "inv"], ["Startup", "cmp"], ["Member","mb"]]
 
 roles.each do |r|
-  Com::Nbos::StartupFundraising::Role.create({name: r})
+  Com::Nbos::StartupFundraising::Role.create({name: r[0], code: r[1]})
   puts "******#{r} Role Created."	
 end
 

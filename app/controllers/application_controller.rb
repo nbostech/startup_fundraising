@@ -41,12 +41,16 @@ class ApplicationController < ActionController::Base
       res = getAuthApi.is_token_valid(token_id, @module_auth_token)
       if res[:status] == 200
         @token_details = res[:token]
-        true
+        if !res[:token].expired
+          true
+        else
+          render :json => {status: res[:status], message: "Token Expired"}
+        end  
       else
-        render :json => {status: res[:status], message: "Unautherized Access."}
+        render :json => {status: res[:status], message: "Unautherized Access"}
       end
     else
-      render :json => {status: 401, message: "Unautherized Access."}
+      render :json => {status: 400, message: "Bad Request"}
     end    
   end
 

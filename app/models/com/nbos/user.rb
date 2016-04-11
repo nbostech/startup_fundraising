@@ -1,5 +1,5 @@
 module Com
-  module Nbos
+	module Nbos
 		class User < ActiveRecord::Base
 			has_one :profile, class_name: "Com::Nbos::StartupFundraising::Profile", dependent: :destroy
 			has_many :event_rsvps, class_name: "Com::Nbos::Events::EventRsvp", inverse_of: :user, dependent: :destroy
@@ -9,65 +9,28 @@ module Com
 
 			has_many :favourites, class_name: "Com::Nbos::StartupFundraising::Favourite", dependent: :destroy
 
-      has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
+			has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
 
-      scope :active_users, -> { where(is_active: true) }
-      scope :total, -> { all }
-      scope :investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 3} ) }
-      scope :premium_investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 2})}
-      
-      validates :uuid, :tenant_id, presence: true
-      validates_associated :profile
+			scope :active_users, -> { where(is_public: true) }
+			scope :total, -> { all }
+			scope :investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 3} ) }
+			scope :premium_investors, -> { all.joins(:user_roles).where(user_roles: {role_id: 2})}
+			
+			validates :uuid, :tenant_id, presence: true
+			validates_associated :profile
 
-      def self.getUsers(user_type, tenantId)
-      	role_id = Com::Nbos::StartupFundraising::Role.where(name: user_type).first.id
-        users = active_users.where(tenant_id: tenantId).joins(:user_roles).where(user_roles: {role_id: role_id} ).to_json
-        if users.present?
-          get_profiles(users)
-        else
-        	[]
-        end   
-      end	
+			def self.getUsers(user_type, tenantId)
+				role_id = Com::Nbos::StartupFundraising::Role.where(name: user_type).first.id
+				users = active_users.where(tenant_id: tenantId).joins(:user_roles).where(user_roles: {role_id: role_id} )  
+			end	
 
-      def self.getPortfolio(tenantId)
-      	role_id = Com::Nbos::StartupFundraising::Role.where(name: "startup").first.id
-      	startups = active_users.where(tenant_id: tenantId).joins(:user_roles, :profile).where(user_roles: {role_id: role_id}, profiles: {is_funded: true} ).to_json
-        if startups.present?
-          get_profiles(startups)
-        else
-          []
-        end  
+			def as_json(options={})
+			  super(:only => [:id, :uuid],
+			        :include => {
+			          :profile => {:only => [:full_name, :email, :contact_number]}
+			        }
+			  )
       end
-
-      def self.getDealbank(tenantId)
-      	role_id = Com::Nbos::StartupFundraising::Role.where(name: "startup").first.id
-      	startups = active_users.where(tenant_id: tenantId).joins(:user_roles, :profile).where(user_roles: {role_id: role_id}, profiles: {is_funded: false , current_fund: nil} ).to_json
-        if startups.present?
-        	get_profiles(startups)
-        else
-        	[]
-        end 	
-      end
-
-      def getFundInProgress(tenantId)
-        role_id = Com::Nbos::StartupFundraising::Role.where(name: "startup").first.id
-      	startups = active_users.where(tenant_id: tenantId).joins(:user_roles, :profile).where(user_roles: {role_id: role_id}, profiles: {is_funded: true} ).to_json
-        if startups.present?
-        	get_profiles(startups)
-        else
-        	[]
-        end 	
-      end 	
-
-      def self.get_profiles(members)
-        user_profiles = []
-
-        members.each do |m|
-        	user_profiles << m.profile 
-        end
-
-        user_profiles	
-      end	
 
 		end
 	end

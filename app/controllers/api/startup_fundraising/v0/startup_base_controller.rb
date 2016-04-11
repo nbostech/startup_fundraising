@@ -1,7 +1,7 @@
 class Api::StartupFundraising::V0::StartupBaseController < ApplicationController
 	  respond_to :json, :xml
 	  skip_before_filter :verify_authenticity_token
-	  before_action :header_authentication
+	  #before_action :header_authentication
 
 	def getAuthApi
     WavelabsClientApi::Client::Api::Core::AuthApi.new

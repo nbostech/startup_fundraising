@@ -35,15 +35,16 @@ namespace :startup do
 		 profile1.email = investor_params[:email]
 		 profile1.contact_number = investor_params[:phone]
 
-		 #api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(43, "profile", new_investor[:member].token.value)
-		 #if api_response[:status] == 200
-			#media = api_response[:media]
-			#profile1_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
-			#profile1.idn_image_url = profile1_image_path
-		 #end
+		 api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(43, "profile", new_investor[:member].token.value)
+		 if api_response[:status] == 200
+			media = api_response[:media]
+			profile1_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
+			profile1.idn_image_url = profile1_image_path
+		 end
 
-		 member1.is_active = true
-		 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "investor").first
+		 member1.is_public = true
+		 member1.is_authorized = false
+		 investor_role = Com::Nbos::StartupFundraising::Role.where(code: "inv").first
 		 member1.roles << investor_role
 		 profile1.full_name = investor_params[:full_name]
 		 profile1.company_name = investor_params[:company]
@@ -55,27 +56,26 @@ namespace :startup do
      
      #Creating New startup
      token_res2 = WavelabsClientApi::Client::Api::Core::AuthApi.new().is_token_valid(new_startup[:member].token.value, m_token[:token].value)
-		 member2 = Com::Nbos::User.new 
+		 member2 = Com::Nbos::StartupFundraising::Company.new 
 		 member2.uuid = token_res2[:token].uuid
 		 member2.tenant_id = token_res2[:token].tenantId
 		 
-		 profile2 = Com::Nbos::StartupFundraising::Profile.new
+		 profile2 = Com::Nbos::StartupFundraising::CompanyProfile.new
 		 profile2.email = startup_params[:email]
 		 profile2.contact_number = startup_params[:phone]
 
-		 #api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(new_startup[:member].id, "profile", new_startup[:member].token.value)
-		 #if api_response[:status] == 200
-			#media = api_response[:media]
-			#profile2_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
-			#profile2.idn_image_url = profile2_image_path
-		 #end
+		 api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(new_startup[:member].id, "profile", new_startup[:member].token.value)
+		 if api_response[:status] == 200
+			media = api_response[:media]
+			profile2_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
+			profile2.idn_image_url = profile2_image_path
+		 end
 
-		 member2.is_active = false
-		 startup_role = Com::Nbos::StartupFundraising::Role.where(name: "startup").first
-		 member2.roles << startup_role
+		 member2.is_public = true
+		 member2.is_authorized = false
 		 profile2.full_name = startup_params[:full_name]
 		 profile2.startup_name = startup_params[:startup_name]
-		 member2.profile = profile2
+		 member2.company_profile = profile2
 
 		 if member2.save
 		 	puts "Strtup created Successfully."

@@ -66,7 +66,7 @@ RailsAdmin.config do |config|
     list do
       scopes [:total, :active_users, :investors, :premium_investors]
       field :id
-      field :is_active
+      field :is_public
       field :email do
         pretty_value do
           user_p = bindings[:object].profile
@@ -92,7 +92,7 @@ RailsAdmin.config do |config|
       field :id
       field :uuid
       field :tenant_id
-      field :is_active
+      field :is_public
       field :created_at
       field :updated_at
     end

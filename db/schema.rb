@@ -23,7 +23,9 @@ ActiveRecord::Schema.define(version: 20160404113118) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "uuid",             limit: 255
-    t.boolean  "is_active",                    default: false
+    t.boolean  "is_public",                    default: true
+    t.boolean  "is_authorized",                default: false
+    t.boolean  "is_delete",                    default: false
     t.string   "tenant_id",        limit: 255
     t.integer  "category_id",      limit: 4
     t.integer  "company_stage_id", limit: 4
@@ -160,6 +162,7 @@ ActiveRecord::Schema.define(version: 20160404113118) do
   create_table "roles", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.string   "code",        limit: 255
     t.boolean  "is_active",               default: true
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -173,11 +176,13 @@ ActiveRecord::Schema.define(version: 20160404113118) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "uuid",       limit: 255
-    t.boolean  "is_active",              default: false
-    t.string   "tenant_id",  limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.string   "uuid",          limit: 255
+    t.boolean  "is_public",                 default: true
+    t.boolean  "is_authorized",             default: false
+    t.boolean  "is_delete",                 default: false
+    t.string   "tenant_id",     limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "users", ["tenant_id"], name: "index_users_on_tenant_id", using: :btree
