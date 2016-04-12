@@ -77,6 +77,7 @@ gem "rails-erd"
 gem 'rails_admin'
 
 gem "rails_12factor"
+gem 'api-pagination'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
