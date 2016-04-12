@@ -1,6 +1,7 @@
 module Com
 	module Nbos
 		class User < ActiveRecord::Base
+			#ActiveRecord::Base.include_root_in_json = false
 			has_one :profile, class_name: "Com::Nbos::StartupFundraising::Profile", dependent: :destroy
 			has_many :event_rsvps, class_name: "Com::Nbos::Events::EventRsvp", inverse_of: :user, dependent: :destroy
 			has_many :events, through: :event_rsvps

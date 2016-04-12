@@ -2,17 +2,19 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	
 	before_action :validate_token
 
+	#set_pagination_headers :user_profiles, only: [:index]
+
 	 # Method to Return all investors & startups
 	 # based on user_type & tenant query params
 	 def index
 		 user_type = params[:user_type]
 		 if ["investor", "startup"].include?(user_type)
 		 	 if user_type == "investor"
-			   user_profiles = Com::Nbos::User.getUsers(user_type, @token_details.tenantId)
+			   @user_profiles = Com::Nbos::User.getUsers(user_type, @token_details.tenantId)
 			 else
-			 	 user_profiles = Com::Nbos::StartupFundraising::Company.getCompanies(@token_details.tenantId)
+			 	 @user_profiles = Com::Nbos::StartupFundraising::Company.getCompanies(@token_details.tenantId)
 			 end  
-			 render :json => {status: 200, data: user_profiles}
+			 render :json => @user_profiles.to_ary
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
 		 end	
