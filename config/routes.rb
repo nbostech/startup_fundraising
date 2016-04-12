@@ -84,6 +84,7 @@ Rails.application.routes.draw do
 		namespace :com , path: nil do
 			namespace :nbos, path: nil do
 				namespace :admin, path: nil do
+					root :to => "auth#login"
 					match 'login' => "auth#login", as: 'login', via: [:get, :post]
 					get 'logout' => "auth#logout", as: 'logout'
 				end
