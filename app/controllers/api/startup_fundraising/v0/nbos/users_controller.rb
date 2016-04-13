@@ -13,7 +13,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 	 role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
 				 @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:user_roles).where(user_roles: {role_id: role_id}).page(params[:page])
 			 end  
-			 paginate json: @user_profiles, per_page: params[:per_page] || 5
+			 paginate json: @user_profiles, per_page: params[:per_page]
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
 		 end	

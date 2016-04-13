@@ -14,7 +14,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        elsif companyType == "funding_progress"
          @companies_list = []
        end 
-			 paginate json: @companies_list, per_page: params[:per_page] || 5
+			 paginate json: @companies_list, per_page: params[:per_page]
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
 		 end	
