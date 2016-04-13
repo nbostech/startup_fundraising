@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
    
-  before_action :get_initial_client_auth_token, :get_module_auth_token
+  before_action :header_authentication, :get_initial_client_auth_token, :get_module_auth_token
 
   private
 
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
           render :json => {status: res[:status], message: "Token Expired"}
         end  
       else
-        render :json => {status: res[:status], message: "Unautherized Access"}
+        render :json => {status: res[:status], message: res[:token].message}
       end
     else
       render :json => {status: 400, message: "Bad Request"}
