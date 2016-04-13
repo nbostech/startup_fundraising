@@ -11,6 +11,14 @@ module Com
 			 scope :active_events, -> { where(is_active: true) }
 
 			 validates :name, :address, :start_date, :location, presence: true
+
+			 def image_url
+			 	  image.url(:medium)
+			 end	
+
+			 def as_json(options={})
+          super(:only => [:id, :name, :description, :address, :location, :start_date, :methods => [:image_url]])
+        end 
 			end
 		end
 	end
