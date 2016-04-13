@@ -68,7 +68,7 @@ gem "font-awesome-rails"
 gem "figaro"
 
 # To Communicate Wavelabs Server Api
-gem "wavelabs_client_api",  "0.3.0"
+gem "wavelabs_client_api",  "0.3.1"
 
 gem "paperclip"
 
