@@ -76,6 +76,7 @@ Rails.application.routes.draw do
 				namespace :v0, path: 'v0' do
 					namespace :nbos, path: nil do
 						get '/:tenantId/events/' => "events#index"
+						post '/:tenantId/events/' => "events#create"
 						#resources :events
 					end
 				end
