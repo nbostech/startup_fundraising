@@ -1,6 +1,6 @@
 class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraising::V0::StartupBaseController
 	
-	#before_action :validate_token
+	before_action :validate_token
 
 	 # Method to Return all investors & startups
 	 # based on user_type & tenant query params
