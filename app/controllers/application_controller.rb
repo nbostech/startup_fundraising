@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
    
-  before_action :header_authentication, :get_initial_client_auth_token, :get_module_auth_token
+  before_action :get_initial_client_auth_token, :get_module_auth_token
 
   private
 
