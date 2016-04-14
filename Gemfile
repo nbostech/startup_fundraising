@@ -67,7 +67,7 @@ gem "font-awesome-rails"
 # For Environment variables
 gem "figaro"
 
-# To Communicate Wavelabs Server Api
+# To Communicate IDN Api 
 gem "wavelabs_client_api",  "0.3.1"
 
 gem "paperclip"
