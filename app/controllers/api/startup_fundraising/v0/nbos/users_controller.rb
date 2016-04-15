@@ -119,8 +119,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 member.tenant_id = @token_details.tenantId
 			 
 			 profile = Com::Nbos::StartupFundraising::CompanyProfile.new
+			 profile.full_name = user_params["details"]["full_name"]
 			 profile.email = user_params["details"]["email"]
 			 profile.contact_number = user_params["details"]["contact_number"]
+			 profile.company_name = user_params["details"]["company_name"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
        
         # if api_response[:status] == 200
@@ -138,8 +140,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 member.tenant_id = @token_details.tenantId
 			 
 			 profile = Com::Nbos::StartupFundraising::Profile.new
+			 profile.full_name = user_params["details"]["full_name"]
 			 profile.email = user_params["details"]["email"]
 			 profile.contact_number = user_params["details"]["contact_number"]
+			 profile.company_name = user_params["details"]["company_name"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
 
