@@ -122,7 +122,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.email = user_params["details"]["email"]
 			 profile.contact_number = user_params["details"]["contact_number"]
 
-			 api_response = getMediaApi.get_media(user_params["id"], "profile", @auth_token)
+			 api_response = getMediaApi.get_media(user_params["idn_id"], "profile", @auth_token)
 			 if api_response[:status] == 200
 				media = api_response[:media]
 				profile_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
@@ -130,8 +130,6 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 end
 
 			 member.is_public = true
-			 profile.full_name = user_params["details"]["full_name"]
-			 profile.company_name = user_params["details"]["company_name"]
 			 member.company_profile = profile
 			 member
 		elsif user_params["user_type"] == "investor"
@@ -143,7 +141,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.email = user_params["details"]["email"]
 			 profile.contact_number = user_params["details"]["contact_number"]
 
-			 api_response = getMediaApi.get_media(user_params["id"], "profile", @auth_token)
+			 api_response = getMediaApi.get_media(user_params["idn_id"], "profile", @auth_token)
 			 if api_response[:status] == 200
 				media = api_response[:media]
 				profile_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
@@ -153,8 +151,6 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 member.is_public = true
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "investor").first
 			 member.roles << investor_role
-			 profile.full_name = user_params["details"]["full_name"]
-			 profile.company_name = user_params["details"]["company_name"]
 			 member.profile = profile
 			 member		
 		else
