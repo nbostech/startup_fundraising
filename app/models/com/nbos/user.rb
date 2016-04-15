@@ -27,10 +27,8 @@ module Com
 
 			def as_json(options={})
 			  super(:only => [:id, :uuid],
-			        :include => {
-			          :profile => {:only => [:full_name, :email, :contact_number]}
-			        }
-			  )
+			        :include => :profile
+			       )
       end
 
 		end
