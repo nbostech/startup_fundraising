@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404113118) do
+ActiveRecord::Schema.define(version: 20160415125817) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -104,6 +104,9 @@ ActiveRecord::Schema.define(version: 20160404113118) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
+    t.string   "contact_person",     limit: 255
+    t.integer  "contact_number",     limit: 4
+    t.string   "website",            limit: 255
   end
 
   add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
