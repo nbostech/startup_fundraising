@@ -7,12 +7,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 def index
 		 user_type = params[:user_type]
 		 if ["investor", "startup"].include?(user_type)
-		 	 if user_type == "startup"
-			   @user_profiles = Com::Nbos::StartupFundraising::Company.active_companies.where(tenant_id: @token_details.tenantId).page(params[:page])
-			 else
-			 	 role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
-				 @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:user_roles).where(user_roles: {role_id: role_id}).page(params[:page])
-			 end  
+		 	 
+			 	role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
+			  @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:user_roles).where(user_roles: {role_id: role_id}).page(params[:page])
+
 			 paginate json: @user_profiles, per_page: params[:per_page]
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
@@ -22,9 +20,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 # Method to create users
 	 def sign_up
 		 if params[:user_type].present?
-			 member = build_user(params)
-			 if member && member.save
-				 render :json => {status: 200, message: "Registration was done successfully. 50k network will contact you."}
+			 @member = build_user(params)
+			 if @member && @member.save
+				 render :json => @member
 			 else
 				 render :json => {status: 500, message: member.errors.messages}
 			 end  
@@ -113,15 +111,15 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 def build_user(user_params)
 		if user_params["user_type"] == "startup"
-       member = Com::Nbos::StartupFundraising::Company.new 
+       member = Com::Nbos::User.new
 			 member.uuid = @token_details.uuid
 			 member.tenant_id = @token_details.tenantId
 			 
-			 profile = Com::Nbos::StartupFundraising::CompanyProfile.new
+			 profile = Com::Nbos::StartupFundraising::Profile.new
 			 profile.full_name = user_params["details"]["full_name"]
 			 profile.email = user_params["details"]["email"]
 			 profile.contact_number = user_params["details"]["contact_number"]
-			 profile.company_name = user_params["details"]["company_name"]
+			 profile.startup_name = user_params["details"]["company_name"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
        
         # if api_response[:status] == 200
@@ -131,7 +129,25 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 # end
 
 			 member.is_public = true
-			 member.company_profile = profile
+			 member.profile = profile
+
+			 startup_role = Com::Nbos::StartupFundraising::Role.where(name: "Startup").first
+			 member.roles << startup_role
+
+			 company = Com::Nbos::StartupFundraising::Company.new
+			 company.uuid = @token_details.uuid
+			 company.tenant_id = @token_details.tenantId
+			 company.is_public = true
+
+			 company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new
+			 company_profile.email = user_params["details"]["email"]
+			 company_profile.full_name = user_params["details"]["full_name"]
+			 company_profile.startup_name = user_params["details"]["company_name"]
+			 company_profile.contact_number = user_params["details"]["contact_number"]
+
+			 company.company_profile = company_profile
+			 member.companies << company
+
 			 member
 		elsif user_params["user_type"] == "investor"
 			 member = Com::Nbos::User.new 
@@ -155,7 +171,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 # end
 
 			 member.is_public = true
-			 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "investor").first
+			 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "Investor").first
 			 member.roles << investor_role
 			 member.profile = profile
 			 member		

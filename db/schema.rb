@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415125817) do
+ActiveRecord::Schema.define(version: 20160418100321) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -34,6 +34,11 @@ ActiveRecord::Schema.define(version: 20160415125817) do
   end
 
   add_index "companies", ["tenant_id"], name: "index_companies_on_tenant_id", using: :btree
+
+  create_table "companies_users", force: :cascade do |t|
+    t.integer "company_id", limit: 4
+    t.integer "user_id",    limit: 4
+  end
 
   create_table "company_profiles", force: :cascade do |t|
     t.string   "full_name",             limit: 255
@@ -63,6 +68,10 @@ ActiveRecord::Schema.define(version: 20160415125817) do
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
+    t.string   "image_file_name",       limit: 255
+    t.string   "image_content_type",    limit: 255
+    t.integer  "image_file_size",       limit: 4
+    t.datetime "image_updated_at"
   end
 
   add_index "company_profiles", ["company_id"], name: "index_company_profiles_on_company_id", using: :btree
@@ -148,6 +157,7 @@ ActiveRecord::Schema.define(version: 20160415125817) do
     t.string   "location",              limit: 255
     t.string   "website",               limit: 255
     t.text     "profile_summary",       limit: 65535
+    t.string   "startup_name",          limit: 255
     t.string   "profile_links",         limit: 255
     t.string   "social_accounts",       limit: 255
     t.string   "idn_image_url",         limit: 255

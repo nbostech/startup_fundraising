@@ -8,6 +8,7 @@ class CreateProfiles < ActiveRecord::Migration
 			t.string :location
 			t.string :website
 			t.text :profile_summary
+			t.string :startup_name
 			t.string :profile_links
 			t.string :social_accounts
 			t.string :idn_image_url

@@ -51,7 +51,7 @@ RailsAdmin.config do |config|
   end
 
   # Excluded Models from Rails Admin Navigation
-  ["Com::Nbos::StartupFundraising::UserRole", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite"].each do |m|
+  ["Com::Nbos::StartupFundraising::UserRole", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
     config.excluded_models << m
   end
 
@@ -64,7 +64,7 @@ RailsAdmin.config do |config|
   config.model Com::Nbos::User do
     navigation_icon 'icon-user'
     list do
-      scopes [:total, :active_users, :investors, :premium_investors]
+      scopes [:total, :active_users, :investors, :startups,:premium_investors]
       field :id
       field :is_public
       field :email do

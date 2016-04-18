@@ -2,7 +2,7 @@ namespace :startup do
   desc 'Create a Startup & Investor User'
   task add_users: :environment do
     token = WavelabsClientApi::Client::Api::Core::AuthApi.new.get_auth_token("client_credentials", [])
-    (1..25).each do |m|	
+    (1..5).each do |m|	
 	    investor_params = { :username => "investor#{m}", 
 		                      :password => "test123",
 		                      :email => "investor#{m}@50knetwork.com",
@@ -36,7 +36,7 @@ namespace :startup do
 			 profile1.email = investor_params[:email]
 			 profile1.contact_number = investor_params[:phone]
 
-			 api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(43, "profile", new_investor[:member].token.value)
+			 api_response = WavelabsClientApi::Client::Api::Core::MediaApi.new().get_media(new_investor[:member].id, "profile", new_investor[:member].token.value)
 			 if api_response[:status] == 200
 				media = api_response[:media]
 				profile1_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
@@ -44,7 +44,7 @@ namespace :startup do
 			 end
 
 			 member1.is_public = true
-			 member1.is_authorized = false
+			 member1.is_authorized = true
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(code: "inv").first
 			 member1.roles << investor_role
 			 profile1.full_name = investor_params[:full_name]
@@ -57,11 +57,11 @@ namespace :startup do
 	     
 	     #Creating New startup
 	     token_res2 = WavelabsClientApi::Client::Api::Core::AuthApi.new().is_token_valid(new_startup[:member].token.value, m_token[:token].value)
-			 member2 = Com::Nbos::StartupFundraising::Company.new 
+			 member2 = Com::Nbos::User.new
 			 member2.uuid = token_res2[:token].uuid
 			 member2.tenant_id = token_res2[:token].tenantId
 			 
-			 profile2 = Com::Nbos::StartupFundraising::CompanyProfile.new
+			 profile2 = Com::Nbos::StartupFundraising::Profile.new
 			 profile2.email = startup_params[:email]
 			 profile2.contact_number = startup_params[:phone]
 
@@ -73,10 +73,29 @@ namespace :startup do
 			 end
 
 			 member2.is_public = true
-			 member2.is_authorized = false
+			 member2.is_authorized = true
+			 startup_role = Com::Nbos::StartupFundraising::Role.where(code: "cmp").first
+			 member2.roles << startup_role
 			 profile2.full_name = startup_params[:full_name]
 			 profile2.startup_name = startup_params[:startup_name]
-			 member2.company_profile = profile2
+			 member2.profile = profile2
+
+			 #create default company & company profile for a startup
+			 company1 = Com::Nbos::StartupFundraising::Company.new
+			 company1.uuid = token_res2[:token].uuid
+			 company1.tenant_id = token_res2[:token].tenantId
+			 company1.is_public = true
+			 company1.is_authorized = true
+
+			 cmp_profile1 = Com::Nbos::StartupFundraising::CompanyProfile.new
+			 cmp_profile1.email = startup_params[:email]
+			 cmp_profile1.contact_number = startup_params[:phone]
+			 cmp_profile1.full_name = startup_params[:full_name]
+			 cmp_profile1.startup_name = startup_params[:startup_name]
+       
+       company1.company_profile = cmp_profile1
+
+       member2.companies << company1
 
 			 if member2.save
 			 	puts "Strtup #{m} created Successfully."
