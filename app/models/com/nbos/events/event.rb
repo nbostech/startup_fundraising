@@ -21,7 +21,7 @@ module Com
 			 	  if Rails.env == "development"
 			 	  	host = "http://localhost:3000"
 			 	  else
-			 	  	host = "https://startup-50kherokuapp.com"
+			 	  	host = "https://startup-50k.herokuapp.com"
 			 	  end 	
 			 	  host + image.url(:medium)
 			 end
