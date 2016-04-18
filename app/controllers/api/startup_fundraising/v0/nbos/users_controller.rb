@@ -21,8 +21,8 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 
 	 # Method to create users
 	 def sign_up
-		 if params[:user].present?
-			 member = build_user(params[:user])
+		 if params[:user_type].present?
+			 member = build_user(params)
 			 if member && member.save
 				 render :json => {status: 200, message: "Registration was done successfully. 50k network will contact you."}
 			 else
@@ -36,10 +36,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 # Method to create users
 	 def login
 		 if params[:user].present?
-			 member = Com::Nbos::User.where(uuid: params[:user][:uuid])
-			 if member.present?
-			 	 data = {user: member, user_profile: member.profile, role: member.roles.first.name}
-				 render :json => {status: 200, data: data}
+			 @member = Com::Nbos::User.where(uuid: params[:user][:uuid])
+			 if @member.present?
+				 render :json => @member
 			 else
 				 render :json => {status: 404, message: "User Not Found"}
 			 end  
