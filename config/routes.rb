@@ -56,14 +56,16 @@ Rails.application.routes.draw do
 	#   end
 
 		namespace :api , path: 'api' do
-			namespace :startup_fundraising, path: 'sfr' do
+			namespace :startup_fundraising, path: 'startup-fundraising' do
 				namespace :v0, path: 'v0' do
 					namespace :nbos, path: nil do
 						get '/users' => "users#index", path: '/users', param: 'user_type'
 						post '/users' => "users#sign_up", path: 'users/signup'
 						post '/users' => "users#login", path: 'users/signin'
 						get '/about' => "home#about", path: '/about'
-						resource :users, only: [:show, :update]
+						get '/users/:id' => "users#show"
+						put '/users/:id' => "users#update"
+						#resource :users, only: [:show, :update]
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
 					end
@@ -77,6 +79,7 @@ Rails.application.routes.draw do
 					namespace :nbos, path: nil do
 						get '/:tenantId/events/' => "events#index"
 						post '/:tenantId/events/' => "events#create"
+						get '/:tenantId/events/:id' => "events#show"
 						#resources :events
 					end
 				end
