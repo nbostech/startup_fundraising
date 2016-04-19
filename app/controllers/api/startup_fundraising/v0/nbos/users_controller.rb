@@ -47,10 +47,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 def show
 	 	 if params[:id].present?
-      member = Com::Nbos::User.find(params[:id])
-			 if member.present?
-			 	 data = {user: member, user_profile: member.profile, role: member.roles.first.name}
-				 render :json => {status: 200, data: data}
+      @member = Com::Nbos::User.find(params[:id])
+			 if @member.present?
+				 render :json => @member
 			 else
 				 render :json => {status: 404, message: "User Not Found"}
 			 end  
@@ -61,11 +60,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 def update
 	 	 if params[:id].present? && params[:user].present?
-       member = Com::Nbos::User.find(params[:id])
-			 if member.present?
-         if member.profile.update(params[:user])
-         	 data = {user: member, user_profile: member.profile, role: member.roles.first.name}
-           render :json => {status: 200, data: data}
+       @member = Com::Nbos::User.find(params[:id])
+			 if @member.present?
+         if @member.profile.update(params[:user])
+           render :json => @member
          else
            render :json => {status: 500, message: "Internal Server Error"}
          end    
@@ -80,8 +78,8 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 def add_to_favourite
 	 	 if params[:id].present? && params[:startup_id].present?
      	 investor = Com::Nbos::User.find(params[:id])
-     	 company = Com::Nbos::StartupFundraising::Compnay.find(params[:startup_id])
-       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favouritable: company, user: investor)
+     	 start_up = Com::Nbos::StartupFundraising::Company.find(params[:startup_id])
+       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favouritable: startup, user: investor)
 			 if add_to_favorite
 				 render :json => {status: 200, message: "Success"}
 			 else

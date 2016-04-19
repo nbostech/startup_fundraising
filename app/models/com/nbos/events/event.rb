@@ -17,6 +17,8 @@ module Com
 
 			 before_destroy :delete_image
 
+			 attr_accessor :schedule_time, :schedule_date
+
 			 def image_url
 			 	  if Rails.env == "development"
 			 	  	host = "http://localhost:3000"
@@ -28,10 +30,22 @@ module Com
 
 			 def delete_image
 			 	 image.clear
+			 end
+
+			 def schedule_time
+			 	 self.start_time.strftime("%I:%M%p").to_s + "-" + self.end_time.strftime("%I:%M%p").to_s
+			 end
+
+			 def schedule_date
+			 	 if self.start_date.present? && self.end_date.present?
+			 	 	 self.start_date.strftime("%b %e").to_s + "-" + self.end_date.strftime("%b %e").to_s
+			 	 else
+			 	 	 self.start_date.strftime("%b %e").to_s
+			 	 end	
 			 end	
 			 	  
 			 def as_json(options={})
-          super(:only => [:id, :name, :description, :address, :location, :contact_person, :contact_number, :website, :start_time, :end_time, :start_date], :methods => [:image_url])
+          super(:only => [:id, :name, :description, :address, :location, :contact_person, :contact_number, :website], :methods => [:image_url, :schedule_time, :schedule_date])
        end 
 			end
 		end
