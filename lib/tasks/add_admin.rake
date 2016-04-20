@@ -2,9 +2,9 @@ namespace :startup do
   desc 'Create Moderator User'
   task create_moderator: :environment do
     token = WavelabsClientApi::Client::Api::Core::AuthApi.new.get_auth_token("client_credentials", [])
-	    moderator_params = { :username => "moderator", 
+	    moderator_params = { :username => "moderator1", 
 		                      :password => "test123",
-		                      :email => "moderator@50knetwork.com",
+		                      :email => "moderator1@50knetwork.com",
 		                      :full_name => "moderator",
 		                      :firstName => "MD",
 		                      :phone => "1234567890",
