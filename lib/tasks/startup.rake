@@ -2,7 +2,7 @@ namespace :startup do
   desc 'Create a Startup & Investor User'
   task add_users: :environment do
     token = WavelabsClientApi::Client::Api::Core::AuthApi.new.get_auth_token("client_credentials", [])
-    (2..6).each do |m|	
+    (10..15).each do |m|	
 	    investor_params = { :username => "investor#{m}", 
 		                      :password => "test123",
 		                      :email => "investor#{m}@50knetwork.com",

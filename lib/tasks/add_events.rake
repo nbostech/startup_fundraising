@@ -2,7 +2,7 @@ namespace :startup do
   desc 'Create Events'
   task create_events: :environment do
   	role = Com::Nbos::StartupFundraising::Role.where(code: "md").first
-  	user_profile = Com::Nbos::StartupFundraising::Profile.where(email: 'moderator@50knetwork.com').first
+  	user_profile = Com::Nbos::StartupFundraising::Profile.where(email: 'admin@50knetwork.com').first
     (1..10).each do |e|  
 	    events_params = { :name => "Event #{e}", 
 		                    :description => "event #{e}",
