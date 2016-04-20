@@ -20,14 +20,25 @@ module Com
 				scope :total, -> { all }
 				
 				validates :uuid, :tenant_id, presence: true
-				validates_associated :company_profile 
+				validates_associated :company_profile
+
+				attr_accessor :company_stage, :category_name
+
+
+				def company_stage
+					self.company_stage.name if self.company_stage_id.present?
+				end
+
+				def category_name
+					self.category.name if self.category_id.present?
+				end   
 
 				def as_json(options={})
-					super(:only => [:id, :uuid],
-								:include => {
-									:company_profile => {:only => [:full_name, :email, :contact_number]}
-								}
-					)
+					super(:only => [:id],
+						    :include => { :company_profile => {:only => [:full_name, :email, :contact_number]}
+								            }, 
+								:methods => [:company_stage, :category_name]
+					     )
 				end 
 
 			end 

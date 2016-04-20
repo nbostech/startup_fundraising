@@ -32,7 +32,7 @@ module Com
 
 			def as_json(options={})
 			  super(:only => [:id, :uuid],
-			        :include => [:profile, :roles => {:only => [:name]}]
+			        :include => [:profile, :companies => {:include => [:company_profile], :only => [:id]}, :roles => {:only => [:name]}]
 			       )
       end
 
