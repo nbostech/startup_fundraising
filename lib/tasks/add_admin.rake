@@ -33,7 +33,7 @@ namespace :startup do
 			 end
 
 			 member1.is_public = true
-			 member1.is_authorized = false
+			 member1.is_approved = false
 			 moderator_role = Com::Nbos::StartupFundraising::Role.where(code: "md").first
 			 member1.roles << moderator_role
 			 profile1.full_name = moderator_params[:full_name]

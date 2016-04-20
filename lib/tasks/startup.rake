@@ -44,7 +44,7 @@ namespace :startup do
 			 end
 
 			 member1.is_public = true
-			 member1.is_authorized = true
+			 member1.is_approved = true
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(code: "inv").first
 			 member1.roles << investor_role
 			 profile1.full_name = investor_params[:full_name]
@@ -73,7 +73,7 @@ namespace :startup do
 			 end
 
 			 member2.is_public = true
-			 member2.is_authorized = true
+			 member2.is_approved = true
 			 startup_role = Com::Nbos::StartupFundraising::Role.where(code: "cmp").first
 			 member2.roles << startup_role
 			 profile2.full_name = startup_params[:full_name]
