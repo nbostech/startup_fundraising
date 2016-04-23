@@ -68,6 +68,7 @@ Rails.application.routes.draw do
 						#resource :users, only: [:show, :update]
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
+						post '/companies' => "companies#create", path: '/companies'
 					end
 				end
 			end   
