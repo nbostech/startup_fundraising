@@ -21,7 +21,6 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 	 end
 
 	 def create
-	 	debugger
      if params[:company].present? && @token_details.present? && @token_details.username.present?
 
        member = Com::Nbos::User.where(uuid: @token_details.uuid).first
@@ -39,8 +38,14 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
 			 company.company_profile = company_profile
        
-       member.companies << company
-       render :json => {status: 200, message: "Company created successfully."}
+       
+       if company.save
+       	  member.companies << company
+       	  member.save
+          render :json => {status: 200, message: "Company created successfully."}
+       else
+       	  render :json => {status: 500, message: company.errors.messages}
+       end   
      else
      	 render :json => {status: 400, message: "Bad Request"}
      end	
