@@ -69,6 +69,11 @@ Rails.application.routes.draw do
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
 						post '/companies' => "companies#create", path: '/companies'
+						get '/companies/:id' => "companies#show"
+						put '/companies/:id' => "companies#update"
+						delete '/companies/:id' => "companies#delete"
+
+						post '/companies/:id/media' => "media#add_media"
 					end
 				end
 			end   

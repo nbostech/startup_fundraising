@@ -22,7 +22,7 @@ module Com
 				validates :uuid, :tenant_id, presence: true
 				validates_associated :company_profile
 
-				attr_accessor :company_stage, :category_name
+				attr_accessor :company_stage, :category_name, :company_image_url
 
 
 				def company_stage
@@ -31,13 +31,21 @@ module Com
 
 				def category_name
 					self.category.name if self.category_id.present?
+				end
+
+				def company_image_url
+					if Rails.env == "development"
+			 	  	host = "http://localhost:3000"
+			 	  else
+			 	  	host = "https://startup-50k.herokuapp.com"
+			 	  end 	
+			 	  host + company_profile.image.url(:medium)
 				end   
 
 				def as_json(options={})
 					super(:only => [:id],
-						    :include => { :company_profile => {:only => [:full_name, :email, :contact_number]}
-								            }, 
-								:methods => [:company_stage, :category_name]
+						    :include => :company_profile, 
+								:methods => [:company_stage, :category_name, :company_image_url]
 					     )
 				end 
 

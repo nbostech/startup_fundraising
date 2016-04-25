@@ -8,7 +8,7 @@ module Com
 			 has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" },
 			                   :path => ":rails_root/public/images/events/:id/:style/:basename.:extension",
 			                   :url => "/images/events/:id/:style/:basename.:extension",
-			                   :default_url => "/images/events/default/missing_event.png"
+			                   :default_url => "/images/default/missing_image.png"
        validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 			 
 			 scope :active_events, -> { where(is_active: true) }
