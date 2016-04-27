@@ -27,7 +27,6 @@ namespace :startup do
 			 profile1 = Com::Nbos::StartupFundraising::Profile.new
 			 profile1.email = moderator_params[:email]
 			 profile1.contact_number = moderator_params[:phone]
-       profile1.idn_image_url = profile1_image_path
        profile1.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
        member1.profile = profile1

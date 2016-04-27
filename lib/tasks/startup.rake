@@ -46,7 +46,6 @@ namespace :startup do
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(code: "inv").first
 			 member1.roles << investor_role
 			 profile1.full_name = investor_params[:full_name]
-			 profile1.company_name = investor_params[:company]
 			 member1.profile = profile1
 
 			 if member1.save
@@ -75,7 +74,6 @@ namespace :startup do
 			 startup_role = Com::Nbos::StartupFundraising::Role.where(code: "cmp").first
 			 member2.roles << startup_role
 			 profile2.full_name = startup_params[:full_name]
-			 profile2.startup_name = startup_params[:startup_name]
 			 member2.profile = profile2
 
 			 if member2.save
