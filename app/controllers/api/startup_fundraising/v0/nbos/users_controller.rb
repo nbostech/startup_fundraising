@@ -22,7 +22,11 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 if params[:user_type].present?
 			 @member = build_user(params)
 			 if @member && @member.save
-				 render :json => @member
+			 	 if params[:user_type] == "startup"
+				   render :json => @member
+				 else
+				 	 render :json => {status: 200, message: "Registartion done Sucessful. Moderator will Approve."}
+				 end  
 			 else
 				 render :json => {status: 500, message: member.errors.messages}
 			 end  
@@ -33,8 +37,8 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 # Method to create users
 	 def login
-		 if params[:user].present?
-			 @member = Com::Nbos::User.where(uuid: params[:user][:uuid])
+		 if params[:uuid].present?
+			 @member = Com::Nbos::User.where(uuid: params[:uuid])
 			 if @member.present?
 				 render :json => @member
 			 else
@@ -114,10 +118,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 member.tenant_id = @token_details.tenantId
 			 
 			 profile = Com::Nbos::StartupFundraising::Profile.new
-			 profile.full_name = user_params["details"]["full_name"]
-			 profile.email = user_params["details"]["email"]
-			 profile.contact_number = user_params["details"]["contact_number"]
-			 profile.startup_name = user_params["details"]["company_name"]
+			 profile.full_name = user_params["full_name"]
+			 profile.email = user_params["email"]
+			 profile.contact_number = user_params["contact_number"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
        
         # if api_response[:status] == 200
@@ -138,10 +141,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 company.is_public = true
 
 			 company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new
-			 company_profile.email = user_params["details"]["email"]
-			 company_profile.full_name = user_params["details"]["full_name"]
-			 company_profile.startup_name = user_params["details"]["company_name"]
-			 company_profile.contact_number = user_params["details"]["contact_number"]
+			 company_profile.email = user_params["email"]
+			 company_profile.full_name = user_params["full_name"]
+			 company_profile.contact_number = user_params["contact_number"]
 
 			 company.company_profile = company_profile
 			 member.companies << company

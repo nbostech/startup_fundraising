@@ -36,9 +36,9 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
        company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new
        company_profile.startup_name = params["company_name"]
-       company_profile.email = params["details"]["email"]
-       company_profile.founder_name = params["details"]["founder_name"]
-       company_profile.contact_number = params["details"]["contact_number"]
+       company_profile.email = params["email"]
+       company_profile.founder_name = params["founder_name"]
+       company_profile.contact_number = params["contact_number"]
 
        company.company_profile = company_profile
        
