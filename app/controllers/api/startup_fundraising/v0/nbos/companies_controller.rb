@@ -7,11 +7,11 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      company_categories = ['deal_bank', 'funding_progress', 'portfolio']
      if companyType.present? && company_categories.include?(companyType)
        if companyType == "portfolio"  
-         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(tenant_id: @token_details.tenantId).joins(:company_profile).where(company_profiles: {is_funded: true}).page(params[:page])
+         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_approved: true).joins(:company_profile).where(company_profiles: {is_funded: true}).page(params[:page])
        elsif companyType == "deal_bank"
-         @companies_list = []
+         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_approved: true).joins(:company_profile).where(company_profiles: {is_funded: true}).page(params[:page])
        elsif companyType == "funding_progress"
-         @companies_list = []
+         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_approved: true).joins(:company_profile).where(company_profiles: {is_funded: true}).page(params[:page])
        end 
        paginate json: @companies_list, per_page: params[:per_page]
      else
@@ -30,9 +30,6 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
        member = Com::Nbos::User.where(uuid: @token_details.uuid).first
        company = Com::Nbos::StartupFundraising::Company.new
-       company.uuid = @token_details.uuid
-       company.tenant_id = @token_details.tenantId
-       company.is_public = true
 
        company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new
        company_profile.startup_name = params["company_name"]
@@ -73,13 +70,13 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      if params[:id].present?
        company = Com::Nbos::StartupFundraising::Company.find(params[:id])
        company_profile = company.company_profile
-       company_profile.email = params["details"]["email"]
-       company_profile.founder_name = params["details"]["founder_name"]
+       company_profile.email = params["email"]
+       company_profile.founder_name = params["founder_name"]
        company_profile.startup_name = params["company_name"]
-       company_profile.contact_number = params["details"]["contact_number"]
+       company_profile.contact_number = params["contact_number"]
        
        if company_profile.save
-          render :json => {status: 200, message: "Company created successfully."}
+          render :json => {status: 200, message: "Company updated successfully."}
        else
           render :json => {status: 500, message: company.errors.messages}
        end   

@@ -122,31 +122,13 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.email = user_params["email"]
 			 profile.contact_number = user_params["contact_number"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
-       
-        # if api_response[:status] == 200
-				# media = api_response[:media]
-				# profile_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
-				# profile.idn_image_url = profile_image_path
-			 # end
+
 
 			 member.is_public = true
 			 member.profile = profile
 
 			 startup_role = Com::Nbos::StartupFundraising::Role.where(name: "Startup").first
 			 member.roles << startup_role
-
-			 company = Com::Nbos::StartupFundraising::Company.new
-			 company.uuid = @token_details.uuid
-			 company.tenant_id = @token_details.tenantId
-			 company.is_public = true
-
-			 company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new
-			 company_profile.email = user_params["email"]
-			 company_profile.full_name = user_params["full_name"]
-			 company_profile.contact_number = user_params["contact_number"]
-
-			 company.company_profile = company_profile
-			 member.companies << company
 
 			 member
 		elsif user_params["user_type"] == "investor"
@@ -161,14 +143,6 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.company_name = user_params["details"]["company_name"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
-
-			 api_response = getMediaApi.get_media(user_params["idn_id"], "profile", @auth_token)
-
-			 # if api_response[:status] == 200
-				# media = api_response[:media]
-				# profile_image_path = media.mediaFileDetailsList[1].to_h["mediapath"]
-				# profile.idn_image_url = profile_image_path
-			 # end
 
 			 member.is_public = true
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "Investor").first

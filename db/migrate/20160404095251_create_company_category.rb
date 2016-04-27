@@ -1,6 +1,6 @@
-class CreateCompanyStage < ActiveRecord::Migration
+class CreateCompanyCategory < ActiveRecord::Migration
   def change
-    create_table :company_stages do |t|
+    create_table :company_categories do |t|
     	t.string :name
     	t.string :description
     	t.boolean :is_active, default: true

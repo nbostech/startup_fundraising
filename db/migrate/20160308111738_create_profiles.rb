@@ -4,12 +4,14 @@ class CreateProfiles < ActiveRecord::Migration
 			t.string :full_name
 			t.string :email
 			t.integer :contact_number
-			t.string :company_name
 			t.string :location
+			t.text :address
 			t.string :website
 			t.text :profile_summary
-			t.string :startup_name
-			t.string :profile_links
+			t.string :linkedin_profile
+			t.string :facebook_profile
+			t.string :twitter_profile
+			t.string :other_profile
 			t.string :social_accounts
 			t.string :idn_image_url
 			t.belongs_to :user, index: true
