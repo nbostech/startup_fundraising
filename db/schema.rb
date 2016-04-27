@@ -11,77 +11,98 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418100321) do
+ActiveRecord::Schema.define(version: 20160427141640) do
 
-  create_table "categories", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "desc",       limit: 255
-    t.boolean  "is_active",              default: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+  create_table "associate_teams", force: :cascade do |t|
+    t.string "name",        limit: 255
+    t.string "description", limit: 255
   end
 
   create_table "companies", force: :cascade do |t|
-    t.string   "uuid",             limit: 255
-    t.boolean  "is_public",                    default: true
-    t.boolean  "is_approved",                  default: false
-    t.boolean  "is_delete",                    default: false
-    t.string   "tenant_id",        limit: 255
-    t.integer  "category_id",      limit: 4
-    t.integer  "company_stage_id", limit: 4
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "company_category_id", limit: 4
+    t.integer  "company_stage_id",    limit: 4
+    t.integer  "currency_type_id",    limit: 4
+    t.boolean  "is_funded",                     default: false
+    t.boolean  "is_approved",                   default: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
-
-  add_index "companies", ["tenant_id"], name: "index_companies_on_tenant_id", using: :btree
 
   create_table "companies_users", force: :cascade do |t|
     t.integer "company_id", limit: 4
     t.integer "user_id",    limit: 4
   end
 
+  create_table "company_associates", force: :cascade do |t|
+    t.string   "name",                     limit: 255
+    t.string   "email",                    limit: 255
+    t.integer  "company_id",               limit: 4
+    t.integer  "associate_category_id",    limit: 4
+    t.string   "position",                 limit: 255
+    t.text     "experience_and_expertise", limit: 65535
+    t.string   "image_file_name",          limit: 255
+    t.string   "image_content_type",       limit: 255
+    t.integer  "image_file_size",          limit: 4
+    t.datetime "image_updated_at"
+  end
+
+  create_table "company_categories", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.boolean  "is_active",               default: true
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
   create_table "company_profiles", force: :cascade do |t|
-    t.string   "full_name",             limit: 255
-    t.string   "email",                 limit: 255
-    t.integer  "contact_number",        limit: 4
-    t.string   "startup_name",          limit: 255
-    t.integer  "emp_strength",          limit: 4
-    t.string   "founder_name",          limit: 255
-    t.string   "location",              limit: 255
-    t.string   "website",               limit: 255
-    t.integer  "category_id",           limit: 4
-    t.text     "business_summary",      limit: 65535
-    t.string   "description",           limit: 255
-    t.text     "profile_summary",       limit: 65535
-    t.string   "profile_links",         limit: 255
-    t.string   "social_accounts",       limit: 255
-    t.boolean  "is_funded",                           default: false
-    t.string   "idn_image_url",         limit: 255
-    t.integer  "company_id",            limit: 4
-    t.integer  "date_funded",           limit: 4
-    t.integer  "year_funded",           limit: 4
-    t.string   "currency",              limit: 255
-    t.integer  "capital_raised",        limit: 4
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "document_file_name",    limit: 255
-    t.string   "document_content_type", limit: 255
-    t.integer  "document_file_size",    limit: 4
+    t.string   "startup_name",           limit: 255
+    t.string   "email",                  limit: 255
+    t.integer  "contact_number",         limit: 4
+    t.integer  "emp_strength",           limit: 4
+    t.string   "founder_name",           limit: 255
+    t.string   "location",               limit: 255
+    t.text     "address",                limit: 65535
+    t.string   "website",                limit: 255
+    t.text     "business_summary",       limit: 65535
+    t.text     "description",            limit: 65535
+    t.text     "usb_product_uniqueness", limit: 65535
+    t.integer  "company_id",             limit: 4
+    t.integer  "date_funded",            limit: 4
+    t.integer  "year_funded",            limit: 4
+    t.string   "linkedin_media_url",     limit: 255
+    t.string   "twitter_media_url",      limit: 255
+    t.string   "facebook_media_url",     limit: 255
+    t.string   "other_media_url",        limit: 255
+    t.integer  "capital_raised",         limit: 4
+    t.integer  "previous_capital",       limit: 4
+    t.integer  "monthly_net_burn",       limit: 4
+    t.integer  "pre_money_valuation",    limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "document_file_name",     limit: 255
+    t.string   "document_content_type",  limit: 255
+    t.integer  "document_file_size",     limit: 4
     t.datetime "document_updated_at"
-    t.string   "image_file_name",       limit: 255
-    t.string   "image_content_type",    limit: 255
-    t.integer  "image_file_size",       limit: 4
+    t.string   "image_file_name",        limit: 255
+    t.string   "image_content_type",     limit: 255
+    t.integer  "image_file_size",        limit: 4
     t.datetime "image_updated_at"
   end
 
   add_index "company_profiles", ["company_id"], name: "index_company_profiles_on_company_id", using: :btree
 
   create_table "company_stages", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "desc",       limit: 255
-    t.boolean  "is_active",              default: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.boolean  "is_active",               default: true
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  create_table "currency_types", force: :cascade do |t|
+    t.string "code",        limit: 255
+    t.string "symbol",      limit: 255
+    t.string "description", limit: 255
   end
 
   create_table "event_rsvps", force: :cascade do |t|
@@ -153,12 +174,14 @@ ActiveRecord::Schema.define(version: 20160418100321) do
     t.string   "full_name",             limit: 255
     t.string   "email",                 limit: 255
     t.integer  "contact_number",        limit: 4
-    t.string   "company_name",          limit: 255
     t.string   "location",              limit: 255
+    t.text     "address",               limit: 65535
     t.string   "website",               limit: 255
     t.text     "profile_summary",       limit: 65535
-    t.string   "startup_name",          limit: 255
-    t.string   "profile_links",         limit: 255
+    t.string   "linkedin_profile",      limit: 255
+    t.string   "facebook_profile",      limit: 255
+    t.string   "twitter_profile",       limit: 255
+    t.string   "other_profile",         limit: 255
     t.string   "social_accounts",       limit: 255
     t.string   "idn_image_url",         limit: 255
     t.integer  "user_id",               limit: 4

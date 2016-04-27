@@ -1,7 +1,7 @@
 module Com
   module Nbos
     module StartupFundraising
-			class CompayCategory < ActiveRecord::Base
+			class CompanyCategory < ActiveRecord::Base
 				has_many :companies, class_name: "Com::Nbos::StartupFundraising::Company", dependent: :destroy
 				
 	      scope :active_categories, -> { where(is_active: true) }
