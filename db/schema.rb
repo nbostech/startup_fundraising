@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427141640) do
+ActiveRecord::Schema.define(version: 20160428075552) do
 
   create_table "associate_teams", force: :cascade do |t|
     t.string "name",        limit: 255
     t.string "description", limit: 255
+    t.string "tenant_id",   limit: 255
   end
 
   create_table "companies", force: :cascade do |t|
@@ -37,9 +38,18 @@ ActiveRecord::Schema.define(version: 20160427141640) do
     t.string   "name",                     limit: 255
     t.string   "email",                    limit: 255
     t.integer  "company_id",               limit: 4
-    t.integer  "associate_category_id",    limit: 4
+    t.integer  "associate_team_id",        limit: 4
     t.string   "position",                 limit: 255
     t.text     "experience_and_expertise", limit: 65535
+    t.integer  "contact_number",           limit: 4
+    t.string   "location",                 limit: 255
+    t.text     "address",                  limit: 65535
+    t.string   "website",                  limit: 255
+    t.text     "profile_summary",          limit: 65535
+    t.string   "linkedin_profile",         limit: 255
+    t.string   "facebook_profile",         limit: 255
+    t.string   "twitter_profile",          limit: 255
+    t.string   "other_profile",            limit: 255
     t.string   "image_file_name",          limit: 255
     t.string   "image_content_type",       limit: 255
     t.integer  "image_file_size",          limit: 4
@@ -49,9 +59,25 @@ ActiveRecord::Schema.define(version: 20160427141640) do
   create_table "company_categories", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.string   "tenant_id",   limit: 255
     t.boolean  "is_active",               default: true
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "company_document_categories", force: :cascade do |t|
+    t.string "name",        limit: 255
+    t.string "tenant_id",   limit: 255
+    t.string "description", limit: 255
+  end
+
+  create_table "company_documents", force: :cascade do |t|
+    t.integer  "company_document_category_id", limit: 4
+    t.integer  "company_id",                   limit: 4
+    t.string   "document_file_name",           limit: 255
+    t.string   "document_content_type",        limit: 255
+    t.integer  "document_file_size",           limit: 4
+    t.datetime "document_updated_at"
   end
 
   create_table "company_profiles", force: :cascade do |t|
@@ -79,10 +105,6 @@ ActiveRecord::Schema.define(version: 20160427141640) do
     t.integer  "pre_money_valuation",    limit: 4
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.string   "document_file_name",     limit: 255
-    t.string   "document_content_type",  limit: 255
-    t.integer  "document_file_size",     limit: 4
-    t.datetime "document_updated_at"
     t.string   "image_file_name",        limit: 255
     t.string   "image_content_type",     limit: 255
     t.integer  "image_file_size",        limit: 4
@@ -94,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160427141640) do
   create_table "company_stages", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.string   "tenant_id",   limit: 255
     t.boolean  "is_active",               default: true
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -102,6 +125,7 @@ ActiveRecord::Schema.define(version: 20160427141640) do
   create_table "currency_types", force: :cascade do |t|
     t.string "code",        limit: 255
     t.string "symbol",      limit: 255
+    t.string "tenant_id",   limit: 255
     t.string "description", limit: 255
   end
 
@@ -171,26 +195,22 @@ ActiveRecord::Schema.define(version: 20160427141640) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string   "full_name",             limit: 255
-    t.string   "email",                 limit: 255
-    t.integer  "contact_number",        limit: 4
-    t.string   "location",              limit: 255
-    t.text     "address",               limit: 65535
-    t.string   "website",               limit: 255
-    t.text     "profile_summary",       limit: 65535
-    t.string   "linkedin_profile",      limit: 255
-    t.string   "facebook_profile",      limit: 255
-    t.string   "twitter_profile",       limit: 255
-    t.string   "other_profile",         limit: 255
-    t.string   "social_accounts",       limit: 255
-    t.string   "idn_image_url",         limit: 255
-    t.integer  "user_id",               limit: 4
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "document_file_name",    limit: 255
-    t.string   "document_content_type", limit: 255
-    t.integer  "document_file_size",    limit: 4
-    t.datetime "document_updated_at"
+    t.string   "full_name",        limit: 255
+    t.string   "email",            limit: 255
+    t.integer  "contact_number",   limit: 4
+    t.string   "location",         limit: 255
+    t.text     "address",          limit: 65535
+    t.string   "website",          limit: 255
+    t.text     "profile_summary",  limit: 65535
+    t.string   "linkedin_profile", limit: 255
+    t.string   "facebook_profile", limit: 255
+    t.string   "twitter_profile",  limit: 255
+    t.string   "other_profile",    limit: 255
+    t.string   "social_accounts",  limit: 255
+    t.string   "idn_image_url",    limit: 255
+    t.integer  "user_id",          limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
@@ -199,6 +219,7 @@ ActiveRecord::Schema.define(version: 20160427141640) do
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.string   "code",        limit: 255
+    t.string   "tenant_id",   limit: 255
     t.boolean  "is_active",               default: true
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false

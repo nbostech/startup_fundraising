@@ -17,8 +17,11 @@ module Com
 				has_many :users, through: :companies_users, class_name: "Com::Nbos::User"
 
 				belongs_to :currency_type
+
+        has_many :company_associates, class_name: "Com::Nbos::StartupFundraising::CompanyAssociate"
+				has_many :company_documents, class_name: "Com::Nbos::StartupFundraising::CompanyDocument"
 				
-				scope :active_companies, -> { where(is_public: true) }
+				scope :active_companies, -> { where(is_approved: true) }
 				scope :total, -> { all }
 				
 				validates :uuid, :tenant_id, presence: true

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
 						get '/company_categories' => "company_categories#index"
 						get '/company_stages' => "company_stages#index"
 						get '/currency_types' => "currency_types#index"
+						get '/company_document_categories' => "company_document_category#index"
 					end
 				end
 			end   
