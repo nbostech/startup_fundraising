@@ -7,6 +7,10 @@ module Com
         validates :name, presence: true
         validates :name, uniqueness: true
 
+        def as_json(options={})
+					super(:only => [:id, :name])
+			  end
+
   		end
 	  end
   end

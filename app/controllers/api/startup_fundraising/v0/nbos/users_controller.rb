@@ -19,7 +19,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 
 	 # Method to create users
 	 def sign_up
-		 if params[:user_type].present?
+		 if params[:uuid].present?
 			 @member = build_user(params)
 			 if @member && @member.save
 			 	 if params[:user_type] == "startup"
@@ -28,7 +28,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 				 	 render :json => {status: 200, message: "Registartion done Sucessful. Moderator will Approve."}
 				 end  
 			 else
-				 render :json => {status: 500, message: member.errors.messages}
+				 render :json => {status: 500, message: @member.errors.messages}
 			 end  
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
@@ -63,13 +63,13 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 end
 
 	 def update
-	 	 if params[:id].present? && params[:user].present?
-       @member = Com::Nbos::User.find(params[:id])
+	 	 if @token_details.uuid.present?
+       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
 			 if @member.present?
-         if @member.profile.update(params[:user])
+         if @member.profile.update(params)
            render :json => @member
          else
-           render :json => {status: 500, message: "Internal Server Error"}
+           render :json => {status: 500, message: @member.errors.messages}
          end    
 			 else
 				 render :json => {status: 404, message: "User Not Found"}
@@ -80,10 +80,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 end
 
 	 def add_to_favourite
-	 	 if params[:id].present? && params[:startup_id].present?
-     	 investor = Com::Nbos::User.find(params[:id])
-     	 start_up = Com::Nbos::StartupFundraising::Company.find(params[:startup_id])
-       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favouritable: startup, user: investor)
+	 	 if params[:id].present? && @token_details.uuid.present?
+     	 investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+     	 company = Com::Nbos::StartupFundraising::Company.find(params[:id])
+       add_to_favorite = Com::Nbos::StartupFundraising::Favourite.create(favouritable: company, user: investor)
 			 if add_to_favorite
 				 render :json => {status: 200, message: "Success"}
 			 else
@@ -98,10 +98,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 	 if params[:id].present?
      	 investor = Com::Nbos::User.find(params[:id])
 			 if investor.present?
-			 	 favourite_startups_list = investor.favourites.companies
-				 render :json => {status: 200, data: favourite_startups_list}
+			 	 @favourite_startups_list = investor.favourites.companies
+				 render :json => @favourite_startups_list
 			 else
-				 render :json => {status: 404, message: "No Favourite Startups Found"}
+				 render :json => {status: 404, message: "User not Found"}
 			 end  
 	 	 else
 	 	 	render :json => {status: 400, message: "Bad Request"}

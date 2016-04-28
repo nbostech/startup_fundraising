@@ -74,6 +74,9 @@ Rails.application.routes.draw do
 						delete '/companies/:id' => "companies#delete"
 
 						post '/companies/:id/media' => "media#add_media"
+						get '/company_categories' => "company_categories#index"
+						get '/company_stages' => "company_stages#index"
+						get '/currency_types' => "currency_types#index"
 					end
 				end
 			end   
