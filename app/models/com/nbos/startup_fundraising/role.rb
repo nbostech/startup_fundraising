@@ -2,8 +2,8 @@ module Com
   module Nbos
     module StartupFundraising	
 			class Role < ActiveRecord::Base
-			 has_many :user_roles, class_name: "Com::Nbos::StartupFundraising::UserRole"
-			 has_many :users, through: :user_roles, class_name: "Com::Nbos::User"
+			 has_many :roles_users, class_name: "Com::Nbos::StartupFundraising::RolesUsers"
+			 has_many :users, through: :roles_users, class_name: "Com::Nbos::User"
 
 			 validates :name, presence: true 
 			 validates :name, uniqueness: true

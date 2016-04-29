@@ -9,7 +9,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 if ["investor", "startup"].include?(user_type)
 		 	 
 			 	role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
-			  @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:user_roles).where(user_roles: {role_id: role_id}).page(params[:page])
+			  @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:roles_users).where(roles_users: {role_id: role_id}).page(params[:page])
 
 			 paginate json: @user_profiles, per_page: params[:per_page]
 		 else

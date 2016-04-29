@@ -6,7 +6,7 @@ class CreateCompanyTable < ActiveRecord::Migration
 			t.belongs_to :currency_type
 			t.boolean :is_funded, default: false
 			t.boolean :is_approved, default: false
-			
+			t.boolean :is_published, default: false
 			t.timestamps null: false
     end
   end

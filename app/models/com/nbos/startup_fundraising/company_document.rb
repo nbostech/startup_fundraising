@@ -12,7 +12,13 @@ module Com
                             :content_type => { 
                             	:content_type => %w(application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document) 
                               }
-		  end
+		  
+        before_destroy :delete_document
+
+         def delete_document
+           document.clear
+         end
+      end
 		end
 	end
 end		

@@ -71,7 +71,7 @@ if Com::Nbos::StartupFundraising::AssociateTeam.all.size == 0
  puts "Associated Teams creation Completed."
 end
 
-document_types = ["Business Plan", "Financial Projections", "Supplemental Documents"]
+document_types = ["Business Plan", "Financial Projections", "Supplemental Documents", "Pitch Deck", "Pitch Deck Video"]
 
 # Creating Initial Associated Teams
 if Com::Nbos::StartupFundraising::CompanyDocumentCategory.all.size == 0
@@ -81,4 +81,24 @@ if Com::Nbos::StartupFundraising::CompanyDocumentCategory.all.size == 0
  puts "Document Types creation Completed."
 end
 
+company_summary_types = ["Management Team", "Customer Problem", "Products & Services",
+                         "Target Market", "Business Model", "Customer Segments", "Sales & Marketing Strategy",
+                         "Competitors", "Competitive Advantage"]
+
+# Creating Initial Company Summary Types
+if Com::Nbos::StartupFundraising::CompanySummaryType.all.size == 0
+ document_types.each do |cst|
+   Com::Nbos::StartupFundraising::CompanySummaryType.create({name: cst, tenant_id: token_res1[:token].tenantId})  
+ end
+ puts "Company Summary Types creation Completed."
+end
+
+address_types = ["Head Office", "Branch Office", "Communication"]
+# Creating Initial Address Types
+if Com::Nbos::StartupFundraising::AddressType.all.size == 0
+ document_types.each do |at|
+   Com::Nbos::StartupFundraising::AddressType.create({name: at, tenant_id: token_res1[:token].tenantId})  
+ end
+ puts "Address Types creation Completed."
+end
 
