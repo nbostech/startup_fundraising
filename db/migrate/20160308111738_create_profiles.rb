@@ -5,7 +5,6 @@ class CreateProfiles < ActiveRecord::Migration
 			t.string :email
 			t.integer :contact_number
 			t.string :location
-			t.text :address
 			t.string :website
 			t.text :profile_summary
 			t.string :linkedin_profile

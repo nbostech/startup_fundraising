@@ -9,7 +9,6 @@ class CreateCompanyAssociate < ActiveRecord::Migration
     	t.text :experience_and_expertise
       t.integer :contact_number
       t.string :location
-      t.text :address
       t.string :website
       t.text :profile_summary
       t.string :linkedin_profile
@@ -17,6 +16,5 @@ class CreateCompanyAssociate < ActiveRecord::Migration
       t.string :twitter_profile
       t.string :other_profile
     end
-    add_attachment :company_associates, :image
   end
 end

@@ -16,18 +16,16 @@ module Com
 				has_many :companies_users, class_name: "Com::Nbos::StartupFundraising::CompaniesUsers"
 				has_many :users, through: :companies_users, class_name: "Com::Nbos::User"
 
-				belongs_to :currency_type
+				belongs_to :currency_type, class_name: "Com::Nbos::StartupFundraising::CurrencyType"
 
         has_many :company_associates, class_name: "Com::Nbos::StartupFundraising::CompanyAssociate"
-				has_many :company_documents, class_name: "Com::Nbos::StartupFundraising::CompanyDocument"
+				has_many :documents, as: :attachable, class_name: "Com::Nbos::StartupFundraising::Document"
 				
 				has_many :company_executive_summaries, class_name: "Com::Nbos::StartupFundraising::CompanyExecutiveSummary"
 
-				has_many :addresses_companies, class_name:"Com::Nbos::StartupFundraising::AddressesCompanies"
-				has_many :addresses , through: :addresses_companies, class_name:"Com::Nbos::StartupFundraising::Address"
+				has_many :addresses , as: :addressable, class_name:"Com::Nbos::StartupFundraising::Address"
 				
-				has_many :company_assets, class_name:"Com::Nbos::StartupFundraising::CompanyAsset"
-				has_many :assets, class_name:"Com::Nbos::StartupFundraising::Asset"
+				has_many :assets, as: :imageable, class_name:"Com::Nbos::StartupFundraising::Asset"
 				
 				scope :active_companies, -> { where(is_approved: true) }
 				scope :total, -> { all }

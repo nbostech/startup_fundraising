@@ -1,7 +1,7 @@
 module Com
   module Nbos
     module StartupFundraising
-			class CompanyDocumentCategory < ActiveRecord::Base
+			class DocumentType < ActiveRecord::Base
         
         def as_json(options={})
 					super(:only => [:id, :name])

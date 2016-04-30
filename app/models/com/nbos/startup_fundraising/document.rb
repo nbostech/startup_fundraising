@@ -1,12 +1,12 @@
 module Com
   module Nbos
     module StartupFundraising
-			class CompanyDocument < ActiveRecord::Base
-        belongs_to :company, class_name: "Com::Nbos::StartupFundraising::Company"
-        belongs_to :company_document_category, class_name: "Com::Nbos::StartupFundraising::CompanyDocumentCategory"
+			class Document < ActiveRecord::Base
+        belongs_to :attachable, polymorphic: true
+        belongs_to :document_type, class_name: "Com::Nbos::StartupFundraising::DocumentType"
 		  
-        has_attached_file :document, :path => ":rails_root/public/documents/compnay/:id/:basename.:extension",
-			                   :url => "/company/documents/:id/:basename.:extension"
+        has_attached_file :document, :path => ":rails_root/public/documents/:id/:basename.:extension",
+			                   :url => "/documents/:id/:basename.:extension"
 			                   
         validates_attachment :document, 
                             :content_type => { 

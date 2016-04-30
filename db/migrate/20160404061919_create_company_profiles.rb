@@ -18,7 +18,6 @@ class CreateCompanyProfiles < ActiveRecord::Migration
 			t.string :twitter_profile_url
 			t.string :facebook_profile_url
 			t.string :other_profile_url
-			t.string :pitch_deck_video_url
 			t.integer :capital_raised
 			t.integer :previous_capital
 			t.integer :monthly_net_burn

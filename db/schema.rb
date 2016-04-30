@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429131100) do
+ActiveRecord::Schema.define(version: 20160429145144) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -20,21 +20,36 @@ ActiveRecord::Schema.define(version: 20160429131100) do
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.float   "longitude",       limit: 24
-    t.float   "latitude",        limit: 24
-    t.string  "address1",        limit: 255
-    t.string  "street",          limit: 255
-    t.string  "city",            limit: 255
-    t.string  "state",           limit: 255
-    t.string  "country",         limit: 255
-    t.integer "zip_code",        limit: 4
-    t.integer "address_type_id", limit: 4
+    t.float    "longitude",        limit: 24
+    t.float    "latitude",         limit: 24
+    t.string   "address1",         limit: 255
+    t.string   "street",           limit: 255
+    t.string   "city",             limit: 255
+    t.string   "state",            limit: 255
+    t.string   "country",          limit: 255
+    t.integer  "zip_code",         limit: 4
+    t.integer  "address_type_id",  limit: 4
+    t.integer  "addressable_id",   limit: 4
+    t.string   "addressable_type", limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "addresses_companies", force: :cascade do |t|
-    t.integer "company_id", limit: 4
-    t.integer "address_id", limit: 4
+  add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "img_type",           limit: 255
+    t.integer  "imageable_id",       limit: 4
+    t.string   "imageable_type",     limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
   end
+
+  add_index "assets", ["imageable_type", "imageable_id"], name: "index_assets_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "associate_teams", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -48,6 +63,7 @@ ActiveRecord::Schema.define(version: 20160429131100) do
     t.integer  "currency_type_id",    limit: 4
     t.boolean  "is_funded",                     default: false
     t.boolean  "is_approved",                   default: false
+    t.boolean  "is_published",                  default: false
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
   end
@@ -58,25 +74,20 @@ ActiveRecord::Schema.define(version: 20160429131100) do
   end
 
   create_table "company_associates", force: :cascade do |t|
-    t.string   "name",                     limit: 255
-    t.string   "email",                    limit: 255
-    t.integer  "company_id",               limit: 4
-    t.integer  "associate_team_id",        limit: 4
-    t.string   "position",                 limit: 255
-    t.text     "experience_and_expertise", limit: 65535
-    t.integer  "contact_number",           limit: 4
-    t.string   "location",                 limit: 255
-    t.text     "address",                  limit: 65535
-    t.string   "website",                  limit: 255
-    t.text     "profile_summary",          limit: 65535
-    t.string   "linkedin_profile",         limit: 255
-    t.string   "facebook_profile",         limit: 255
-    t.string   "twitter_profile",          limit: 255
-    t.string   "other_profile",            limit: 255
-    t.string   "image_file_name",          limit: 255
-    t.string   "image_content_type",       limit: 255
-    t.integer  "image_file_size",          limit: 4
-    t.datetime "image_updated_at"
+    t.string  "name",                     limit: 255
+    t.string  "email",                    limit: 255
+    t.integer "company_id",               limit: 4
+    t.integer "associate_team_id",        limit: 4
+    t.string  "position",                 limit: 255
+    t.text    "experience_and_expertise", limit: 65535
+    t.integer "contact_number",           limit: 4
+    t.string  "location",                 limit: 255
+    t.string  "website",                  limit: 255
+    t.text    "profile_summary",          limit: 65535
+    t.string  "linkedin_profile",         limit: 255
+    t.string  "facebook_profile",         limit: 255
+    t.string  "twitter_profile",          limit: 255
+    t.string  "other_profile",            limit: 255
   end
 
   create_table "company_categories", force: :cascade do |t|
@@ -88,21 +99,6 @@ ActiveRecord::Schema.define(version: 20160429131100) do
     t.datetime "updated_at",                             null: false
   end
 
-  create_table "company_document_categories", force: :cascade do |t|
-    t.string "name",        limit: 255
-    t.string "tenant_id",   limit: 255
-    t.string "description", limit: 255
-  end
-
-  create_table "company_documents", force: :cascade do |t|
-    t.integer  "company_document_category_id", limit: 4
-    t.integer  "company_id",                   limit: 4
-    t.string   "document_file_name",           limit: 255
-    t.string   "document_content_type",        limit: 255
-    t.integer  "document_file_size",           limit: 4
-    t.datetime "document_updated_at"
-  end
-
   create_table "company_executive_summaries", force: :cascade do |t|
     t.integer  "company_summary_type_id", limit: 4
     t.integer  "company_id",              limit: 4
@@ -112,38 +108,29 @@ ActiveRecord::Schema.define(version: 20160429131100) do
   end
 
   create_table "company_profiles", force: :cascade do |t|
-    t.string   "startup_name",             limit: 255
-    t.string   "email",                    limit: 255
-    t.integer  "contact_number",           limit: 4
-    t.integer  "emp_strength",             limit: 4
-    t.string   "founder_name",             limit: 255
-    t.string   "location",                 limit: 255
-    t.string   "website",                  limit: 255
-    t.text     "business_summary",         limit: 65535
-    t.text     "description",              limit: 65535
-    t.text     "usb_product_uniqueness",   limit: 65535
-    t.integer  "company_id",               limit: 4
-    t.integer  "date_founded",             limit: 4
-    t.integer  "year_founded",             limit: 4
-    t.string   "linkedin_profile_url",     limit: 255
-    t.string   "twitter_profile_url",      limit: 255
-    t.string   "facebook_profile_url",     limit: 255
-    t.string   "other_profile_url",        limit: 255
-    t.string   "pitch_deck_video_url",     limit: 255
-    t.integer  "capital_raised",           limit: 4
-    t.integer  "previous_capital",         limit: 4
-    t.integer  "monthly_net_burn",         limit: 4
-    t.integer  "pre_money_valuation",      limit: 4
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "logo_image_file_name",     limit: 255
-    t.string   "logo_image_content_type",  limit: 255
-    t.integer  "logo_image_file_size",     limit: 4
-    t.datetime "logo_image_updated_at"
-    t.string   "brand_image_file_name",    limit: 255
-    t.string   "brand_image_content_type", limit: 255
-    t.integer  "brand_image_file_size",    limit: 4
-    t.datetime "brand_image_updated_at"
+    t.string   "startup_name",           limit: 255
+    t.string   "email",                  limit: 255
+    t.integer  "contact_number",         limit: 4
+    t.integer  "emp_strength",           limit: 4
+    t.string   "founder_name",           limit: 255
+    t.string   "location",               limit: 255
+    t.string   "website",                limit: 255
+    t.text     "business_summary",       limit: 65535
+    t.text     "description",            limit: 65535
+    t.text     "usb_product_uniqueness", limit: 65535
+    t.integer  "company_id",             limit: 4
+    t.integer  "date_founded",           limit: 4
+    t.integer  "year_founded",           limit: 4
+    t.string   "linkedin_profile_url",   limit: 255
+    t.string   "twitter_profile_url",    limit: 255
+    t.string   "facebook_profile_url",   limit: 255
+    t.string   "other_profile_url",      limit: 255
+    t.integer  "capital_raised",         limit: 4
+    t.integer  "previous_capital",       limit: 4
+    t.integer  "monthly_net_burn",       limit: 4
+    t.integer  "pre_money_valuation",    limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   add_index "company_profiles", ["company_id"], name: "index_company_profiles_on_company_id", using: :btree
@@ -171,6 +158,26 @@ ActiveRecord::Schema.define(version: 20160429131100) do
     t.string "tenant_id",   limit: 255
     t.string "description", limit: 255
   end
+
+  create_table "document_types", force: :cascade do |t|
+    t.string "name",        limit: 255
+    t.string "tenant_id",   limit: 255
+    t.string "description", limit: 255
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.integer  "document_type_id",      limit: 4
+    t.integer  "attachable_id",         limit: 4
+    t.string   "attachable_type",       limit: 255
+    t.string   "content_type",          limit: 255
+    t.string   "content_provider_url",  limit: 255
+    t.string   "document_file_name",    limit: 255
+    t.string   "document_content_type", limit: 255
+    t.integer  "document_file_size",    limit: 4
+    t.datetime "document_updated_at"
+  end
+
+  add_index "documents", ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id", using: :btree
 
   create_table "event_rsvps", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -242,7 +249,6 @@ ActiveRecord::Schema.define(version: 20160429131100) do
     t.string   "email",            limit: 255
     t.integer  "contact_number",   limit: 4
     t.string   "location",         limit: 255
-    t.text     "address",          limit: 65535
     t.string   "website",          limit: 255
     t.text     "profile_summary",  limit: 65535
     t.string   "linkedin_profile", limit: 255

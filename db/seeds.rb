@@ -61,7 +61,7 @@ if Com::Nbos::StartupFundraising::CurrencyType.all.size == 0
  puts "Currency Type creation Completed."
 end
 
-associate_teams = ["Core", "Advisor", "Previous Investor"]
+associate_teams = ["CoreTeam", "Advisor", "PreviousInvestor"]
 
 # Creating Initial Associated Teams
 if Com::Nbos::StartupFundraising::AssociateTeam.all.size == 0
@@ -71,7 +71,7 @@ if Com::Nbos::StartupFundraising::AssociateTeam.all.size == 0
  puts "Associated Teams creation Completed."
 end
 
-document_types = ["Business Plan", "Financial Projections", "Supplemental Documents", "Pitch Deck", "Pitch Deck Video"]
+document_types = ["BusinessPlan", "FinancialProjections", "SupplementalDocuments", "PitchDeck", "PitchDeckVideo"]
 
 # Creating Initial Associated Teams
 if Com::Nbos::StartupFundraising::CompanyDocumentCategory.all.size == 0
@@ -81,9 +81,9 @@ if Com::Nbos::StartupFundraising::CompanyDocumentCategory.all.size == 0
  puts "Document Types creation Completed."
 end
 
-company_summary_types = ["Management Team", "Customer Problem", "Products & Services",
-                         "Target Market", "Business Model", "Customer Segments", "Sales & Marketing Strategy",
-                         "Competitors", "Competitive Advantage"]
+company_summary_types = ["ManagementTeam", "CustomerProblem", "Products&Services",
+                         "TargetMarket", "BusinessModel", "CustomerSegments", "Sales&MarketingStrategy",
+                         "Competitors", "CompetitiveAdvantage"]
 
 # Creating Initial Company Summary Types
 if Com::Nbos::StartupFundraising::CompanySummaryType.all.size == 0
@@ -93,7 +93,7 @@ if Com::Nbos::StartupFundraising::CompanySummaryType.all.size == 0
  puts "Company Summary Types creation Completed."
 end
 
-address_types = ["Head Office", "Branch Office", "Communication"]
+address_types = ["HeadOffice", "BranchOffice", "Communication"]
 # Creating Initial Address Types
 if Com::Nbos::StartupFundraising::AddressType.all.size == 0
  document_types.each do |at|
