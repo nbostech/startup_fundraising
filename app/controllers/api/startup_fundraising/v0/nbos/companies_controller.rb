@@ -33,7 +33,8 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        company.company_category_id = params[:company_category_id] || Com::Nbos::StartupFundraising::CompanyCategory.first.id
        company.company_stage_id = params[:company_stage_id] || Com::Nbos::StartupFundraising::CompanyStage.first.id
        company.currency_type_id = params[:currency_type_id] || Com::Nbos::StartupFundraising::CurrencyType.first.id
-
+       
+      
        company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new(params)
        company.company_profile = company_profile
        
