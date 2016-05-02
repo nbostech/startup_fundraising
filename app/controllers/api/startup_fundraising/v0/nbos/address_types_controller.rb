@@ -1,5 +1,5 @@
 class Api::StartupFundraising::V0::Nbos::AddressTypesController < Api::StartupFundraising::V0::StartupBaseController
-
+ before_action :validate_token
  def index
  	 @address_types = Com::Nbos::StartupFundraising::AddressType.all
  	 render :json => @address_types
