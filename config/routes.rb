@@ -76,9 +76,12 @@ Rails.application.routes.draw do
 						post '/companies/:id/media' => "media#add_media"
 						get '/company/categories' => "company_categories#index"
 						get '/company/stages' => "company_stages#index"
+						get '/company/summarytypes' => "company_summary_types#index"
+
+						get '/document/types' => "company_document_category#index"
 						get '/currency/types' => "currency_types#index"
-						get '/company/document/types' => "company_document_category#index"
-						get '/company/summarytypes' => "company_summary_type#index"
+						get '/associate/teams' => "associate_teams#index"
+						get '/address/types' => "address_types#index"
 					end
 				end
 			end   

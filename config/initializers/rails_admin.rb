@@ -27,8 +27,13 @@ RailsAdmin.config do |config|
       only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
             'Com::Nbos::StartupFundraising::Investment',
             'Com::Nbos::StartupFundraising::CompanyStage',
-            'Com::Nbos::StartupFundraising::Category',
-            'Com::Nbos::StartupFundraising::CurrentFundingRound'
+            'Com::Nbos::StartupFundraising::CompanyCategory',
+            'Com::Nbos::StartupFundraising::CurrentFundingRound',
+            'Com::Nbos::StartupFundraising::AddressType',
+            'Com::Nbos::StartupFundraising::AssociateTeam',
+            'Com::Nbos::StartupFundraising::CompanySummaryType',
+            'Com::Nbos::StartupFundraising::CuurencyType',
+            'Com::Nbos::StartupFundraising::DocumentType'
           ]
     end  
     export
@@ -39,8 +44,13 @@ RailsAdmin.config do |config|
       only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
             'Com::Nbos::StartupFundraising::Investment',
             'Com::Nbos::StartupFundraising::CompanyStage',
-            'Com::Nbos::StartupFundraising::Category',
-            'Com::Nbos::StartupFundraising::CurrentFundingRound'
+            'Com::Nbos::StartupFundraising::CompanyCategory',
+            'Com::Nbos::StartupFundraising::CurrentFundingRound',
+            'Com::Nbos::StartupFundraising::AddressType',
+            'Com::Nbos::StartupFundraising::AssociateTeam',
+            'Com::Nbos::StartupFundraising::CompanySummaryType',
+            'Com::Nbos::StartupFundraising::CuurencyType',
+            'Com::Nbos::StartupFundraising::DocumentType'            
           ]
     end  
     show_in_app
@@ -51,7 +61,7 @@ RailsAdmin.config do |config|
   end
 
   # Excluded Models from Rails Admin Navigation
-  ["Com::Nbos::StartupFundraising::UserRole", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
+  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
     config.excluded_models << m
   end
 

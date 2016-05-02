@@ -31,10 +31,10 @@ module Com
 			end	
 
 			def as_json(options={})
-			  super(:only => [:id, :uuid],
-			        :include => [:profile, :companies => {:include => [:company_profile], :only => [:id]}, :roles => {:only => [:name]}]
-			       )
-      end
+				super(:only => [:id, :uuid],
+							:include => [:profile, :companies => {:include => [:company_profile], :only => [:id]}, :roles => {:only => [:name]}]
+						 )
+			end
 
 		end
 	end
