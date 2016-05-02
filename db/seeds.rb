@@ -22,14 +22,14 @@ if Com::Nbos::StartupFundraising::Role.all.size == 0
 end
 
 # Creating default Company Catogories for startup fundraising module
-categories = ["Aerospace", "Agriculture", "Biotechnology", "Business Products", "Business Services",
-              "Chemicals and Chemical Products", "Clean Technology", "Computers and Peripherals",
-              "Construction", "Consulting", "Consumer Products", "Consumer Services", "Digital Marketing",
-              "Education", "Electronics / Instrumentation", "Fashion", "Financial Services", "Fintech",
-              "Food and Beverage", "Gaming", "Healthcare Services", "Industrial/Energy", "Internet / Web Services",
-              "IT Services", "Legal", "Lifestyle", "Marine", "Maritime/Shipping", "Marketing / Advertising",
-              "Media and Entertainment", "Medical Devices and Equipment", "Mining", "Mobile", "Nanotechnology",
-              "Networking and Equipment", "Oil and Gas", "Other", "Real Estate", "Retailing / Distribution",
+categories = ["Aerospace", "Agriculture", "Biotechnology", "BusinessProducts", "BusinessServices",
+              "Chemicals&Chemical Products", "CleanTechnology", "Computers&Peripherals",
+              "Construction", "Consulting", "ConsumerProducts", "ConsumerServices", "DigitalMarketing",
+              "Education", "Electronics/Instrumentation", "Fashion", "FinancialServices", "Fintech",
+              "Food&Beverage", "Gaming", "HealthcareServices", "Industrial/Energy", "Internet/WebServices",
+              "ITServices", "Legal", "Lifestyle", "Marine", "Maritime/Shipping", "Marketing/Advertising",
+              "Media&Entertainment", "MedicalDevices&Equipment", "Mining", "Mobile", "Nanotechnology",
+              "Networking&Equipment", "Oil&Gas", "Other", "RealEstate", "Retailing/Distribution",
               "Robotics", "Security", "Semiconductors", "Software", "Sports", "Telecommunications", "Transportation",
               "Travel"
              ]
@@ -74,9 +74,9 @@ end
 document_types = ["BusinessPlan", "FinancialProjections", "SupplementalDocuments", "PitchDeck", "PitchDeckVideo"]
 
 # Creating Initial Associated Teams
-if Com::Nbos::StartupFundraising::CompanyDocumentCategory.all.size == 0
+if Com::Nbos::StartupFundraising::DocumentType.all.size == 0
  document_types.each do |cdt|
-   Com::Nbos::StartupFundraising::CompanyDocumentCategory.create({name: cdt, tenant_id: token_res1[:token].tenantId})  
+   Com::Nbos::StartupFundraising::DocumentType.create({name: cdt, tenant_id: token_res1[:token].tenantId})  
  end
  puts "Document Types creation Completed."
 end

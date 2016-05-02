@@ -22,11 +22,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 if params[:uuid].present?
 			 @member = build_user(params)
 			 if @member && @member.save
-			 	 if params[:user_type] == "startup"
-				   render :json => @member
-				 else
-				 	 render :json => {status: 200, message: "Registartion done Sucessful. Moderator will Approve."}
-				 end  
+				 render :json => @member
 			 else
 				 render :json => {status: 500, message: @member.errors.messages}
 			 end  

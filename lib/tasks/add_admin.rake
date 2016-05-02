@@ -4,10 +4,10 @@ namespace :startup do
     token = WavelabsClientApi::Client::Api::Core::AuthApi.new.get_auth_token("client_credentials", [])
 	    moderator_params = {:username => "adminmoderator", 
 		                      :password => "admin",
-		                      :email => "admin@50knetwork.com",
-		                      :full_name => "adminmoderator",
+		                      :email => "admin1@50knetwork.com",
+		                      :full_name => "adminmoderator1",
 		                      :firstName => "MD1",
-		                      :lastName => "admin",
+		                      :lastName => "admin1",
 		                      :phone => "1234567890"
 		                    }
 
