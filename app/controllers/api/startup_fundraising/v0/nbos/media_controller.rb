@@ -8,9 +8,9 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
      if @model
        @model.image = params[:image_file]
        if @model.save
-         render :json => {status: 200, message: "Image uploaded successfully"}
+         render :json => @model
        else
-         render :json => {status: 200, message: @modal.errors.messages}
+         render :json => {status: 500, message: @modal.errors.messages}
        end
      else
      	 render :json => {status: 400, message: "Unsupported Entity to upload Media"}
@@ -22,8 +22,12 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
 
  def get_class_for_media(media_for, id)
  	case media_for
-  when "company"
-    Com::Nbos::StartupFundraising::Company.find(id).company_profile
+  when "company_logo"
+    company = Com::Nbos::StartupFundraising::Company.find(id)
+    company.assets.build(img_type: "logo")
+  when "company_brand"
+    company = Com::Nbos::StartupFundraising::Company.find(id)
+    company.assets.build(img_type: "brand")  
   when "event"
     Com::Nbos::Events::Event.find(id)
   else

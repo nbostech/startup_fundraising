@@ -4,8 +4,12 @@ module Com
 			class CompanyProfile < ActiveRecord::Base
 			 belongs_to :company, class_name: "Com::Nbos::StartupFundraising::Company"
 
-			 validates :email, :full_name, :contact_number, presence: true
-			 validates :email, uniqueness: true
+			 validates :email, :startup_name, :contact_number, presence: true
+			 
+
+			 	def as_json(options={})
+					super(:except => [:company_id, :updated_at, :created_at])
+				end
 			end
 		end
 	end

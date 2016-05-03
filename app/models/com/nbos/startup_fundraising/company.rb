@@ -30,7 +30,6 @@ module Com
 				scope :active_companies, -> { where(is_approved: true) }
 				scope :total, -> { all }
 				
-				validates :uuid, :tenant_id, presence: true
 				validates_associated :company_profile
 
 				attr_accessor :company_stage, :category_name, :company_image_url
@@ -41,7 +40,7 @@ module Com
 				end
 
 				def category_name
-					self.company_category.name if self.category_id.present?
+					self.company_category.name if self.company_category_id.present?
 				end
 
 				def company_image_url
@@ -49,17 +48,43 @@ module Com
 			 	  	host = "http://localhost:3000"
 			 	  else
 			 	  	host = "https://startup-50k.herokuapp.com"
-			 	  end 	
-			 	  host + company_profile.image.url(:medium)
+			 	  end
+			 	  url =  self.assets.present? ? self.assets.first.image.url(:medium) : "/images/default/missing_image.png"	
+			 	  host + url
+				end
+
+				def profile
+					self.company_profile
+				end
+
+				def logoImage
+					self.assets.where(img_type: "logo")
+				end
+
+				def brandImage
+					self.assets.where(img_type: "brand")
+				end
+
+				def addressList
+					self.addresses
+				end
+
+				def descriptionList
+					self.company_executive_summaries
+				end
+
+				def documentsList
+					self.documents
+				end
+
+				def associates
+					self.company_associates
 				end   
 
 				def as_json(options={})
-					super(:only => [:id],
-						    :include => {:company_profile => {:except => [:created_at, :updated_at, :document_file_name,
-						    	           :document_content_type, :document_file_size, :document_updated_at,
-						    	           :image_file_name, :image_content_type, :image_file_size, :image_updated_at,
-						    	           :company_id, :company_category_id, :company_stage_id]}}, 
-								:methods => [:company_stage, :category_name, :company_image_url]
+					super(:only => [:id], 
+								:methods => [:profile, :logoImage, :brandImage, :addressList, 
+									           :descriptinList, :documentsList, :associates]
 					     )
 				end 
 

@@ -14,6 +14,37 @@ module Com
 			 def delete_image
 			 	 image.clear
 			 end
+
+			 def extension
+         self.image_content_type
+			 end
+
+			 def mediaFileDetailsList
+			 	  if Rails.env == "development"
+			 	  	host = "http://localhost:3000"
+			 	  else
+			 	  	host = "https://startup-50k.herokuapp.com"
+			 	  end
+			 	  image_list = []
+			 	  ["medium", "small", "original"].each do |st|
+			 	  	image_list << {
+			 	  		"mediapath": host + self.image.url(st.to_sym),
+			 	  		"mediatype": st
+			 	  	}
+			 	  end
+			 	  image_list
+			 end
+
+			 def supportedsizes
+			 	 "small:48x48,medium:300x200"
+			 end	
+
+			 def as_json(options={})
+					super(:only => [:id], 
+								:methods => [:extension, :mediaFileDetailsList, :supportedsizes]
+					     )
+			 end
+
 			end
 		end
 	end
