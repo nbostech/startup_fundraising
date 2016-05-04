@@ -65,7 +65,6 @@ Rails.application.routes.draw do
 						get '/about' => "home#about", path: '/about'
 						get '/users/:id' => "users#show"
 						put '/users/:id' => "users#update"
-						#resource :users, only: [:show, :update]
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
 						post '/companies' => "companies#create", path: '/companies'
@@ -73,16 +72,27 @@ Rails.application.routes.draw do
 						get '/companies/:id' => "companies#show"
 						put '/companies/:id' => "companies#update"
 						delete '/companies/:id' => "companies#delete"
+
+						# To Get all associates of a company & Add an Associate to a company
+						get '/companies/:id/associates' => 'associates#index'
+						post '/companies/:id/associates' => 'associates#create'
+
+						# To GET, Update and Delete an Associate
+						get '/associate/:id' => 'associates#show'
+						put '/associate/:id' => 'associates#update_associate'
+						delete '/associate/:id' => 'associates#delete' 
 						
+						# To Get MetaData of Company,Currency,Associate,Address,
+						# CompanySummary and Document types 
 						get '/company/categories' => "company_categories#index"
 						get '/company/stages' => "company_stages#index"
 						get '/company/summarytypes' => "company_summary_types#index"
-
 						get '/document/types' => "company_document_category#index"
 						get '/currency/types' => "currency_types#index"
 						get '/associate/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
 
+						#To Upload media
 						post '/media' => "media#add_media"
 						get '/media/:id' => "media#get_media"
 					end

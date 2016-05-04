@@ -115,25 +115,4 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        render :json => {status: 400, message: "Bad Request"}
      end  
    end 
-
-   def add_team_member
-     if params[:id].present?
-       company = Com::Nbos::StartupFundraising::Company.find(params[:id])
-       team_member = Com::Nbos::StartupFundraising::CompanyAssociate.new
-       team_member.name = params[:name]
-       team_member.email = params[:email]
-       team_member.contact_number = params[:contact_number]
-       team_member.position = params[:position]
-       team_member.experience_and_expertise = params[:experience_and_expertise]
-       team_member.associate_team_id = params[:associate_team_id]
-       if team_member.save
-         render :json => {status: 200, message: "Team Member Added Successfully."}
-       else
-         render :json => {status: 500, message: team_member.errors.messages}
-       end  
-     else
-       render :json => {status: 400, message: "Bad Request"}
-     end   
-   end 
-
 end 
