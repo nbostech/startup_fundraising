@@ -55,8 +55,11 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
   	if params[:id].present?
        @company_associate = Com::Nbos::StartupFundraising::CompanyAssociate.where(id: params[:id]).first
        associate_params = params.except(:id, :controller, :action, :associate_type)
-       @company_associate.update_columns(associate_params.permit!)
-       if @company_associate.present?  
+       if params[:associate_type].present? 
+         associated_team_type = Com::Nbos::StartupFundraising::AssociateTeam.where(name: params[:associate_type]).first 
+         associate_params.merge(associate_type_id: associated_team_type.id)
+       end
+       if @company_associate.update_columns(associate_params.permit!) 
 	       render :json => @company_associate
        else
        	 render :json => {status: 404, message: "Associate Not Found"}
