@@ -73,8 +73,7 @@ Rails.application.routes.draw do
 						get '/companies/:id' => "companies#show"
 						put '/companies/:id' => "companies#update"
 						delete '/companies/:id' => "companies#delete"
-
-						post '/companies/:id/media' => "media#add_media"
+						
 						get '/company/categories' => "company_categories#index"
 						get '/company/stages' => "company_stages#index"
 						get '/company/summarytypes' => "company_summary_types#index"
@@ -83,6 +82,9 @@ Rails.application.routes.draw do
 						get '/currency/types' => "currency_types#index"
 						get '/associate/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
+
+						post '/media' => "media#add_media"
+						get '/media/:id' => "media#get_media"
 					end
 				end
 			end   

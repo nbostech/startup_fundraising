@@ -73,7 +73,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
    def show
      if params[:id].present?
-       @company = Com::Nbos::StartupFundraising::Company.find(params[:id])
+       @company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
        if @company.present?
          render :json => @company
        else
