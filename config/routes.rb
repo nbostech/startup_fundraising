@@ -89,7 +89,7 @@ Rails.application.routes.draw do
 						get '/company/summarytypes' => "company_summary_types#index"
 						get '/document/types' => "company_document_category#index"
 						get '/currency/types' => "currency_types#index"
-						get '/associate/teams' => "associate_teams#index"
+						get '/associates/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
 
 						#To Upload media
