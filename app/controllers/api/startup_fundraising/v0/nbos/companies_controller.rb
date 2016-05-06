@@ -52,15 +52,15 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
       
       company_category = Com::Nbos::StartupFundraising::CompanyCategory.exists?(name: params[:company_category]) ? Com::Nbos::StartupFundraising::CompanyCategory.find_by(name: params[:company_category]) : nil
       company_stage = Com::Nbos::StartupFundraising::CompanyStage.exists?(name: params[:company_stage]) ? Com::Nbos::StartupFundraising::CompanyStage.find_by(name: params[:company_stage]) : nil
-      currency_type = Com::Nbos::StartupFundraising::CurrencyType.exists?(code: params[:currency_type]) ? Com::Nbos::StartupFundraising::CurrencyType.find_by(name: params[:currency_type]) : nil
+      currency_type = Com::Nbos::StartupFundraising::CurrencyType.exists?(code: params[:currency_type]) ? Com::Nbos::StartupFundraising::CurrencyType.find_by(code: params[:currency_type]) : nil
 
       @company.company_category_id = company_category.id if company_category.present?
       @company.company_stage_id = company_stage.id if company_category.present?
       @company.currency_type_id = currency_type.id if currency_type.present?
       
-      profile_params = params.except(:id, :company_stage, :company_category, :currency_type, :action, :controller)
+      profile_params = params[:company].except(:company_stage, :company_category, :currency_type)
 
-      @company.company_profile.update(profile_params[:company].permit!)
+      @company.company_profile.update(profile_params.permit!)
       if @company.save
         render :json => @company
       else
@@ -107,10 +107,12 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
    def delete
      if params[:id].present?
-      company = Com::Nbos::StartupFundraising::Company.find(params[:id])
-      member = Com::Nbos::User.where(uuid: @token_details.uuid).first
-      member.companies.delete(company)
-      render :json => {status: 200, message: "Company deleted successfully."}
+      @company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+      if @company.present? && @company.destroy
+        render :json => {status: 200, message: "Company deleted successfully."}
+      else
+        render :json => {status: 404, message: "Company Not Found."}
+      end  
      else
        render :json => {status: 400, message: "Bad Request"}
      end  

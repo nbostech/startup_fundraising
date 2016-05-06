@@ -62,7 +62,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 	 if @token_details.uuid.present?
        @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
 			 if @member.present?
-         if @member.profile.update(params)
+         if @member.profile.update(params[:user].permit!)
            render :json => @member
          else
            render :json => {status: 500, message: @member.errors.messages}

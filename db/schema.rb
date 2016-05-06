@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429145144) do
+ActiveRecord::Schema.define(version: 20160506135807) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20160429145144) do
     t.integer "associate_team_id",        limit: 4
     t.string  "position",                 limit: 255
     t.text    "experience_and_expertise", limit: 65535
-    t.integer "contact_number",           limit: 4
+    t.string  "contact_number",           limit: 255
     t.string  "location",                 limit: 255
     t.string  "website",                  limit: 255
     t.text    "profile_summary",          limit: 65535
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20160429145144) do
   create_table "company_profiles", force: :cascade do |t|
     t.string   "startup_name",           limit: 255
     t.string   "email",                  limit: 255
-    t.integer  "contact_number",         limit: 4
+    t.string   "contact_number",         limit: 255
     t.integer  "emp_strength",           limit: 4
     t.string   "founder_name",           limit: 255
     t.string   "location",               limit: 255
@@ -209,7 +209,7 @@ ActiveRecord::Schema.define(version: 20160429145144) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.string   "contact_person",     limit: 255
-    t.integer  "contact_number",     limit: 4
+    t.string   "contact_number",     limit: 255
     t.string   "website",            limit: 255
   end
 
@@ -247,7 +247,7 @@ ActiveRecord::Schema.define(version: 20160429145144) do
   create_table "profiles", force: :cascade do |t|
     t.string   "full_name",        limit: 255
     t.string   "email",            limit: 255
-    t.integer  "contact_number",   limit: 4
+    t.string   "contact_number",   limit: 255
     t.string   "location",         limit: 255
     t.string   "website",          limit: 255
     t.text     "profile_summary",  limit: 65535
