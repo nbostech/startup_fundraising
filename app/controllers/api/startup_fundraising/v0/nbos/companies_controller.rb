@@ -60,7 +60,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
       
       profile_params = params.except(:id, :company_stage, :company_category, :currency_type, :action, :controller)
 
-      @company.company_profile.update_columns(profile_params)
+      @company.company_profile.update(profile_params[:company].permit!)
       if @company.save
         render :json => @company
       else
