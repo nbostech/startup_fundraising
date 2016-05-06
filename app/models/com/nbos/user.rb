@@ -30,9 +30,18 @@ module Com
 				users = active_users.where(tenant_id: tenantId).joins(:roles_users).where(roles_users: {role_id: role_id} )  
 			end	
 
+			def startupCompanies
+				self.companies
+			end
+
+			def userTypes
+				self.roles
+			end	
+
 			def as_json(options={})
 				super(:only => [:id, :uuid],
-							:include => [:profile, :companies => {:include => [:company_profile], :only => [:id]}, :roles => {:only => [:name]}]
+							:include => [:profile],
+							:methods => [:startupCompanies, :userTypes]
 						 )
 			end
 
