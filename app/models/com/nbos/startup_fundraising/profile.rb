@@ -6,6 +6,10 @@ module Com
 			 validates :email, :full_name, :contact_number, presence: true
 			 validates :email, uniqueness: true
 			 has_many :addresses , as: :addressable, class_name:"Com::Nbos::StartupFundraising::Address"
+			 
+			 def as_json(options={})
+				super(:except => [:user_id, :created_at, :updated_at, :idn_image_url])
+			 end
 			end
 		end
 	end
