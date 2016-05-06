@@ -30,7 +30,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
        @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
        @company = Com::Nbos::StartupFundraising::Company.new
-       profile_params = params.except(:controller, :action)
+       profile_params = params[:company]
        company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new(profile_params.permit!)
        @company.company_profile = company_profile
        
