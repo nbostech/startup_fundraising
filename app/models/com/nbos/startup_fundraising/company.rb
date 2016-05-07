@@ -32,27 +32,6 @@ module Com
 				
 				validates_associated :company_profile
 
-				attr_accessor :company_stage, :category_name, :company_image_url
-
-
-				def company_stage
-					self.company_stage.name if self.company_stage_id.present?
-				end
-
-				def category_name
-					self.company_category.name if self.company_category_id.present?
-				end
-
-				def company_image_url
-					if Rails.env == "development"
-			 	  	host = "http://localhost:3000"
-			 	  else
-			 	  	host = "https://startup-50k.herokuapp.com"
-			 	  end
-			 	  url =  self.assets.present? ? self.assets.first.image.url(:medium) : "/images/default/missing_image.png"	
-			 	  host + url
-				end
-
 				def profile
 					self.company_profile
 				end

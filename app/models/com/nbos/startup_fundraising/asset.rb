@@ -25,12 +25,10 @@ module Com
 			 	  else
 			 	  	host = "https://startup-50k.herokuapp.com"
 			 	  end
-			 	  image_list = []
+			 	  image_list = {}
 			 	  ["medium", "small", "original"].each do |st|
-			 	  	image_list << {
-			 	  		"mediapath": host + self.image.url(st.to_sym),
-			 	  		"mediatype": st
-			 	  	}
+			 	  	image_list["mediapath"] = host + self.image.url(st.to_sym)
+			 	  	image_list["mediatype"]	= st
 			 	  end
 			 	  image_list
 			 end
