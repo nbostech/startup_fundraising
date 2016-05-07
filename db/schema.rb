@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506135807) do
+ActiveRecord::Schema.define(version: 20160507101328) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -216,15 +216,15 @@ ActiveRecord::Schema.define(version: 20160506135807) do
   add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
-  create_table "favourites", force: :cascade do |t|
-    t.integer  "favouritable_id",   limit: 4
-    t.string   "favouritable_type", limit: 255
-    t.integer  "user_id",           limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "favoritable_id",   limit: 4
+    t.string   "favoritable_type", limit: 255
+    t.integer  "user_id",          limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "favourites", ["favouritable_type", "favouritable_id"], name: "index_favourites_on_favouritable_type_and_favouritable_id", using: :btree
+  add_index "favorites", ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable_type_and_favoritable_id", using: :btree
 
   create_table "funding_rounds", force: :cascade do |t|
     t.integer  "seeking_amount", limit: 4

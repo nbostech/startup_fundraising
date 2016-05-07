@@ -116,5 +116,51 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      else
        render :json => {status: 400, message: "Bad Request"}
      end  
-   end 
+   end
+
+   def add_to_favorite
+     if params[:id].present? && @token_details.uuid.present?
+       investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+       company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+       add_to_favorite = Com::Nbos::StartupFundraising::Favorite.create(favoritable: company, user: investor)
+       if add_to_favorite
+         render :json => {status: 200, message: "Success"}
+       else
+         render :json => {status: 404, message: "Internal Server Error"}
+       end  
+     else
+      render :json => {status: 400, message: "Bad Request"}
+     end 
+   end
+
+   def favorite_startups
+     if @token_details.uuid.present?
+       investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+       if investor.present?
+         @favorite_startups_list = investor.favorites.companies
+         render :json => @favorite_startups_list
+       else
+         render :json => {status: 404, message: "User not Found"}
+       end  
+     else
+      render :json => {status: 400, message: "Bad Request"}
+     end 
+   end
+
+   def remove_favorite
+     if params[:id].present? && @token_details.uuid.present?
+       investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+       company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+       if investor.present? && company.present?
+         favorite_startup = investor.favorites.where(favoritable_id: company.id)
+         favorite_startup.destroy
+         @favorite_startups_list = investor.favorites.companies
+         render :json => @favorite_startups_list
+       else
+         render :json => {status: 404, message: "User Or Company not Found"}
+       end  
+     else
+      render :json => {status: 400, message: "Bad Request"}
+     end
+   end   
 end 

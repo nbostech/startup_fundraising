@@ -5,7 +5,7 @@ module Com
 				has_one :company_profile, class_name: "Com::Nbos::StartupFundraising::CompanyProfile", dependent: :destroy
 				
 
-				has_many :favourites, as: :favouritable, class_name: "Com::Nbos::StartupFundraising::Favourite", dependent: :destroy
+				has_many :favorites, as: :favoritable, class_name: "Com::Nbos::StartupFundraising::Favorite", dependent: :destroy
 			 
 				belongs_to :company_category, class_name: "Com::Nbos::StartupFundraising::CompanyCategory"
 				
@@ -37,11 +37,11 @@ module Com
 				end
 
 				def logoImage
-					self.assets.where(img_type: "logo")
+					self.assets.where(img_type: "logo").first
 				end
 
 				def brandImage
-					self.assets.where(img_type: "brand")
+					self.assets.where(img_type: "brand").first
 				end
 
 				def addressList

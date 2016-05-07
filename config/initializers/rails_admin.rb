@@ -61,7 +61,7 @@ RailsAdmin.config do |config|
   end
 
   # Excluded Models from Rails Admin Navigation
-  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favourite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
+  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favorite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
     config.excluded_models << m
   end
 
@@ -108,7 +108,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      exclude_fields :favourites, :events, :event_rsvps, :investments, :favourites, :current_funding_rounds
+      exclude_fields :favorites, :events, :event_rsvps, :investments, :current_funding_rounds
       field :uuid do
         read_only true
       end

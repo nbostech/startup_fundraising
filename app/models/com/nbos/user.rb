@@ -8,7 +8,7 @@ module Com
 			has_many :roles_users, class_name: "Com::Nbos::StartupFundraising::RolesUsers", inverse_of: :user, dependent: :destroy
 			has_many :roles, through: :roles_users
 
-			has_many :favourites, class_name: "Com::Nbos::StartupFundraising::Favourite", dependent: :destroy
+			has_many :favorites, class_name: "Com::Nbos::StartupFundraising::Favorite", dependent: :destroy
 
 			has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
 

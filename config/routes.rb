@@ -95,6 +95,11 @@ Rails.application.routes.draw do
 						#To Upload media
 						post '/media' => "media#add_media"
 						get '/media/:id' => "media#get_media"
+
+						#To Add a company to Favoirite list
+						get '/companies/favoirites' => "companies#favorite_startups"
+						post '/companies/favoirites' => "companies#add_to_favoirites"
+						delete '/companies/favorites' => "companies#remove_favorite"
 					end
 				end
 			end   
