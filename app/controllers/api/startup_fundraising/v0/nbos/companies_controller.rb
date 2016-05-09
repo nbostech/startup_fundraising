@@ -48,7 +48,8 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
    def update_profile
     if params[:id].present? && @token_details.present? && @token_details.username.present?
-      @company = Com::Nbos::StartupFundraising::Company.find(params[:id])
+      @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+      @company = @member.companies.where(id: params[:id]).first
       
       company_category = Com::Nbos::StartupFundraising::CompanyCategory.exists?(name: params[:company_category]) ? Com::Nbos::StartupFundraising::CompanyCategory.find_by(name: params[:company_category]) : nil
       company_stage = Com::Nbos::StartupFundraising::CompanyStage.exists?(name: params[:company_stage]) ? Com::Nbos::StartupFundraising::CompanyStage.find_by(name: params[:company_stage]) : nil
@@ -86,16 +87,17 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
    end  
 
    def update
-     if params[:id].present?
-       company = Com::Nbos::StartupFundraising::Company.find(params[:id])
-       company_profile = company.company_profile
+     if params[:id].present? && @token_details.present? && @token_details.username.present?
+       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+       @company = @member.companies.where(id: params[:id]).first
+       company_profile = @company.company_profile
        company_profile.email = params["email"]
        company_profile.founder_name = params["founder_name"]
        company_profile.startup_name = params["company_name"]
        company_profile.contact_number = params["contact_number"]
        
        if company_profile.save
-          render :json => {status: 200, message: "Company updated successfully."}
+          render :json => @company
        else
           render :json => {status: 500, message: company.errors.messages}
        end   
@@ -106,10 +108,11 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
 
    def delete
-     if params[:id].present?
-      @company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+     if params[:id].present? && @token_details.present? && @token_details.username.present?
+      @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+      @company = @member.companies.where(id: params[:id]).first
       if @company.present? && @company.destroy
-        render :json => {status: 200, message: "Company deleted successfully."}
+        render :json => @member.companies
       else
         render :json => {status: 404, message: "Company Not Found."}
       end  
@@ -122,11 +125,12 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      if params[:id].present? && @token_details.uuid.present?
        investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
        company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
-       add_to_favorite = Com::Nbos::StartupFundraising::Favorite.create(favoritable: company, user: investor)
-       if add_to_favorite
-         render :json => {status: 200, message: "Success"}
+       add_to_favorite = Com::Nbos::StartupFundraising::Favorite.new(favoritable: company, user: investor)
+       if add_to_favorite.save
+         @favorite_startups_list = Com::Nbos::StartupFundraising::Company.where(id: investor.favorites.pluck(:favoritable_id))
+         render :json => @favorite_startups_list
        else
-         render :json => {status: 404, message: "Internal Server Error"}
+         render :json => {status: 404, message: add_to_favorite.errors.messages}
        end  
      else
       render :json => {status: 400, message: "Bad Request"}
@@ -137,7 +141,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      if @token_details.uuid.present?
        investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
        if investor.present?
-         @favorite_startups_list = investor.favorites.companies
+         @favorite_startups_list = Com::Nbos::StartupFundraising::Company.where(id: investor.favorites.pluck(:favoritable_id))
          render :json => @favorite_startups_list
        else
          render :json => {status: 404, message: "User not Found"}
@@ -152,9 +156,9 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
        company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
        if investor.present? && company.present?
-         favorite_startup = investor.favorites.where(favoritable_id: company.id)
+         favorite_startup = investor.favorites.where(favoritable_id: company.id).first
          favorite_startup.destroy
-         @favorite_startups_list = investor.favorites.companies
+         @favorite_startups_list = Com::Nbos::StartupFundraising::Company.where(id: investor.favorites.pluck(:favoritable_id))
          render :json => @favorite_startups_list
        else
          render :json => {status: 404, message: "User Or Company not Found"}

@@ -21,7 +21,7 @@ module Com
 			scope :investors, -> { all.joins(:roles_users).where(roles_users: {role_id: 3} ) }
 			scope :startups, -> { all.joins(:roles_users).where(roles_users: {role_id: 4} ) }
 			scope :premium_investors, -> { all.joins(:roles_users).where(roles_users: {role_id: 2})}
-			
+		
 			validates :uuid, :tenant_id, presence: true
 			validates_associated :profile
 
