@@ -10,7 +10,7 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
        if @model[:obj].save
          render :json => @model[:obj]
        else
-         render :json => {status: 500, message: @modal.errors.messages}
+         render :json => {status: 500, message: @modal[:obj].errors.messages}
        end
      else
      	 render :json => {status: 400, message: @model[:message]}
