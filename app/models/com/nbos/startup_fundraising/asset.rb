@@ -8,9 +8,9 @@ module Com
 			                    :url => "/images/media/:id/:style/:basename.:extension",
 			                    :default_url => "/images/default/missing_image.png"
        validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
-			
+			 attr_accessor :delete_image 
        before_destroy :delete_image
-
+    
 			 def delete_image
 			 	 image.clear
 			 end
