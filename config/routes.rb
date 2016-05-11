@@ -97,9 +97,9 @@ Rails.application.routes.draw do
 						get '/media/:id' => "media#get_media"
 
 						#To Add a company to Favoirite list
-						get '/company/favorites' => "companies#favorite_startups"
-						post '/company/favorites' => "companies#add_to_favorite"
-						delete '/company/favorites' => "companies#remove_favorite", param: 'id'
+						get '/user/favorites' => "favorites#index"
+						post '/user/favorites' => "favorites#create"
+						delete '/user/favorites' => "favorites#delete"
 					end
 				end
 			end   
