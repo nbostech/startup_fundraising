@@ -91,6 +91,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.16.14.11)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -201,6 +202,7 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    ref (2.0.0)
     remotipart (1.2.1)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
@@ -224,6 +226,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
@@ -249,6 +254,7 @@ DEPENDENCIES
   api-pagination
   byebug
   coffee-rails (~> 4.1.0)
+  execjs
   figaro
   font-awesome-rails
   httmultiparty
@@ -273,6 +279,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
+  therubyracer
   turbolinks
   uglifier (>= 1.3.0)
   wavelabs_client_api (= 0.3.1)
