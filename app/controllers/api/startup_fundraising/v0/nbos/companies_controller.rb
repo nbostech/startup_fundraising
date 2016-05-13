@@ -90,16 +90,11 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
      if params[:id].present? && @token_details.present? && @token_details.username.present?
        @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
        @company = @member.companies.where(id: params[:id]).first
-       company_profile = @company.company_profile
-       company_profile.email = params["email"]
-       company_profile.founder_name = params["founder_name"]
-       company_profile.startup_name = params["company_name"]
-       company_profile.contact_number = params["contact_number"]
-       
-       if company_profile.save
+       company_params = params[:company].except(:id,:controller,:action)
+       if @company.update(company_params.permit!)
           render :json => @company
        else
-          render :json => {status: 500, message: company.errors.messages}
+          render :json => {status: 500, message: @company.errors.messages}
        end   
      else
        render :json => {status: 400, message: "Bad Request"}
