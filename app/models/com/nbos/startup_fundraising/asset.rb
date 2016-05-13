@@ -25,10 +25,12 @@ module Com
 			 	  else
 			 	  	host = "http://fundr.api.qa1.nbos.in"
 			 	  end
-			 	  image_list = {}
+			 	  image_list = []
 			 	  ["medium", "small", "original"].each do |st|
-			 	  	image_list["mediapath"] = host + self.image.url(st.to_sym)
-			 	  	image_list["mediatype"]	= st
+			 	  	image_size_content = {}
+			 	  	image_size_content["mediapath"] = host + self.image.url(st.to_sym)
+			 	  	image_size_content["mediatype"]	= st
+			 	  	image_list << image_size_content
 			 	  end
 			 	  image_list
 			 end
