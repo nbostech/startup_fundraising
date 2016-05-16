@@ -13,8 +13,15 @@ class Com::Nbos::Admin::AuthController < ApplicationController
       api_response = getAuthApi.login(params[:wavelabs_client_api_client_api_data_models_login_api_model], @auth_token)
       if api_response[:status] == 200
         @member = api_response[:member]
-        session[:admin_user] = @member
-        redirect_to :rails_admin
+        moderator = Com::Nbos::User.where(uuid: @member.uuid).first
+        if moderator.present? && moderator.roles.first.name == "Moderator"
+          session[:admin_user] = @member
+          redirect_to :rails_admin
+        else
+          getAuthApi.logout(@member["token"]["value"])
+          flash[:notice] = "You are Not Authorized"
+          render :login
+        end  
       else
         @login = api_response[:login]
         render :login

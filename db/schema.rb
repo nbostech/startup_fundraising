@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507101328) do
+ActiveRecord::Schema.define(version: 20160516050450) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -36,6 +36,22 @@ ActiveRecord::Schema.define(version: 20160507101328) do
   end
 
   add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
+
+  create_table "annual_financial_details", force: :cascade do |t|
+    t.integer "revenue_driver_count",     limit: 8
+    t.integer "revenue",                  limit: 8
+    t.integer "expenditure",              limit: 8
+    t.integer "annual_financial_info_id", limit: 4
+    t.integer "year",                     limit: 4
+  end
+
+  create_table "annual_financial_infos", force: :cascade do |t|
+    t.integer "annual_revenue_run_rate", limit: 8
+    t.integer "monthly_bun_rate",        limit: 8
+    t.text    "financial_annotation",    limit: 65535
+    t.string  "revenue_driver",          limit: 255
+    t.integer "company_id",              limit: 4
+  end
 
   create_table "assets", force: :cascade do |t|
     t.string   "img_type",           limit: 255
@@ -226,14 +242,21 @@ ActiveRecord::Schema.define(version: 20160507101328) do
 
   add_index "favorites", ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable_type_and_favoritable_id", using: :btree
 
+  create_table "funding_round_types", force: :cascade do |t|
+    t.string "name",        limit: 255
+    t.string "description", limit: 255
+    t.string "tenant_id",   limit: 255
+  end
+
   create_table "funding_rounds", force: :cascade do |t|
-    t.integer  "seeking_amount", limit: 4
+    t.integer  "seeking_amount",        limit: 4
     t.date     "closing_date"
-    t.boolean  "is_closed",                default: false
-    t.integer  "company_id",     limit: 4
-    t.boolean  "is_deleted",               default: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.boolean  "is_closed",                       default: false
+    t.integer  "company_id",            limit: 4
+    t.boolean  "is_deleted",                      default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "funding_round_type_id", limit: 4
   end
 
   create_table "investments", force: :cascade do |t|

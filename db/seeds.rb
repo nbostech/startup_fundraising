@@ -102,3 +102,12 @@ if Com::Nbos::StartupFundraising::AddressType.all.size == 0
  puts "Address Types creation Completed."
 end
 
+funding_round_types = ["Founder", "Seed", "Family&Friends"]
+# Creating Initial Funding Round Types
+if Com::Nbos::StartupFundraising::FundingRoundType.all.size == 0
+ funding_round_types.each do |at|
+   Com::Nbos::StartupFundraising::FundingRoundType.create({name: at, tenant_id: token_res1[:token].tenantId})  
+ end
+ puts "Funding Round Types creation Completed."
+end
+

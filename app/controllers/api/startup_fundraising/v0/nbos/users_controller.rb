@@ -20,12 +20,17 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 # Method to create users
 	 def sign_up
 		 if params[:uuid].present?
-			 @member = build_user(params)
-			 if @member && @member.save
-				 render :json => @member
+		 	 @existing_member = Com::Nbos::User.where(uuid: params[:uuid])
+		 	 if @existing_member.present?
+         render :json => @existing_member.first
 			 else
-				 render :json => {status: 500, message: @member.errors.messages}
-			 end  
+			 	 @member = build_user(params)
+				 if @member && @member.save
+					 render :json => @member
+				 else
+					 render :json => {status: 500, message: @member.errors.messages}
+				 end
+			 end	   
 		 else
 			 render :json => {status: 400, message: "Bad Request"}
 		 end	
