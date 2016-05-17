@@ -111,7 +111,6 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.full_name = user_params["full_name"]
 			 profile.email = user_params["email"]
 			 profile.contact_number = user_params["contact_number"]
-			 profile.company_name = user_params["company_name"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
 
