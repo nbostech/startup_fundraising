@@ -14,11 +14,7 @@ module Com
 				end
 
 				def profileImage
-					if self.assets.size > 0
-					  self.assets.where(img_type: "associate_profile").first
-					else
-						{}
-					end  
+					 self.assets.where(img_type: "associate_profile").first 
 				end	
 					
 				def as_json(options={})
