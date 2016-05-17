@@ -17,13 +17,13 @@ module Com
 					 self.assets.where(img_type: "associate_profile").first 
 				end
 
-				def associateType
+				def associate_type
 					self.associate_team.name if self.associate_team.present?
 				end	
 					
 				def as_json(options={})
 					super(:except => [:associate_team_id, :company_id], 
-								:methods => [:address, :profileImage, :associateType]
+								:methods => [:address, :profileImage, :associate_type]
 					     )
 				end 			
 			end 
