@@ -52,9 +52,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 def show
 	 	 if params[:id].present?
-      @member = Com::Nbos::User.find(params[:id])
+      @member = Com::Nbos::User.where("id = ? or uuid = ?", params[:id], params[:id])
 			 if @member.present?
-				 render :json => @member
+				 render :json => @member.first
 			 else
 				 render :json => {status: 404, message: "User Not Found"}
 			 end  
