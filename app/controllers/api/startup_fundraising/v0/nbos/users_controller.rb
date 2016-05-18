@@ -56,10 +56,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 if @member.present?
 				 render :json => @member.first
 			 else
-				 render :json => {status: 404, message: "User Not Found"}
+				 render :json => {status: 404, message: "User Not Found"}, status: 404
 			 end  
 	 	 else
-	 	 	render :json => {status: 400, message: "Bad Request"}
+	 	 	render :json => {status: 400, message: "Bad Request"}, , status: 400
 	 	 end	
 	 end
 
