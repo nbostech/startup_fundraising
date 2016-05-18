@@ -10,13 +10,13 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
        if @model[:obj].save
          render :json => @model[:obj]
        else
-         render :json => {status: 500, message: @model[:obj].errors.messages}
+         render :json => {status: 500, message: @model[:obj].errors.messages},status: 500
        end
      else
-     	 render :json => {status: 400, message: @model[:message]}
+     	 render :json => {status: 400, message: @model[:message]},status: 400
      end	
  	 else
- 	 	 render :json => {status: 400, message: "Bad Request"}
+ 	 	 render :json => {status: 400, message: "Bad Request"},status: 400
  	 end	
  end
 
@@ -26,10 +26,10 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
      if @media.present?
        render :json => @media
      else
-       render :json => {status: 404, message: "Media Not Found"}
+       render :json => {status: 404, message: "Media Not Found"},status: 404
      end 
    else
-     render :json => {status: 400, message: "Bad Request"}
+     render :json => {status: 400, message: "Bad Request"},status: 400
    end 
  end 
 

@@ -11,13 +11,13 @@ class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundr
          @favorite_startups_list = model.where(id: investor.favorites.pluck(:favoritable_id))
          render :json => @favorite_startups_list
        else
-       	 render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."}
+       	 render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."},status: 404
        end  
      else
-       render :json => {status: 404, message: "User not Found"}
+       render :json => {status: 404, message: "User not Found"},status: 404
      end  
    else
-    render :json => {status: 400, message: "Bad Request"}
+    render :json => {status: 400, message: "Bad Request"},status: 400
    end 
  end
 
@@ -32,13 +32,13 @@ class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundr
 		     @favorite_startups_list = model.where(id: investor.favorites.pluck(:favoritable_id))
 		     render :json => @favorite_startups_list
 		   else
-		     render :json => {status: 404, message: add_to_favorite.errors.messages}
+		     render :json => {status: 404, message: add_to_favorite.errors.messages},status: 404
 		   end
 		 else
-       render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."}
+       render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."},status: 404
      end      
 	 else
-	  render :json => {status: 400, message: "Bad Request"}
+	  render :json => {status: 400, message: "Bad Request"},status: 400
 	 end 
  end
 
@@ -54,13 +54,13 @@ class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundr
 	       @favorite_startups_list = model.where(id: investor.favorites.pluck(:favoritable_id))
 	       render :json => @favorite_startups_list
 	     else
-	       render :json => {status: 404, message: "Record not Found"}
+	       render :json => {status: 404, message: "Record not Found"},status: 404
 	     end
      else
-       render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."}
+       render :json => {status: 404, message: "#{params[:favorite_type]} Favoirite Type Not Supported."},status: 404
      end   
    else
-    render :json => {status: 400, message: "Bad Request"}
+    render :json => {status: 400, message: "Bad Request"},status: 400
    end
  end
 

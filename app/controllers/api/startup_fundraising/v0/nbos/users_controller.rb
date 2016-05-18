@@ -28,11 +28,11 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 				 if @member && @member.save
 					 render :json => @member
 				 else
-					 render :json => {status: 500, message: @member.errors.messages}
+					 render :json => {status: 500, message: @member.errors.messages}, status: 500
 				 end
 			 end	   
 		 else
-			 render :json => {status: 400, message: "Bad Request"}
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
 		 end	
 	 end
 
@@ -43,10 +43,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 if @member.present?
 				 render :json => @member
 			 else
-				 render :json => {status: 404, message: "User Not Found"}
+				 render :json => {status: 404, message: "User Not Found"}, status: 404
 			 end  
 		 else
-			 render :json => {status: 400, message: "Bad Request"}
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
 		 end	
 	 end		
 
@@ -73,10 +73,10 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
            render :json => {status: 500, message: @member.errors.messages}
          end    
 			 else
-				 render :json => {status: 404, message: "User Not Found"}
+				 render :json => {status: 404, message: "User Not Found"}, status: 404
 			 end  
 	 	 else
-	 	 	render :json => {status: 400, message: "Bad Request"}
+	 	 	render :json => {status: 400, message: "Bad Request"}, status: 400
 	 	 end	
 	 end
 

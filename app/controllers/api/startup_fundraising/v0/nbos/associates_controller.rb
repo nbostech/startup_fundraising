@@ -28,13 +28,13 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
 	       if @team_member.save
 	         render :json => @company.company_associates
 	       else
-	         render :json => {status: 500, message: @team_member.errors.messages}
+	         render :json => {status: 500, message: @team_member.errors.messages}, status: 500
 	       end
        else
-       	 render :json => {status: 404, message: "Company Not Found"}
+       	 render :json => {status: 404, message: "Company Not Found"},status: 404
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"},status: 400
      end   
   end
 
@@ -44,10 +44,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
        if @company_associate.present?  
 	      render :json => @company_associate
        else
-       	 render :json => {status: 404, message: "Associate Not Found"}
+       	 render :json => {status: 404, message: "Associate Not Found"},status: 404
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"}, status: 400
      end
   end
   
@@ -62,10 +62,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
        if @company_associate.update_columns(associate_params.permit!) 
 	       render :json => @company_associate
        else
-       	 render :json => {status: 404, message: "Associate Not Found"}
+       	 render :json => {status: 404, message: "Associate Not Found"},status: 404
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"},status: 400
      end
   end
 
@@ -77,10 +77,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
          @company = Com::Nbos::StartupFundraising::Company.where(id: company_id).first 
 	       render :json => @company.company_associates
        else
-       	 render :json => {status: 404, message: "Associate Not Found"}
+       	 render :json => {status: 404, message: "Associate Not Found"}, status: 404
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"},status: 400
      end
   end	
 

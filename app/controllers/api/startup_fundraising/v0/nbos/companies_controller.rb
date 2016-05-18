@@ -20,7 +20,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
          @companies = member.companies
          paginate json: @companies, per_page: params[:per_page]
        else 
-        render :json => {status: 400, message: "Bad Request"}
+        render :json => {status: 400, message: "Bad Request"}, status: 400
        end 
      end  
    end
@@ -39,10 +39,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
           @member.save
           render :json => @company
        else
-          render :json => {status: 500, message: @company.errors.messages}
+          render :json => {status: 500, message: @company.errors.messages}, status: 500
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"}, status: 400
      end  
    end
 
@@ -65,10 +65,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
       if @company.save
         render :json => @company
       else
-        render :json => { status: 500, message: "Internal Server Error"}
+        render :json => { status: 500, message: "Internal Server Error"}, status: 500
       end  
     else
-      render :json => {status: 400, message: "Bad Request"}
+      render :json => {status: 400, message: "Bad Request"}, status: 400
     end  
    end  
 
@@ -78,10 +78,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        if @company.present?
          render :json => @company
        else
-         render :json => {status: 404, message: "Company Not Found"}
+         render :json => {status: 404, message: "Company Not Found"}, status: 404
        end  
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"}, status: 400
      end      
 
    end  
@@ -94,10 +94,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        if @company.update(company_params.permit!)
           render :json => @company
        else
-          render :json => {status: 500, message: @company.errors.messages}
+          render :json => {status: 500, message: @company.errors.messages}, status: 500
        end   
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"}, status: 400
      end  
    end
 
@@ -109,10 +109,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
       if @company.present? && @company.destroy
         render :json => @member.companies
       else
-        render :json => {status: 404, message: "Company Not Found."}
+        render :json => {status: 404, message: "Company Not Found."}, status: 404
       end  
      else
-       render :json => {status: 400, message: "Bad Request"}
+       render :json => {status: 400, message: "Bad Request"}, status: 400
      end  
    end   
 end 
