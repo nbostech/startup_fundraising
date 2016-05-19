@@ -73,7 +73,7 @@ end
 
 document_types = ["BusinessPlan", "FinancialProjections", "SupplementalDocuments", "PitchDeck", "PitchDeckVideo"]
 
-# Creating Initial Associated Teams
+# Creating Initial Document Types
 if Com::Nbos::StartupFundraising::DocumentType.all.size == 0
  document_types.each do |cdt|
    Com::Nbos::StartupFundraising::DocumentType.create({name: cdt, tenant_id: token_res1[:token].tenantId})  
