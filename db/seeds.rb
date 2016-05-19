@@ -87,7 +87,7 @@ company_summary_types = ["ManagementTeam", "CustomerProblem", "Products&Services
 
 # Creating Initial Company Summary Types
 if Com::Nbos::StartupFundraising::CompanySummaryType.all.size == 0
- document_types.each do |cst|
+ company_summary_types.each do |cst|
    Com::Nbos::StartupFundraising::CompanySummaryType.create({name: cst, tenant_id: token_res1[:token].tenantId})  
  end
  puts "Company Summary Types creation Completed."
@@ -96,7 +96,7 @@ end
 address_types = ["HeadOffice", "BranchOffice", "Communication"]
 # Creating Initial Address Types
 if Com::Nbos::StartupFundraising::AddressType.all.size == 0
- document_types.each do |at|
+ address_types.each do |at|
    Com::Nbos::StartupFundraising::AddressType.create({name: at, tenant_id: token_res1[:token].tenantId})  
  end
  puts "Address Types creation Completed."

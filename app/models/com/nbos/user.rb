@@ -36,12 +36,18 @@ module Com
 
 			def userTypes
 				self.roles
-			end	
+			end
+
+			def wishlistCompanies
+			end
+
+			def portifolioCompanies
+		  end		
 
 			def as_json(options={})
 				super(:only => [:id, :uuid],
 							:include => {:profile => {:except => [:user_id, :created_at,:updated_at, :idn_image_url]}},
-							:methods => [:startupCompanies, :userTypes]
+							:methods => [:startupCompanies, :userTypes, :wishlistCompanies, :portifolioCompanies]
 						 )
 			end
 
