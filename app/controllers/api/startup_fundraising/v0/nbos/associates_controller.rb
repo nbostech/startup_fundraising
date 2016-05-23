@@ -54,10 +54,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
   def update_associate
   	if params[:id].present? && @token_details.present? && @token_details.username.present?
        @company_associate = Com::Nbos::StartupFundraising::CompanyAssociate.where(id: params[:id]).first
-       associate_params = params[:associate].except(:associate_type)
+       associate_params = params[:associate].except(:associate_type, :id, :profileImage, :address)
        if params[:associate_type].present? 
          associated_team_type = Com::Nbos::StartupFundraising::AssociateTeam.where(name: params[:associate_type]).first 
-         associate_params.merge(associate_type_id: associated_team_type.id)
+         associate_params.merge(associate_type_id: associated_team_type.id) if associated_team_type.present?
        end
        if @company_associate.update_columns(associate_params.permit!) 
 	       render :json => @company_associate
