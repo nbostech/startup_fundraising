@@ -36,7 +36,6 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 end	
 	 end
 
-	 # Method to create users
 	 def login
 		 if params[:uuid].present?
 			 @member = Com::Nbos::User.where(uuid: params[:uuid])
@@ -44,6 +43,19 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 				 render :json => @member
 			 else
 				 render :json => {status: 404, message: "User Not Found"}, status: 404
+			 end  
+		 else
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
+	 end
+
+	 def sign_out
+		 if @token_details.present?
+		 	api_response = getAuthApi.logout(@token_details.token)
+			 if api_response[:status] == 200
+				 render :json => {status: 200, message: "Success"}, status: 200
+			 else
+				 render :json => {status: api_response[:status], message: "Something went wrong"}, status: api_response[:status]
 			 end  
 		 else
 			 render :json => {status: 400, message: "Bad Request"}, status: 400

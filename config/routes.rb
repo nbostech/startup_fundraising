@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 						get '/users' => "users#index", path: '/users', param: 'user_type'
 						post '/users' => "users#sign_up", path: 'users/signup'
 						post '/users' => "users#login", path: 'users/signin'
+					  get '/users' => "users#sign_out", path: 'users/signout'
 						get '/about' => "home#about", path: '/about'
 						get '/users/:id' => "users#show"
 						put '/users/:id' => "users#update"
