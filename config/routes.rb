@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+	mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".
 
@@ -62,10 +62,12 @@ Rails.application.routes.draw do
 						get '/users' => "users#index", path: '/users', param: 'user_type'
 						post '/users' => "users#sign_up", path: 'users/signup'
 						post '/users' => "users#login", path: 'users/signin'
-					  get '/users' => "users#sign_out", path: 'users/signout'
+						get '/users' => "users#sign_out", path: 'users/signout'
 						get '/about' => "home#about", path: '/about'
 						get '/users/:id' => "users#show"
 						put '/users/:id' => "users#update"
+
+						get '/token_details' => "users#get_token_details"
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
 						post '/companies' => "companies#create", path: '/companies'
@@ -92,6 +94,7 @@ Rails.application.routes.draw do
 						get '/currency/types' => "currency_types#index"
 						get '/associates/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
+						get '/domin_expertises/types' => "domain_expertises#index"
 
 						#To Upload media
 						post '/media' => "media#add_media"
