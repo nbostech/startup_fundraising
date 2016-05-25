@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 						get '/currency/types' => "currency_types#index"
 						get '/associates/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
-						get '/domin_expertises/types' => "domain_expertises#index"
+						get '/domain_expertises/types' => "domain_expertises#index"
 
 						#To Upload media
 						post '/media' => "media#add_media"
