@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519062100) do
+ActiveRecord::Schema.define(version: 20160524130926) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -115,6 +115,14 @@ ActiveRecord::Schema.define(version: 20160519062100) do
     t.datetime "updated_at",                             null: false
   end
 
+  create_table "company_categories_profiles", force: :cascade do |t|
+    t.integer "profile_id",          limit: 4
+    t.integer "company_category_id", limit: 4
+  end
+
+  add_index "company_categories_profiles", ["company_category_id"], name: "index_company_categories_profiles_on_company_category_id", using: :btree
+  add_index "company_categories_profiles", ["profile_id"], name: "index_company_categories_profiles_on_profile_id", using: :btree
+
   create_table "company_executive_summaries", force: :cascade do |t|
     t.integer  "company_summary_type_id", limit: 4
     t.integer  "company_id",              limit: 4
@@ -194,6 +202,21 @@ ActiveRecord::Schema.define(version: 20160519062100) do
   end
 
   add_index "documents", ["attachable_type", "attachable_id"], name: "index_documents_on_attachable_type_and_attachable_id", using: :btree
+
+  create_table "domain_expertises", force: :cascade do |t|
+    t.string  "name",        limit: 255
+    t.string  "tenant_id",   limit: 255
+    t.string  "description", limit: 255
+    t.integer "parent_id",   limit: 4
+  end
+
+  create_table "domain_expertises_profiles", force: :cascade do |t|
+    t.integer "profile_id",          limit: 4
+    t.integer "domain_expertise_id", limit: 4
+  end
+
+  add_index "domain_expertises_profiles", ["domain_expertise_id"], name: "index_domain_expertises_profiles_on_domain_expertise_id", using: :btree
+  add_index "domain_expertises_profiles", ["profile_id"], name: "index_domain_expertises_profiles_on_profile_id", using: :btree
 
   create_table "event_rsvps", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
