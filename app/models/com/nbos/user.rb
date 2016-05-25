@@ -39,15 +39,24 @@ module Com
 			end
 
 			def wishlistCompanies
+				Com::Nbos::StartupFundraising::Company.where(id: self.favorites.pluck(:favoritable_id))
 			end
 
 			def portifolioCompanies
+		  end
+
+		  def areaofInterests
+		  	self.profile.company_categories
+		  end
+
+		  def domainExpertises
+		  	self.profile.domain_expertises
 		  end		
 
 			def as_json(options={})
 				super(:only => [:id, :uuid],
 							:include => {:profile => {:except => [:user_id, :created_at,:updated_at, :idn_image_url]}},
-							:methods => [:startupCompanies, :userTypes, :wishlistCompanies, :portifolioCompanies]
+							:methods => [:startupCompanies, :userTypes, :wishlistCompanies, :portifolioCompanies, :areaofInterests, :domainExpertises]
 						 )
 			end
 

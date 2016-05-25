@@ -7,9 +7,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 def index
 		 user_type = params[:user_type]
 		 if ["investor", "startup"].include?(user_type)
-		 	 
-			 	role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
-			  @user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:roles_users).where(roles_users: {role_id: role_id}).page(params[:page])
+			 
+				role_id = Com::Nbos::StartupFundraising::Role.where(name: params[:user_type]).first.id
+				@user_profiles = Com::Nbos::User.active_users.where(tenant_id: @token_details.tenantId).joins(:roles_users).where(roles_users: {role_id: role_id}).page(params[:page])
 
 			 paginate json: @user_profiles, per_page: params[:per_page]
 		 else
@@ -20,11 +20,11 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 # Method to create users
 	 def sign_up
 		 if params[:uuid].present?
-		 	 @existing_member = Com::Nbos::User.where(uuid: params[:uuid])
-		 	 if @existing_member.present?
-         render :json => @existing_member.first
+			 @existing_member = Com::Nbos::User.where(uuid: params[:uuid])
+			 if @existing_member.present?
+				 render :json => @existing_member.first
 			 else
-			 	 @member = build_user(params)
+				 @member = build_user(params)
 				 if @member && @member.save
 					 render :json => @member
 				 else
@@ -51,7 +51,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 
 	 def sign_out
 		 if @token_details.present?
-		 	api_response = getAuthApi.logout(@token_details.token)
+			api_response = getAuthApi.logout(@token_details.token)
 			 if api_response[:status] == 200
 				 render :json => {status: 200, message: "Success"}, status: 200
 			 else
@@ -63,40 +63,65 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 end		
 
 	 def show
-	 	 if params[:id].present?
-      @member = Com::Nbos::User.where("id = ? or uuid = ?", params[:id], params[:id])
+		 if params[:id].present?
+			@member = Com::Nbos::User.where("id = ? or uuid = ?", params[:id], params[:id])
 			 if @member.present?
 				 render :json => @member.first
 			 else
 				 render :json => {status: 404, message: "User Not Found"}, status: 404
 			 end  
-	 	 else
-	 	 	render :json => {status: 400, message: "Bad Request"}, status: 400
-	 	 end	
+		 else
+			render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
 	 end
 
 	 def update
-	 	 if @token_details.uuid.present?
-       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+		 if @token_details.uuid.present?
+			 @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
 			 if @member.present?
-         if @member.profile.update(params[:user].permit!)
-           render :json => @member
-         else
-           render :json => {status: 500, message: @member.errors.messages}
-         end    
+				 profile_params = params[:user][:profile].except(:id).permit!
+				 if params[:areaofInterests].present?
+					 @member.profile.company_categories.clear
+					 params[:areaofInterests].each do |ai|
+						 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
+						 @member.company_categories << area_of_interest if area_of_interest.present?
+					 end
+				 end
+
+				 if params[:domainExpertises].present?
+					 @member.profile.domain_expertises.clear
+					 params[:domainExpertises].each do |de|
+						 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
+						 @member.domain_expertises << domain_expertise if domain_expertise.present?
+					 end
+				 end
+
+				 if @member.profile.update_columns(profile_params) && @member.save
+					 render :json => @member
+				 else
+					 render :json => {status: 500, message: @member.errors.messages}
+				 end    
 			 else
 				 render :json => {status: 404, message: "User Not Found"}, status: 404
 			 end  
-	 	 else
-	 	 	render :json => {status: 400, message: "Bad Request"}, status: 400
-	 	 end	
+		 else
+			render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
 	 end
+
+	 def get_token_details
+		if @token_details.present?
+			render :json => @token_details
+		else
+			render :json => {status: 400, message: "Bad Request"}, status: 400
+		end	
+	 end	
 
 	 private
 
 	 def build_user(user_params)
 		if user_params["user_type"] == "startup"
-       member = Com::Nbos::User.new
+			 member = Com::Nbos::User.new
 			 member.uuid = @token_details.uuid
 			 member.tenant_id = @token_details.tenantId
 			 
@@ -125,6 +150,19 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.contact_number = user_params["contact_number"]
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
+			 if user_params[:areaofInterests].present?
+				 user_params[:areaofInterests].each do |ai|
+					 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
+					 member.company_categories << area_of_interest if area_of_interest.present?
+				 end	
+			 end
+
+			 if user_params[:domainExpertises].present?
+				 user_params[:domainExpertises].each do |de|
+					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
+					 member.domain_expertises << domain_expertise if domain_expertise.present?
+				 end	
+			 end
 
 			 member.is_public = true
 			 investor_role = Com::Nbos::StartupFundraising::Role.where(name: "Investor").first
@@ -132,7 +170,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 member.profile = profile
 			 member		
 		else
-		  return false	
+			return false	
 		end	
 	 end	
 
