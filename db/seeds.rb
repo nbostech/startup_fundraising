@@ -111,3 +111,40 @@ if Com::Nbos::StartupFundraising::FundingRoundType.all.size == 0
  puts "Funding Round Types creation Completed."
 end
 
+domain_expertises = ["Sales&Marketing", "Technology", "BusinessStrategy", "Finance&Legal", "Production&Design"]
+sub_domain_expertises_for_sales = ["Advertising", "Branding", "ContentMarketing", "CustomProcess","CustomerEngagement", "CustomerRelationships", "DistributionChannels", "GrowthHacking", "LeadGeneration", "Negotiations", "PR&Media", "PromoMaterials", "SalesTechniques", "SEO&DigitalMarketing", "SocialMediaMarketing", "Strategies&Training"]
+sub_domain_expertises_for_technologies = ["AgroTech", "Cloud", "Construction", "CRM", "Electrical", "FashonTech", "FoodTech", "Mechanical", "SoftwareDevelopment", "Solar&CleanTech", "Web&MobileApp"]
+sub_domain_expertises_for_business_strategies = ["BusinessModel", "BusinessPlans",  "Expansion/ScalingUp", "GotoMarket", "HRStrategies", "IdeatoPrototype", "IdeaValidation", "Logistics", "OperationsStrategy", "PitchDeck", "Revenue&PricingModel", "SupplyChainManagement", "WebAnalytics"]
+sub_domain_expertises_for_finance_and_legal = ["FinancialModel", "Finance&Accounting", "FundRaising", "CompanyIncorporation", "Statutory&Legal", "Patents,Trademarks&Copyrights"]
+sub_domain_expertises_for_product_and_design = ["UI/UX", "ProductManagement", "ProductDesign", "ProductDevelopment"]
+# Creating Initial Funding Round Types
+if Com::Nbos::StartupFundraising::DomainExpertise.all.size == 0
+ domain_expertises.each do |de|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: de, tenant_id: token_res1[:token].tenantId})  
+ end
+ parent_id = Com::Nbos::StartupFundraising::DomainExpertise.where(name: "Sales&Marketing").first.id
+ sub_domain_expertises_for_sales.each do |sm|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: sm, tenant_id: token_res1[:token].tenantId, parent_id: parent_id})  
+ end
+
+ parent_id = Com::Nbos::StartupFundraising::DomainExpertise.where(name: "Technology").first.id
+ sub_domain_expertises_for_technologies.each do |tc|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: tc, tenant_id: token_res1[:token].tenantId, parent_id: parent_id})  
+ end
+
+ parent_id = Com::Nbos::StartupFundraising::DomainExpertise.where(name: "BusinessStrategy").first.id
+ sub_domain_expertises_for_business_strategies.each do |bs|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: bs, tenant_id: token_res1[:token].tenantId, parent_id: parent_id})  
+ end
+
+ parent_id = Com::Nbos::StartupFundraising::DomainExpertise.where(name: "Finance&Legal").first.id
+ sub_domain_expertises_for_finance_and_legal.each do |fl|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: fl, tenant_id: token_res1[:token].tenantId, parent_id: parent_id})  
+ end
+
+ parent_id = Com::Nbos::StartupFundraising::DomainExpertise.where(name: "Production&Design").first.id
+ sub_domain_expertises_for_product_and_design.each do |pd|
+   Com::Nbos::StartupFundraising::DomainExpertise.create({name: pd, tenant_id: token_res1[:token].tenantId, parent_id: parent_id})  
+ end  
+end
+
