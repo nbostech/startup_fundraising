@@ -24,7 +24,7 @@ class Com::Nbos::Admin::AuthController < ApplicationController
         end  
       else
         @login = api_response[:login]
-        flash[:notice] = api_response[:login].messge
+        flash[:notice] = api_response[:login].message
         render :login
       end
     end
