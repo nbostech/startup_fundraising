@@ -18,12 +18,13 @@ class Com::Nbos::Admin::AuthController < ApplicationController
           session[:admin_user] = @member
           redirect_to :rails_admin
         else
-          getAuthApi.logout(@member["token"]["value"])
+          getAuthApi.logout(@member.token.value)
           flash[:notice] = "You are Not Authorized"
           render :login
         end  
       else
         @login = api_response[:login]
+        flash[:notice] = api_response[:login].messge
         render :login
       end
     end
