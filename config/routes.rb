@@ -115,6 +115,7 @@ Rails.application.routes.draw do
 					namespace :nbos, path: nil do
 						get '/:tenantId/events/' => "events#index"
 						post '/:tenantId/events/' => "events#create"
+						get '/events' => "events#get_events"
 						get '/:tenantId/events/:id' => "events#show"
 						#resources :events
 					end

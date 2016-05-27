@@ -9,9 +9,19 @@ class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseContr
 			 @events = Com::Nbos::Events::Event.active_events.where(tenant_id: tenantId).page(params[:page])
 			 paginate json: @events, per_page: params[:per_page]
 		 else
-			 render :json => {status: 400, message: "Bad Request"}
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
 		 end	
 	 end
+
+	 # Method to get token based tenant events
+	 def get_events
+	 	if @token_details.present? && @token_details.tenantId.present?
+			 @events = Com::Nbos::Events::Event.active_events.where(tenant_id: @token_details.tenantId).page(params[:page])
+			 paginate json: @events, per_page: params[:per_page]
+		 else
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
+	 end	
 
 	 # Method to show an event in a Tenant
 	 def show
@@ -21,7 +31,7 @@ class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseContr
 			 @event = Com::Nbos::Events::Event.active_events.where("tenant_id = ? AND id = ?", tenantId, event_id)
 			 render :json => @event
 		 else
-			 render :json => {status: 400, message: "Bad Request"}
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
 		 end	
 	 end
 
