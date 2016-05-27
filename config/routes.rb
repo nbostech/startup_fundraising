@@ -67,7 +67,7 @@ Rails.application.routes.draw do
 						get '/users/:id' => "users#show"
 						put '/users/:id' => "users#update"
 
-						get '/token_details' => "users#get_token_details"
+						get '/tenantInfo' => "users#get_tenant_info"
 
 						get '/companies' => "companies#index", path: '/companies', param: 'company_type'
 						post '/companies' => "companies#create", path: '/companies'

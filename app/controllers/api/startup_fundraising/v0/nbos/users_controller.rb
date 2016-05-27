@@ -109,9 +109,9 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 		 end	
 	 end
 
-	 def get_token_details
+	 def get_tenant_info
 		if @token_details.present?
-			render :json => @token_details
+			render :json => {tenantId: @token_details.tenantId}
 		else
 			render :json => {status: 400, message: "Bad Request"}, status: 400
 		end	
