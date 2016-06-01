@@ -68,7 +68,7 @@ gem "font-awesome-rails"
 gem "figaro"
 
 # To Communicate IDN Api 
-gem "wavelabs_client_api",  "0.3.3"
+gem "wavelabs_client_api",  "0.3.5"
 
 gem "paperclip"
 
