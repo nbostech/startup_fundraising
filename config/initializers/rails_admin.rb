@@ -33,6 +33,7 @@ RailsAdmin.config do |config|
             'Com::Nbos::StartupFundraising::AssociateTeam',
             'Com::Nbos::StartupFundraising::CompanySummaryType',
             'Com::Nbos::StartupFundraising::CuurencyType',
+            'Com::Nbos::StartupFundraising::DomainExpertise',
             'Com::Nbos::StartupFundraising::DocumentType'
           ]
     end  
@@ -50,6 +51,7 @@ RailsAdmin.config do |config|
             'Com::Nbos::StartupFundraising::AssociateTeam',
             'Com::Nbos::StartupFundraising::CompanySummaryType',
             'Com::Nbos::StartupFundraising::CuurencyType',
+            'Com::Nbos::StartupFundraising::DomainExpertise',
             'Com::Nbos::StartupFundraising::DocumentType'            
           ]
     end  
@@ -61,7 +63,14 @@ RailsAdmin.config do |config|
   end
 
   # Excluded Models from Rails Admin Navigation
-  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", "Com::Nbos::StartupFundraising::Favorite", "Com::Nbos::StartupFundraising::CompaniesUsers"].each do |m|
+  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", 
+   "Com::Nbos::StartupFundraising::Favorite", "Com::Nbos::StartupFundraising::CompaniesUsers",
+   "Com::Nbos::StartupFundraising::Address", "Com::Nbos::StartupFundraising::AddressType",
+   "Com::Nbos::StartupFundraising::AnnualFinancialDetail",
+   "Com::Nbos::StartupFundraising::AnnualFinancialInfo", 
+   "Com::Nbos::StartupFundraising::CompanyExicutiveSummary",
+   "Com::Nbos::StartupFundraising::CompanySummaryType",
+   "Com::Nbos::StartupFundraising::Document", "Com::Nbos::StartupFundraising::DocumentType"].each do |m|
     config.excluded_models << m
   end
 
