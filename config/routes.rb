@@ -80,6 +80,15 @@ Rails.application.routes.draw do
 						get '/companies/:id/associates' => 'associates#index'
 						post '/companies/:id/associates' => 'associates#create'
 
+						# Funding Rounds of a company
+						get '/companies/:id/fundingRounds' => 'funding_rounds#index'
+						post '/companies/:id/fundingRounds' => 'funding_rounds#create'
+            
+            # To GET, Update and Delete a fundingRound
+						get '/fundingRounds/:id' => 'funding_rounds#show'
+						put '/fundingRounds/:id' => 'funding_rounds#update_fundingRound'
+						delete '/fundingRounds/:id' => 'funding_rounds#delete' 
+
 						# To GET, Update and Delete an Associate
 						get '/associate/:id' => 'associates#show'
 						put '/associate/:id' => 'associates#update_associate'
