@@ -58,12 +58,16 @@ module Com
 
 				def associates
 					self.company_associates
+				end
+
+				def fundingRounds
+					self.funding_rounds
 				end   
 
 				def as_json(options={})
 					super(:only => [:id], 
 								:methods => [:profile, :logoImage, :brandImage, :addressList, 
-									           :descriptinList, :documentsList, :associates]
+									           :descriptinList, :documentsList, :associates, :fundingRounds]
 					     )
 				end 
 
