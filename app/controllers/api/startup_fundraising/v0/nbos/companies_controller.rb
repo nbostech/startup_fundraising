@@ -1,7 +1,7 @@
 class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundraising::V0::StartupBaseController
   
   before_action :validate_token
- 
+  before_action :get_member, only: [:create, :update_profile, :update, :delete]
    def index
      companyType = params[:company_type]
      company_categories = ['deal_bank', 'funding_progress', 'portfolio']
@@ -26,9 +26,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
    end
 
    def create
-     if params[:startup_name].present? && @token_details.present? && @token_details.username.present?
-
-       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+     if params[:startup_name].present? && @member.present?
        @company = Com::Nbos::StartupFundraising::Company.new
        profile_params = params[:company]
        company_profile = Com::Nbos::StartupFundraising::CompanyProfile.new(profile_params.permit!)
@@ -47,8 +45,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
    end
 
    def update_profile
-    if params[:id].present? && @token_details.present? && @token_details.username.present?
-      @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+    if params[:id].present? && @member.present?
       @company = @member.companies.where(id: params[:id]).first
       
       company_category = Com::Nbos::StartupFundraising::CompanyCategory.exists?(name: params[:company_category]) ? Com::Nbos::StartupFundraising::CompanyCategory.find_by(name: params[:company_category]) : nil
@@ -87,8 +84,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
    end  
 
    def update
-     if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+     if params[:id].present? && @member.present?
        @company = @member.companies.where(id: params[:id]).first
        company_params = params[:company].except(:id,:controller,:action)
        if @company.update(company_params.permit!)
@@ -103,8 +99,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 
 
    def delete
-     if params[:id].present? && @token_details.present? && @token_details.username.present?
-      @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+     if params[:id].present? && @member.present?
       @company = @member.companies.where(id: params[:id]).first
       if @company.present? && @company.destroy
         render :json => @member.companies

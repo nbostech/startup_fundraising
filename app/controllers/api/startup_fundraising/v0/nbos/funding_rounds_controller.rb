@@ -1,11 +1,12 @@
 class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupFundraising::V0::StartupBaseController
  
  before_action :validate_token
+ before_action :get_member, only: [:index, :create, :update_fundingRound, :delete]
  
   
   def index
-    if params[:id].present? && @token_details.present? && @token_details.username.present?
-    	@company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+    if params[:id].present? && @member.present?
+    	@company = @member.companies.where(id: params[:id]).first
     	if @company.present?
     		render :json => @company.funding_rounds
       else
@@ -17,8 +18,8 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   end
 
   def create
-     if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @company = Com::Nbos::StartupFundraising::Company.where(id: params[:id]).first
+     if params[:id].present? && @member.present?
+       @company = @member.companies.where(id: params[:id]).first
        if @company.present? 
          fundinground_params = params[:funding_round]
          @funding_round = Com::Nbos::StartupFundraising::FundingRound.new(fundinground_params.permit!)
@@ -51,8 +52,8 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   end
   
   def update_fundingRound
-  	if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @funding_round = Com::Nbos::StartupFundraising::FundingRound.where(id: params[:id]).first
+  	if params[:id].present? && @member.present?
+       @funding_round = @member.funding_rounds.where(id: params[:id]).first
        funding_round_params = params[:funding_round]
 
        if @funding_round.update_columns(funding_round_params.permit!) 
@@ -66,8 +67,8 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   end
 
   def delete
-  	if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @funding_round = Com::Nbos::StartupFundraising::FundingRound.where(id: params[:id]).first
+  	if params[:id].present? && && @member.present?
+       @funding_round = @member.funding_rounds.where(id: params[:id]).first
        company_id = @funding_round.company_id if @funding_round.present?
        if @funding_round.destroy 
          @company = Com::Nbos::StartupFundraising::Company.where(id: company_id).first 

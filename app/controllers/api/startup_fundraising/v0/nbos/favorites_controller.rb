@@ -1,6 +1,7 @@
 class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundraising::V0::StartupBaseController
 
  before_action :validate_token
+ before_action :get_member, only: [:create, :delete]
 
  def index
    if @token_details.uuid.present? && params[:favorite_type].present?
@@ -22,8 +23,8 @@ class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundr
  end
 
  def create
-	 if params[:id].present? && @token_details.uuid.present? && params[:favorite_type].present?
-	   investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+	 if params[:id].present? && @member.present?
+	   investor = @member
 	   model = get_favoritable_model(params[:favorite_type])
 	   if model
 		   favoritable_model = model.where(id: params[:id]).first
@@ -43,8 +44,8 @@ class Api::StartupFundraising::V0::Nbos::FavoritesController < Api::StartupFundr
  end
 
  def delete
-   if params[:id].present? && @token_details.uuid.present? && params[:favorite_type].present?
-     investor = Com::Nbos::User.where(uuid: @token_details.uuid).first
+   if params[:id].present? && @member.present? && params[:favorite_type].present?
+     investor = @member
      model = get_favoritable_model(params[:favorite_type])
 	   if model
 	     favoritable_model = model.where(id: params[:id]).first

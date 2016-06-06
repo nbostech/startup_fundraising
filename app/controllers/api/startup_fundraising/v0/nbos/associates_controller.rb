@@ -1,7 +1,7 @@
 class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFundraising::V0::StartupBaseController
  
  before_action :validate_token
- 
+ before_action :get_member, only: [:update_associate, :delete]
   
   def index
     if params[:id].present? && @token_details.present? && @token_details.username.present?
@@ -52,10 +52,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
   end
   
   def update_associate
-  	if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @company_associate = Com::Nbos::StartupFundraising::CompanyAssociate.where(id: params[:id]).first
+  	if params[:id].present? && @member.present?
+       @company_associate = @member.company_associates.where(id: params[:id]).first
        associate_params = params[:associate].except(:associate_type, :id, :profileImage, :address)
-       if params[:associate_type].present? 
+       if @company_associate.present? && params[:associate_type].present? 
          associated_team_type = Com::Nbos::StartupFundraising::AssociateTeam.where(name: params[:associate_type]).first 
          associate_params.merge(associate_type_id: associated_team_type.id) if associated_team_type.present?
        end
@@ -70,10 +70,10 @@ class Api::StartupFundraising::V0::Nbos::AssociatesController < Api::StartupFund
   end
 
   def delete
-  	if params[:id].present? && @token_details.present? && @token_details.username.present?
-       @company_associate = Com::Nbos::StartupFundraising::CompanyAssociate.where(id: params[:id]).first
+  	if params[:id].present? && @member.present?
+       @company_associate = @member.company_associates.where(id: params[:id]).first #Com::Nbos::StartupFundraising::CompanyAssociate.where(id: params[:id]).first
        company_id = @company_associate.company_id if @company_associate.present?
-       if @company_associate.destroy 
+       if @company_associate.present? && @company_associate.destroy 
          @company = Com::Nbos::StartupFundraising::Company.where(id: company_id).first 
 	       render :json => @company.company_associates
        else

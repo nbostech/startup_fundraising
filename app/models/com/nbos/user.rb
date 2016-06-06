@@ -14,7 +14,10 @@ module Com
 
 			has_many :companies_users, class_name: "Com::Nbos::StartupFundraising::CompaniesUsers"
 			has_many :companies, through: :companies_users, class_name: "Com::Nbos::StartupFundraising::Company"
-
+      
+      has_many :company_associates, through: :companies
+      has_many :funding_rounds, through: :companies
+       
 			scope :active_users, -> { where(is_public: true) }
 			scope :approved_users, -> { where(is_approved: true)}
 			scope :total, -> { all }

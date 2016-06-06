@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     if token.present? && token.split(" ")[1].present?
       true
     else
-      render :json => {status: 401, message: "Unautherized Access."}
+      render :json => {status: 401, message: "Unauthorized Access."}
     end    
   end
     
@@ -44,15 +44,28 @@ class ApplicationController < ActionController::Base
         if !res[:token].expired
           true
         else
-          render :json => {status: res[:status], message: "Token Expired"}
+          render :json => {status: res[:status], message: "Token Expired"}, status: res[:status]
         end  
       else
-        render :json => {status: res[:status], message: res[:token].message}
+        render :json => {status: res[:status], message: res[:token].message}, status: res[:status]
       end
     else
-      render :json => {status: 400, message: "Bad Request"}
+      render :json => {status: 400, message: "Bad Request"}, status: 400
     end    
   end
+
+  def get_member
+    if @token_details.present? && @token_details.username.present?
+      @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
+      if @member.present?
+        @member
+      else
+        render :json => {status: 401, message: "Unauthorized"}, status: 401
+      end
+    else
+      render :json => {status: 401, message: "Unauthorized"}, status: 401   
+    end  
+  end  
 
   def getAuthApi
     WavelabsClientApi::Client::Api::Core::AuthApi.new
