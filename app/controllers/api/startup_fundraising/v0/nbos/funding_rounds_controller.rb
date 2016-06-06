@@ -67,7 +67,7 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   end
 
   def delete
-  	if params[:id].present? && && @member.present?
+  	if params[:id].present? && @member.present?
        @funding_round = @member.funding_rounds.where(id: params[:id]).first
        company_id = @funding_round.company_id if @funding_round.present?
        if @funding_round.destroy 
