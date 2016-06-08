@@ -11,10 +11,14 @@ module Com
 			    funded_amount_percent = funded_amount/(self.seeking_amount/100)
 			    funded_amount_percent 
 			  end
+
+			  def fundingroundType
+			  	self.funding_round_type.name if self.funding_round_type.present?
+			  end	
 			  	
 				def as_json(options={})
 				 super(:only => [:seeking_amount, :closing_date, :minimum_investment],
-				 	     :methods => [:fundingProgressPercent])
+				 	     :methods => [:fundingroundType, :fundingProgressPercent])
 				end
 			end
 		end

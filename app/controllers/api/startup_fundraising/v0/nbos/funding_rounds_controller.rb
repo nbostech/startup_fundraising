@@ -20,9 +20,13 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   def create
      if params[:id].present? && @member.present?
        @company = @member.companies.where(id: params[:id]).first
-       if @company.present? 
-         fundinground_params = params[:funding_round]
+       if @company.present?
+         fundinground_params = params[:funding_round].except(:fundingroundType)
          @funding_round = Com::Nbos::StartupFundraising::FundingRound.new(fundinground_params.permit!)
+         if params[:fundingroundType].present?
+           funding_round_type = Com::Nbos::StartupFundraising::FundingRoundType.where(name: params[:fundingroundType])
+           @funding_round.funding_round_type_id = funding_round_type.first.id if funding_round_type.present?
+         end 
 	       @funding_round.company_id = @company.id
 	   
 	       if @funding_round.save
@@ -54,8 +58,11 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
   def update_fundingRound
   	if params[:id].present? && @member.present?
        @funding_round = @member.funding_rounds.where(id: params[:id]).first
-       funding_round_params = params[:funding_round]
-
+       funding_round_params = params[:funding_round].except(:fndingrounfType)
+       if params[:fundingroundType].present?
+           funding_round_type = Com::Nbos::StartupFundraising::FundingRoundType.where(name: params[:fundingroundType])
+           @funding_round.funding_round_type_id = funding_round_type.first.id if funding_round_type.present?
+         end
        if @funding_round.update_columns(funding_round_params.permit!) 
 	       render :json => @funding_round
        else

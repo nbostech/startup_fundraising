@@ -104,6 +104,7 @@ Rails.application.routes.draw do
 						get '/associates/teams' => "associate_teams#index"
 						get '/address/types' => "address_types#index"
 						get '/domain_expertises/types' => "domain_expertises#index"
+						get '/funding_rounds/types' => "funding_round_types#index"
 
 						#To Upload media
 						post '/media' => "media#add_media"
