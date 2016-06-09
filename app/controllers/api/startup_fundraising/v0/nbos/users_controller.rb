@@ -2,6 +2,8 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	
 	before_action :validate_token
 
+	before_action :get_member, only: [:update]
+
 	 # Method to Return all investors & startups
 	 # based on user_type & tenant query params
 	 def index
@@ -78,37 +80,32 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 	 end
 
 	 def update
-		 if @token_details.uuid.present?
-			 @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
-			 if @member.present?
-				 profile_params = params[:user][:profile].except(:id).permit!
-				 if params[:areaofInterests].present?
-					 @member.profile.company_categories.clear
-					 params[:areaofInterests].each do |ai|
-						 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
-						 @member.company_categories << area_of_interest if area_of_interest.present?
-					 end
+		 if @member.present?
+			 profile_params = params[:user].except(:areaofInterests,:domainExpertises).permit!
+			 if params[:areaofInterests].present?
+				 @member.profile.company_categories.clear
+				 params[:areaofInterests].each do |ai|
+					 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
+					 @member.company_categories << area_of_interest if area_of_interest.present?
 				 end
+			 end
 
-				 if params[:domainExpertises].present?
-					 @member.profile.domain_expertises.clear
-					 params[:domainExpertises].each do |de|
-						 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
-						 @member.domain_expertises << domain_expertise if domain_expertise.present?
-					 end
+			 if params[:domainExpertises].present?
+				 @member.profile.domain_expertises.clear
+				 params[:domainExpertises].each do |de|
+					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
+					 @member.domain_expertises << domain_expertise if domain_expertise.present?
 				 end
+			 end
 
-				 if @member.profile.update_columns(profile_params) && @member.save
-					 render :json => @member
-				 else
-					 render :json => {status: 500, message: @member.errors.messages}
-				 end    
+			 if @member.profile.update_columns(profile_params) && @member.save
+				 render :json => @member
 			 else
-				 render :json => {status: 404, message: "User Not Found"}, status: 404
-			 end  
+				 render :json => {status: 500, message: @member.errors.messages}, status: 404
+			 end    
 		 else
-			render :json => {status: 400, message: "Bad Request"}, status: 400
-		 end	
+			 render :json => {status: 404, message: "User Not Found"}, status: 404
+		 end  
 	 end
 
 	 def get_tenant_info
