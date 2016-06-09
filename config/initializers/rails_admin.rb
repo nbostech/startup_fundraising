@@ -25,7 +25,7 @@ RailsAdmin.config do |config|
     index                         # mandatory
     new do
       only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
-            'Com::Nbos::StartupFundraising::Investment',
+            'Com::Nbos::StartupFundraising::InvestmentCommitment',
             'Com::Nbos::StartupFundraising::CompanyStage',
             'Com::Nbos::StartupFundraising::CompanyCategory',
             'Com::Nbos::StartupFundraising::CurrentFundingRound',
@@ -43,7 +43,7 @@ RailsAdmin.config do |config|
     edit
     delete do
       only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
-            'Com::Nbos::StartupFundraising::Investment',
+            'Com::Nbos::StartupFundraising::InvestmentCommitment',
             'Com::Nbos::StartupFundraising::CompanyStage',
             'Com::Nbos::StartupFundraising::CompanyCategory',
             'Com::Nbos::StartupFundraising::CurrentFundingRound',
@@ -117,7 +117,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      exclude_fields :favorites, :events, :event_rsvps, :investments, :current_funding_rounds
+      exclude_fields :favorites, :events, :event_rsvps, :investment_commitments, :funding_rounds
       field :uuid do
         read_only true
       end

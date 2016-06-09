@@ -1,7 +1,7 @@
 class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupFundraising::V0::StartupBaseController
  
  before_action :validate_token
- before_action :get_member, only: [:index, :create, :update_fundingRound, :delete]
+ before_action :get_member, only: [:index, :create, :update, :delete]
  
   
   def index
@@ -55,7 +55,7 @@ class Api::StartupFundraising::V0::Nbos::FundingRoundsController < Api::StartupF
      end
   end
   
-  def update_fundingRound
+  def update
   	if params[:id].present? && @member.present?
        @funding_round = @member.funding_rounds.where(id: params[:id]).first
        funding_round_params = params[:funding_round].except(:fndingrounfType)

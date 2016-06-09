@@ -10,7 +10,7 @@ module Com
 
 			has_many :favorites, class_name: "Com::Nbos::StartupFundraising::Favorite", dependent: :destroy
 
-			has_many :investments, class_name: "Com::Nbos::StartupFundraising::Investment", inverse_of: :user, dependent: :destroy
+			has_many :investment_commitments, class_name: "Com::Nbos::StartupFundraising::InvestmentCommitment", inverse_of: :user, dependent: :destroy
 
 			has_many :companies_users, class_name: "Com::Nbos::StartupFundraising::CompaniesUsers"
 			has_many :companies, through: :companies_users, class_name: "Com::Nbos::StartupFundraising::Company"

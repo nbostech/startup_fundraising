@@ -9,9 +9,10 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
        if companyType == "portfolio"  
          @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_funded: true).page(params[:page])
        elsif companyType == "deal_bank"
-         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_funded: true).page(params[:page])
+         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.page(params[:page])
        elsif companyType == "funding_progress"
-         @companies_list = Com::Nbos::StartupFundraising::Company.active_companies.where(is_funded: true).page(params[:page])
+         company_ids = Com::Nbos::StartupFundraising::FundingRound.all.collect {|i| i.company_id}
+         @companies_list = Com::Nbos::StartupFundraising::Company.where(id: company_ids).page(params[:page])
        end 
        paginate json: @companies_list, per_page: params[:per_page]
      else

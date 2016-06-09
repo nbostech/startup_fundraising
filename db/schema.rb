@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603123247) do
+ActiveRecord::Schema.define(version: 20160609055955) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -71,6 +71,14 @@ ActiveRecord::Schema.define(version: 20160603123247) do
     t.string "name",        limit: 255
     t.string "description", limit: 255
     t.string "tenant_id",   limit: 255
+  end
+
+  create_table "commitment_types", force: :cascade do |t|
+    t.string  "name",        limit: 255
+    t.string  "tenant_id",   limit: 255
+    t.string  "description", limit: 255
+    t.boolean "is_deleted"
+    t.boolean "is_active"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -283,12 +291,13 @@ ActiveRecord::Schema.define(version: 20160603123247) do
     t.integer  "minimum_investment",    limit: 4
   end
 
-  create_table "investments", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4
-    t.integer  "funding_round_id", limit: 4
-    t.integer  "invested_amount",  limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+  create_table "investment_commitments", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4
+    t.integer  "funding_round_id",   limit: 4
+    t.integer  "invested_amount",    limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "commitment_type_id", limit: 4
   end
 
   create_table "profiles", force: :cascade do |t|

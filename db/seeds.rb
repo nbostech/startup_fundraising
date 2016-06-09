@@ -148,3 +148,12 @@ if Com::Nbos::StartupFundraising::DomainExpertise.all.size == 0
  end  
 end
 
+commitment_types = ["Soft", "Commited"]
+# Creating Initial Funding Round Types
+if Com::Nbos::StartupFundraising::CommitmentType.all.size == 0
+ commitment_types.each do |ct|
+   Com::Nbos::StartupFundraising::CommitmentType.create({name: ct, tenant_id: token_res1[:token].tenantId})  
+ end
+ puts "Commitment Types creation Completed."
+end
+

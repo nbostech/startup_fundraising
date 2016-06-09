@@ -28,6 +28,7 @@ module Com
 				has_many :assets, as: :imageable, class_name:"Com::Nbos::StartupFundraising::Asset", dependent: :destroy
 				
 				scope :active_companies, -> { where(is_approved: true) }
+				
 				scope :total, -> { all }
 				
 				validates_associated :company_profile

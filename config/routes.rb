@@ -86,8 +86,17 @@ Rails.application.routes.draw do
             
             # To GET, Update and Delete a fundingRound
 						get '/fundingRounds/:id' => 'funding_rounds#show'
-						put '/fundingRounds/:id' => 'funding_rounds#update_fundingRound'
-						delete '/fundingRounds/:id' => 'funding_rounds#delete' 
+						put '/fundingRounds/:id' => 'funding_rounds#update'
+						delete '/fundingRounds/:id' => 'funding_rounds#delete'
+
+						# investment commitments of a company funding round
+						get '/fundingRounds/:id/investmentCommitments' => 'investment_commitments#index'
+						post '/fundingRounds/:id/investmentCommitments' => 'investment_commitments#create' 
+
+						# To GET, Update and Delete a fundingRound
+						get '/investmentCommitments/:id' => 'investment_commitments#show'
+						put '/investmentCommitments/:id' => 'investment_commitments#update'
+						delete '/investmentCommitments/:id' => 'investment_commitments#delete'
 
 						# To GET, Update and Delete an Associate
 						get '/associate/:id' => 'associates#show'
@@ -105,6 +114,7 @@ Rails.application.routes.draw do
 						get '/address/types' => "address_types#index"
 						get '/domain_expertises/types' => "domain_expertises#index"
 						get '/funding_rounds/types' => "funding_round_types#index"
+						get '/commitment/types' => "commitment_types#index"
 
 						#To Upload media
 						post '/media' => "media#add_media"
