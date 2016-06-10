@@ -61,14 +61,14 @@ module Com
 					self.company_associates
 				end
 
-				def fundingRounds
-					self.funding_rounds
+				def fundingRound
+					self.funding_rounds.where(is_closed: false).first
 				end   
 
 				def as_json(options={})
 					super(:only => [:id], 
 								:methods => [:profile, :logoImage, :brandImage, :addressList, 
-									           :descriptinList, :documentsList, :associates, :fundingRounds]
+									           :descriptinList, :documentsList, :associates, :fundingRound]
 					     )
 				end 
 
