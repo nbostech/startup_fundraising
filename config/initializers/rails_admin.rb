@@ -23,38 +23,12 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new do
-      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
-            'Com::Nbos::StartupFundraising::InvestmentCommitment',
-            'Com::Nbos::StartupFundraising::CompanyStage',
-            'Com::Nbos::StartupFundraising::CompanyCategory',
-            'Com::Nbos::StartupFundraising::CurrentFundingRound',
-            'Com::Nbos::StartupFundraising::AddressType',
-            'Com::Nbos::StartupFundraising::AssociateTeam',
-            'Com::Nbos::StartupFundraising::CompanySummaryType',
-            'Com::Nbos::StartupFundraising::CuurencyType',
-            'Com::Nbos::StartupFundraising::DomainExpertise',
-            'Com::Nbos::StartupFundraising::DocumentType'
-          ]
-    end  
+    new
     export
     bulk_delete
     show
     edit
-    delete do
-      only ['Com::Nbos::Events::Event', 'Com::Nbos::StartupFundraising::Role', 
-            'Com::Nbos::StartupFundraising::InvestmentCommitment',
-            'Com::Nbos::StartupFundraising::CompanyStage',
-            'Com::Nbos::StartupFundraising::CompanyCategory',
-            'Com::Nbos::StartupFundraising::CurrentFundingRound',
-            'Com::Nbos::StartupFundraising::AddressType',
-            'Com::Nbos::StartupFundraising::AssociateTeam',
-            'Com::Nbos::StartupFundraising::CompanySummaryType',
-            'Com::Nbos::StartupFundraising::CuurencyType',
-            'Com::Nbos::StartupFundraising::DomainExpertise',
-            'Com::Nbos::StartupFundraising::DocumentType'            
-          ]
-    end  
+    delete
     show_in_app
 
     ## With an audit adapter, you can add:
@@ -63,16 +37,16 @@ RailsAdmin.config do |config|
   end
 
   # Excluded Models from Rails Admin Navigation
-  ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", 
-   "Com::Nbos::StartupFundraising::Favorite", "Com::Nbos::StartupFundraising::CompaniesUsers",
-   "Com::Nbos::StartupFundraising::Address", "Com::Nbos::StartupFundraising::AddressType",
-   "Com::Nbos::StartupFundraising::AnnualFinancialDetail",
-   "Com::Nbos::StartupFundraising::AnnualFinancialInfo", 
-   "Com::Nbos::StartupFundraising::CompanyExicutiveSummary",
-   "Com::Nbos::StartupFundraising::CompanySummaryType",
-   "Com::Nbos::StartupFundraising::Document", "Com::Nbos::StartupFundraising::DocumentType"].each do |m|
-    config.excluded_models << m
-  end
+  # ["Com::Nbos::StartupFundraising::RolesUsers", "Com::Nbos::Events::EventRsvp", 
+  #  "Com::Nbos::StartupFundraising::Favorite", "Com::Nbos::StartupFundraising::CompaniesUsers",
+  #  "Com::Nbos::StartupFundraising::Address", "Com::Nbos::StartupFundraising::AddressType",
+  #  "Com::Nbos::StartupFundraising::AnnualFinancialDetail",
+  #  "Com::Nbos::StartupFundraising::AnnualFinancialInfo", 
+  #  "Com::Nbos::StartupFundraising::CompanyExicutiveSummary",
+  #  "Com::Nbos::StartupFundraising::CompanySummaryType",
+  #  "Com::Nbos::StartupFundraising::Document", "Com::Nbos::StartupFundraising::DocumentType"].each do |m|
+  #   config.excluded_models << m
+  # end
 
   #External logout link in navigation  
   config.navigation_static_links = {
@@ -117,7 +91,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      exclude_fields :favorites, :events, :event_rsvps, :investment_commitments, :funding_rounds
+      #exclude_fields :favorites, :events, :event_rsvps, :investment_commitments, :funding_rounds
       field :uuid do
         read_only true
       end
