@@ -5,7 +5,7 @@ module Com
 			 has_many :event_rsvps, class_name: "Com::Nbos::Events::EventRsvp"
 			 has_many :users, through: :event_rsvps
 
-			 has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" },
+			 has_attached_file :image, :styles => { :small => "48x48",:medium => "300x200"},
 			                   :path => ":rails_root/public/images/events/:id/:style/:basename.:extension",
 			                   :url => "/images/events/:id/:style/:basename.:extension",
 			                   :default_url => "/images/default/missing_image.png"

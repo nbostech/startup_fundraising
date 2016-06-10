@@ -3,7 +3,7 @@ module Com
     module StartupFundraising	
 			class Asset < ActiveRecord::Base
 			 belongs_to :imageable, polymorphic: true
-       has_attached_file :image, :styles => { :small => "48x48",:medium => "300x200>"},
+       has_attached_file :image, :styles => { :small => "48x48",:medium => "300x200"},
 			                    :path => ":rails_root/public/images/media/:id/:style/:basename.:extension",
 			                    :url => "/images/media/:id/:style/:basename.:extension",
 			                    :default_url => "/images/default/missing_image.png"
