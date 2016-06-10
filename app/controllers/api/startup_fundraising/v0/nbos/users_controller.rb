@@ -86,7 +86,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 				 @member.profile.company_categories.clear
 				 params[:areaofInterests].each do |ai|
 					 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
-					 @member.company_categories << area_of_interest if area_of_interest.present?
+					 @member.profile.company_categories << area_of_interest if area_of_interest.present?
 				 end
 			 end
 
@@ -94,7 +94,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 				 @member.profile.domain_expertises.clear
 				 params[:domainExpertises].each do |de|
 					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
-					 @member.domain_expertises << domain_expertise if domain_expertise.present?
+					 @member.profile.domain_expertises << domain_expertise if domain_expertise.present?
 				 end
 			 end
 
@@ -152,14 +152,14 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 if user_params[:areaofInterests].present?
 				 user_params[:areaofInterests].each do |ai|
 					 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
-					 member.company_categories << area_of_interest if area_of_interest.present?
+					 member.profile.company_categories << area_of_interest if area_of_interest.present?
 				 end	
 			 end
 
 			 if user_params[:domainExpertises].present?
 				 user_params[:domainExpertises].each do |de|
 					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
-					 member.domain_expertises << domain_expertise if domain_expertise.present?
+					 member.profile.domain_expertises << domain_expertise if domain_expertise.present?
 				 end	
 			 end
 
