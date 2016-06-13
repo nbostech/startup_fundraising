@@ -161,7 +161,7 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 if user_params[:domainExpertises].present?
 			 	domain_expertises = []
 				 user_params[:domainExpertises].each do |de|
-					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
+					 domain_expertise = Com::Nbos::StartupFundraising::DomainExpertise.where(name: de["name"]).first
 					 domain_expertises << domain_expertise if domain_expertise.present?
 				 end
 				 profile.domain_expertises = domain_expertises	
