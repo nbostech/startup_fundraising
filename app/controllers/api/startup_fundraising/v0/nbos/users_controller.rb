@@ -150,17 +150,21 @@ class Api::StartupFundraising::V0::Nbos::UsersController < Api::StartupFundraisi
 			 profile.idn_image_url = ENV['IDN_HOST_URL'] + "/Media/default/default-profile_300x200.png"
 
 			 if user_params[:areaofInterests].present?
+			 	company_categories = []
 				 user_params[:areaofInterests].each do |ai|
 					 area_of_interest = Com::Nbos::StartupFundraising::CompanyCategory.where(name: ai["name"]).first
-					 member.profile.company_categories << area_of_interest if area_of_interest.present?
-				 end	
+					 company_categories << area_of_interest if area_of_interest.present?
+				 end
+				 profile.company_categories = company_categories	
 			 end
 
 			 if user_params[:domainExpertises].present?
+			 	domain_expertises = []
 				 user_params[:domainExpertises].each do |de|
 					 domain_expertise = Com::Nbos::StartupFundraising::domainExpertise.where(name: de["name"]).first
-					 member.profile.domain_expertises << domain_expertise if domain_expertise.present?
-				 end	
+					 domain_expertises << domain_expertise if domain_expertise.present?
+				 end
+				 profile.domain_expertises = domain_expertises	
 			 end
 
 			 member.is_public = true
