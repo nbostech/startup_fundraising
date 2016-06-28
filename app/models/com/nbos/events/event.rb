@@ -5,12 +5,14 @@ module Com
 			 has_many :event_rsvps, class_name: "Com::Nbos::Events::EventRsvp"
 			 has_many :users, through: :event_rsvps
 
-			 has_attached_file :image, :styles => { :small => "48x48",:medium => "300x200"},
-			                   :path => ":rails_root/public/images/events/:id/:style/:basename.:extension",
-			                   :url => "/images/events/:id/:style/:basename.:extension",
-			                   :default_url => "/images/default/missing_image.png"
-       validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+			 #has_attached_file :image, :styles => { :small => "48x48",:medium => "300x200"},
+			 #                  :path => ":rails_root/public/images/events/:id/:style/:basename.:extension",
+			 #                  :url => "/images/events/:id/:style/:basename.:extension",
+			 #                  :default_url => "/images/default/missing_image.png"
+       #validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 			 
+			 has_many :event_assets, as: :imageable, class_name:"Com::Nbos::Events::EventAsset", dependent: :destroy
+
 			 scope :active_events, -> { where(is_active: true) }
 
 			 validates :name, :address, :start_date, :location, presence: true
@@ -20,12 +22,7 @@ module Com
 			 attr_accessor :schedule_time, :schedule_date
 
 			 def image_url
-			 	  if Rails.env == "development"
-			 	  	host = "http://localhost:3000"
-			 	  else
-			 	  	host = "http://fundr.api.qa1.nbos.in"
-			 	  end 	
-			 	  host + image.url(:medium)
+			 	  self.event_assets.where(img_type: "event").first
 			 end
 
 			 def delete_image

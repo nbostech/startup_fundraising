@@ -134,10 +134,12 @@ Rails.application.routes.draw do
 				namespace :v0, path: 'v0' do
 					namespace :nbos, path: nil do
 						get '/:tenantId/events/' => "events#index"
-						post '/:tenantId/events/' => "events#create"
+						post '/events/' => "events#create"
 						get '/events' => "events#get_events"
-						get '/:tenantId/events/:id' => "events#show"
-						#resources :events
+						get '/events/:id' => "events#show"
+						#To Upload event media
+						post '/media' => "media#add_media"
+						get '/media/:id' => "media#get_media"
 					end
 				end
 			end   
