@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628072449) do
+ActiveRecord::Schema.define(version: 20160628094835) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -251,28 +251,24 @@ ActiveRecord::Schema.define(version: 20160628072449) do
   add_index "event_rsvps", ["user_id"], name: "index_event_rsvps_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "name",               limit: 255
-    t.text     "description",        limit: 65535
-    t.string   "address",            limit: 255
+    t.string   "name",           limit: 255
+    t.text     "description",    limit: 65535
+    t.string   "address",        limit: 255
     t.date     "start_date"
     t.date     "end_date"
     t.time     "start_time"
     t.time     "end_time"
-    t.string   "location",           limit: 255
-    t.boolean  "is_public",                        default: true
-    t.boolean  "is_active",                        default: true
-    t.integer  "user_id",            limit: 4
-    t.string   "tenant_id",          limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
-    t.datetime "image_updated_at"
-    t.string   "contact_person",     limit: 255
-    t.string   "contact_number",     limit: 255
-    t.string   "website",            limit: 255
-    t.string   "uuid",               limit: 255
+    t.string   "location",       limit: 255
+    t.boolean  "is_public",                    default: true
+    t.boolean  "is_active",                    default: true
+    t.integer  "user_id",        limit: 4
+    t.string   "tenant_id",      limit: 255
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "contact_person", limit: 255
+    t.string   "contact_number", limit: 255
+    t.string   "website",        limit: 255
+    t.string   "uuid",           limit: 255
   end
 
   add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
