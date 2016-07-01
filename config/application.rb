@@ -24,5 +24,8 @@ module Network50k
     config.active_record.raise_in_transactional_callbacks = true
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.action_dispatch.default_headers = {
+     'Access-Control-Allow-Origin' => '*'
+    }
   end
 end
