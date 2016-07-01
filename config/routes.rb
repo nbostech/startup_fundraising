@@ -135,7 +135,7 @@ Rails.application.routes.draw do
 					namespace :nbos, path: nil do
 						get '/:tenantId/events/' => "events#index"
 						post '/events/' => "events#create"
-						get '/events' => "events#get_events"
+						match "/events" => "events#get_events", via: [:get, :options]
 						get '/events/:id' => "events#show"
 						#To Upload event media
 						post '/media' => "media#add_media"
