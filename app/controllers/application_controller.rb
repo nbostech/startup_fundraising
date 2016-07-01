@@ -59,7 +59,11 @@ class ApplicationController < ActionController::Base
       @member = Com::Nbos::User.where(uuid: @token_details.uuid).first
       if @member.present?
         @member
-      else
+      elsif @token_details.present?
+        @member = Com::Nbos::User.new()
+        @member.uuid = @token_details.uuid
+        @member.tenant_id = @token_details.tenantId
+      else  
         render :json => {status: 401, message: "Unauthorized"}, status: 401
       end
     else
