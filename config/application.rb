@@ -26,7 +26,8 @@ module Network50k
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.action_dispatch.default_headers = {
      'Access-Control-Allow-Origin' => '*',
-     'Access-Control-Request-Method' => %w{GET POST DELETE PUT PATCH OPTIONS}.join(",")
+     'Access-Control-Request-Method' => %w{GET POST DELETE PUT PATCH OPTIONS}.join(","),
+     'Access-Control-Allow-Headers' => %w{Content-Type X-Requested-With Authorization}.join(",")
     }
   end
 end
