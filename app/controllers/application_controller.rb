@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     token = request.headers.env["HTTP_AUTHORIZATION"]
     if token.present? && @module_auth_token.present?
       token_id = token.split(" ")[1]
-      res = getAuthApi.is_token_valid(token_id, @module_auth_token)
+      res = token_id.present? ? getAuthApi.is_token_valid(token_id, @module_auth_token) : { status: -1, message: "Invalid Token" }
       if res[:status] == 200
         @token_details = res[:token]
         if !res[:token].expired
@@ -46,6 +46,8 @@ class ApplicationController < ActionController::Base
         else
           render :json => {status: res[:status], message: "Token Expired"}, status: res[:status]
         end  
+      elsif res[:status] == -1
+        render :json => {status: res[:status], message: res[:message]}, status: res[:status]
       else
         render :json => {status: res[:status], message: res[:token].message}, status: res[:status]
       end

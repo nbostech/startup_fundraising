@@ -137,6 +137,7 @@ Rails.application.routes.draw do
 						post '/events/' => "events#create"
 						match "/events" => "events#get_events", via: [:get, :options]
 						get '/events/:id' => "events#show"
+						put '/events/:id' => "events#update"
 						#To Upload event media
 						post '/media' => "media#add_media"
 						get '/media/:id' => "media#get_media"

@@ -35,6 +35,27 @@ class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseContr
 		 end	
 	 end
 
+	 # Method to show an event in a Tenant
+	 def update
+		 event_id = params[:id]
+		 if event_id.present? && params[:event].present?
+		 	 event_params = params[:event]
+			 @event = Com::Nbos::Events::Event.where(:id => event_id).first
+			if @event.present? 
+			 @event.update(event_params.permit!)
+			 if @event.save
+          render :json => @event
+       else
+          render :json => {status: 500, message: @event.errors.messages}, status: 500
+       end
+      else
+      	render :json => {status: 404, message: "Event Not Found"}, status: 404
+      end 
+		 else
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
+	 end
+
 	 def create
 	 	if params[:event].present? && @member.present?
 	 		 event_params = params[:event]
