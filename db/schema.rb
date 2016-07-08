@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628094835) do
+ActiveRecord::Schema.define(version: 20160708112258) do
 
   create_table "address_types", force: :cascade do |t|
     t.string "name",        limit: 255
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 20160628094835) do
     t.string   "rsvp_type",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "uuid",       limit: 255
   end
 
   add_index "event_rsvps", ["user_id"], name: "index_event_rsvps_on_user_id", using: :btree

@@ -39,10 +39,14 @@ module Com
 			 	 else
 			 	 	 self.start_date.strftime("%b %e").to_s
 			 	 end	
+			 end
+
+			 def attendencies
+         self.event_rsvps.count
 			 end	
 			 	  
 			 def as_json(options={})
-          super(:only => [:id, :name, :description, :address, :location, :contact_person, :contact_number, :website], :methods => [:image_url, :schedule_time, :schedule_date])
+          super(:only => [:id, :name, :description, :address, :location, :contact_person, :contact_number, :website], :methods => [:image_url, :schedule_time, :schedule_date, :attendencies])
        end 
 			end
 		end

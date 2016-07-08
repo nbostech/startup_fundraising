@@ -1,7 +1,7 @@
 class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseController
 	
 	before_action :validate_token
-	before_action :get_member, only: [:create]
+	before_action :get_member, only: [:create, :add_rsvp]
 
 	 # Method to Return all events in a Tenant
 	 def index
@@ -60,6 +60,7 @@ class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseContr
 	 	if params[:event].present? && @member.present?
 	 		 event_params = params[:event]
        @event = Com::Nbos::Events::Event.new(event_params.permit!)
+       @event.user_id = @member.id if @member.id.present?
        @event.uuid = @member.uuid
        @event.tenant_id = @member.tenant_id
        if @event.save
@@ -67,9 +68,32 @@ class Api::Events::V0::Nbos::EventsController < Api::Events::V0::EventsBaseContr
        else
           render :json => {status: 500, message: @event.errors.messages}, status: 500
        end   
-     else
-       render :json => {status: 400, message: "Bad Request"}, status: 400
-     end
+    else
+      render :json => {status: 400, message: "Bad Request"}, status: 400
+    end
+	 end
+
+	 def add_rsvp
+	 	 event_id = params[:id]
+		 if event_id.present? && @member.present?
+			 @event = Com::Nbos::Events::Event.where(:id => event_id).first
+			if @event.present? 
+			 event_rsvp = Com::Events::EventRsvp.new()
+			 event_rsvp.user_id = @member.id if @member.id.present?
+			 event_rsvp.uuid = @member.uuid
+			 event_rsvp.event_id = @event.id
+			 event_rsvp.rsvp_type = "Attend" 
+			 if event_rsvp.save
+          render :json => @event
+       else
+          render :json => {status: 500, message: event_rsvp.errors.messages}, status: 500
+       end
+      else
+      	render :json => {status: 404, message: "Event Not Found"}, status: 404
+      end 
+		 else
+			 render :json => {status: 400, message: "Bad Request"}, status: 400
+		 end	
 	 end	
 
 end	
