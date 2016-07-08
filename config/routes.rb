@@ -56,7 +56,7 @@ Rails.application.routes.draw do
 	#   end
 
 		namespace :api , path: 'api' do
-			namespace :startup_fundraising, path: 'startup-fundraising' do
+			namespace :startup_fundraising, path: 'fundr' do
 				namespace :v0, path: 'v0' do
 					namespace :nbos, path: nil do
 						get '/users' => "users#index", path: '/users', param: 'user_type'
