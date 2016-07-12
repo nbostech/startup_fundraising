@@ -1,15 +1,15 @@
 <% if obj.present? && obj.message.presence %>
  <div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Warning!</strong> <%= obj.message%>
-  </div>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Warning!</strong> <%= obj.message%>
+	</div>
 <% else %>
-  <div class="alert alert-success alert-dismissible" role="alert">
-  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong><%= notice %></strong> 
-  </div>
-<% end %>  
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong><%= notice %></strong> 
+	</div>
+<% end %>

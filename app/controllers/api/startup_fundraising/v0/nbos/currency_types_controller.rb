@@ -1,7 +1,7 @@
 class Api::StartupFundraising::V0::Nbos::CurrencyTypesController < Api::StartupFundraising::V0::StartupBaseController
-before_action :validate_token
- def index
- 	 @currency_types = Com::Nbos::StartupFundraising::CurrencyType.all
- 	 render :json => @currency_types
- end	
+
+	def index
+		@currency_types = Com::Nbos::StartupFundraising::CurrencyType.all
+		render :json => @currency_types
+	end
 end

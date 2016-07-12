@@ -55,6 +55,9 @@ Rails.application.routes.draw do
 	#     resources :products
 	#   end
 
+	# To handle Routing Errors
+  match '*path', :to => 'application#routing_error', via: :all
+
 		namespace :api , path: 'api' do
 			namespace :startup_fundraising, path: 'fundr' do
 				namespace :v0, path: 'v0' do

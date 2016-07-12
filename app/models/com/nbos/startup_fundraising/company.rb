@@ -3,28 +3,21 @@ module Com
 		module StartupFundraising
 			class Company < ActiveRecord::Base
 				has_one :company_profile, class_name: "Com::Nbos::StartupFundraising::CompanyProfile", dependent: :destroy
-				
-
 				has_many :favorites, as: :favoritable, class_name: "Com::Nbos::StartupFundraising::Favorite", dependent: :destroy
-			 
+
 				belongs_to :company_category, class_name: "Com::Nbos::StartupFundraising::CompanyCategory"
-				
 				belongs_to :company_stage, class_name: "Com::Nbos::StartupFundraising::CompanyStage"
 
 				has_many :funding_rounds, class_name: "Com::Nbos::StartupFundraising::FundingRound", dependent: :destroy
-
 				has_many :companies_users, class_name: "Com::Nbos::StartupFundraising::CompaniesUsers", dependent: :destroy
 				has_many :users, through: :companies_users, class_name: "Com::Nbos::User"
 
 				belongs_to :currency_type, class_name: "Com::Nbos::StartupFundraising::CurrencyType"
 
-        has_many :company_associates, class_name: "Com::Nbos::StartupFundraising::CompanyAssociate", dependent: :destroy
+				has_many :company_associates, class_name: "Com::Nbos::StartupFundraising::CompanyAssociate", dependent: :destroy
 				has_many :documents, as: :attachable, class_name: "Com::Nbos::StartupFundraising::Document", dependent: :destroy
-				
 				has_many :company_executive_summaries, class_name: "Com::Nbos::StartupFundraising::CompanyExecutiveSummary", dependent: :destroy
-
 				has_many :addresses , as: :addressable, class_name:"Com::Nbos::StartupFundraising::Address", dependent: :destroy
-				
 				has_many :assets, as: :imageable, class_name:"Com::Nbos::StartupFundraising::Asset", dependent: :destroy
 				
 				scope :active_companies, -> { where(is_approved: true) }
@@ -63,16 +56,16 @@ module Com
 
 				def fundingRound
 					self.funding_rounds.where(is_closed: false).first
-				end   
+				end
 
 				def as_json(options={})
 					super(:only => [:id], 
 								:methods => [:profile, :logoImage, :brandImage, :addressList, 
-									           :descriptinList, :documentsList, :associates, :fundingRound]
-					     )
-				end 
+														 :descriptinList, :documentsList, :associates, :fundingRound]
+								)
+				end
 
-			end 
+			end
 		end
 	end
-end		
+end

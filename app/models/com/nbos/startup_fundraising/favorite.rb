@@ -8,10 +8,10 @@ module Com
 				validates :user_id, uniqueness: { scope: [:favoritable_id, :favoritable_type],
 																					message: 'can only favorite a company once'
 																				}
-				validates :favoritable_id, presence: {message: "Company Not Found"}																																
+				validates :favoritable_id, presence: {message: "Company Not Found"}
 
-				scope :companies, -> { where(favoritable_type: 'Com::Nbos::StartupFundraising::Company') }																
+				scope :companies, -> { where(favoritable_type: 'Com::Nbos::StartupFundraising::Company') }
 			end
 		end
 	end
-end				
+end

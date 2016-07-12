@@ -3,7 +3,7 @@ module Com
 		module StartupFundraising
 			class AssociateTeam < ActiveRecord::Base
 				
-			end 
+			end
 		end
 	end
-end		
+end
