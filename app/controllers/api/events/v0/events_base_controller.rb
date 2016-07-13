@@ -16,7 +16,6 @@ class Api::Events::V0::EventsBaseController < ApplicationController
 
 	def validate_with_event_module_token
 		token = request.headers.env["HTTP_AUTHORIZATION"]
-		debugger
 		if token.present? && @events_module_auth_token.present?
 			token_id = token.split(" ")[1]
 			res = token_id.present? ? getAuthApi.is_token_valid(token_id, @events_module_auth_token) : { status: -1, message: "Invalid Token" }
