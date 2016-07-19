@@ -1,6 +1,6 @@
 class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundraising::V0::StartupBaseController
 
-	before_action :get_member, only: [:create, :update_profile, :update, :delete]
+	before_action :get_member, only: [:index, :create, :update_profile, :update, :delete]
 
 	def index
 		companyType = params[:company_type]
@@ -14,12 +14,7 @@ class Api::StartupFundraising::V0::Nbos::CompaniesController < Api::StartupFundr
 				company_ids = Com::Nbos::StartupFundraising::FundingRound.all.collect {|i| i.company_id}
 				@companies_list = Com::Nbos::StartupFundraising::Company.where(id: company_ids).page(params[:page])
 			end
-			if @company_list.present?
-				paginate json: @companies_list, per_page: params[:per_page]
-			else
-				render json: []
-			end	
-			
+			paginate json: @companies_list, per_page: params[:per_page]
 		elsif @token_details.present? && @member.present?
 			member = Com::Nbos::User.where(uuid: @token_details.uuid).first
 			@companies = member.companies
