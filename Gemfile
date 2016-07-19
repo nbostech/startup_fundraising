@@ -38,25 +38,25 @@ gem 'protected_attributes'
 
 gem 'httparty'
 
-gem 'omniauth'
+#gem 'omniauth'
 
 # For OAuth protocal 
-gem 'omniauth-oauth2', '~> 1.3.1'
+#gem 'omniauth-oauth2', '~> 1.3.1'
 
 # For Login with Facebook 
-gem 'omniauth-facebook'
+#gem 'omniauth-facebook'
 
 # For Login with Google +
-gem 'omniauth-google-oauth2'
+#gem 'omniauth-google-oauth2'
 
 # For Login with github
-gem 'omniauth-github'
+#gem 'omniauth-github'
 
 # For Login with linkedin
-gem 'omniauth-linkedin-oauth2'
+#gem 'omniauth-linkedin-oauth2'
 
 # For Login with Instagram
-gem 'omniauth-instagram'
+#gem 'omniauth-instagram'
 
 # Run time dependent for wavelabs_client_api gem
 gem 'httmultiparty'
@@ -86,6 +86,8 @@ gem 'therubyracer', :platforms => :ruby
 gem 'linkedin-scraper'
 
 gem 'linkedin'
+
+#gem "linkedin-oauth2", "~> 1.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

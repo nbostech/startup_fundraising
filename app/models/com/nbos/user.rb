@@ -17,7 +17,9 @@ module Com
 			
 			has_many :company_associates, through: :companies
 			has_many :funding_rounds, through: :companies
-			
+
+			has_many :assets, as: :imageable, class_name:"Com::Nbos::StartupFundraising::Asset", dependent: :destroy
+
 			scope :active_users, -> { where(is_public: true) }
 			scope :approved_users, -> { where(is_approved: true)}
 			scope :total, -> { all }
@@ -58,10 +60,14 @@ module Com
 				self.profile.domain_expertises
 			end
 
+			def profileImage
+					self.assets.where(img_type: "user_profile").first 
+			end
+
 			def as_json(options={})
 				super(:only => [:id, :uuid],
 							:include => {:profile => {:except => [:user_id, :created_at,:updated_at, :idn_image_url]}},
-							:methods => [:startupCompanies, :userTypes, :wishlistCompanies, :portifolioCompanies, :areaofInterests, :domainExpertises]
+							:methods => [:startupCompanies, :userTypes, :wishlistCompanies, :portifolioCompanies, :areaofInterests, :domainExpertises, :profileImage]
 						)
 			end
 

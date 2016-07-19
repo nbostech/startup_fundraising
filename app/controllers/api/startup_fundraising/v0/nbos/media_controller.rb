@@ -59,7 +59,16 @@ class Api::StartupFundraising::V0::Nbos::MediaController < Api::StartupFundraisi
 				{status: 200, obj: media_obj}
 			else
 				{status: 404, message: "Associate Not Found to Add Profile Image."}
-			end  
+			end
+		when "user_profile"
+			user = Com::Nbos::User.where(id: id).first
+			if user.present?
+				user_asset = user.assets.where(img_type: "user_profile").first
+				media_obj = user_asset.present? ? user_asset : user.assets.build(img_type: "user_profile")
+				{status: 200, obj: media_obj}
+			else
+				{status: 404, message: "User Not Found to Add Profile Image."}
+			end
 		else
 			{status: 500, message: "Unsupported mediafor #{media_for}"}  
 		end
