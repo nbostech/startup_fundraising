@@ -68,7 +68,7 @@ gem "font-awesome-rails"
 gem "figaro"
 
 # To Communicate IDN Api 
-gem "wavelabs_client_api",  "0.3.5"
+gem "wavelabs_client_api",  path: "../wavelabs_client_api" #"0.3.5"
 
 gem "paperclip"
 
@@ -87,11 +87,14 @@ gem 'linkedin-scraper'
 
 gem 'linkedin'
 
+gem "idn_sdk_ruby", "0.1.5"
+
 #gem "linkedin-oauth2", "~> 1.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'pry'
 end
 
 group :development do

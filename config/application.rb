@@ -29,5 +29,6 @@ module Network50k
      'Access-Control-Request-Method' => %w{GET POST DELETE PUT PATCH OPTIONS}.join(","),
      'Access-Control-Allow-Headers' => %w{Content-Type X-Requested-With Authorization}.join(",")
     }
+    config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes } if ENV["CACHE_ENABLED"] == "true"
   end
 end

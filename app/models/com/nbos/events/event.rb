@@ -8,7 +8,7 @@ module Com
 				
 				scope :active_events, -> { where(is_active: true) }
 
-				validates :name, :address, :start_date, :location, presence: true
+				validates :name, :address, :start_date, :end_date, :start_time, :end_time, :location, presence: true
 
 				before_destroy :delete_image
 

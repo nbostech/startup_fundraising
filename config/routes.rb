@@ -128,26 +128,50 @@ Rails.application.routes.draw do
 			end   
 		end
 
-		namespace :api , path: 'api' do
-			namespace :events, path: 'events' do
-				namespace :v0, path: 'v0' do
-					namespace :nbos, path: nil do
-						get '/:tenantId/events/' => "events#index"
-						post '/events/' => "events#create"
-						match "/events" => "events#get_events", via: [:get, :options]
-						get '/events/:id' => "events#show"
-						put '/events/:id' => "events#update"
+		#namespace :api , path: 'api' do
+		#	namespace :events, path: 'events' do
+		#		namespace :v0, path: 'v0' do
+		#			namespace :nbos, path: nil do
+		#				get '/:tenantId/events/' => "events#index"
+		#				post '/events/' => "events#create"
+		#				match "/events" => "events#get_events", via: [:get, :options]
+		#				get '/events/:id' => "events#show"
+		#				put '/events/:id' => "events#update"
 
 						#To Upload event media
-						post '/media' => "media#add_media"
-						get '/media/:id' => "media#get_media"
+		#				post '/media' => "media#add_media"
+		#				get '/media/:id' => "media#get_media"
 
-						#To Accept RSVP of an event
-						post '/events/:id/attend' => "events#add_rsvp"
+		#				#To Accept RSVP of an event
+		#				post '/events/:id/attend' => "events#add_rsvp"
+		#			end
+		#		end
+		#	end
+   # end
+	namespace :api , path: 'api' do
+    namespace :com, path: nil do
+      namespace :nbos, path: nil do
+				namespace :modules, path: nil do
+					namespace :events, path: 'events' do
+						namespace :v0, path: 'v0' do
+							get '/:tenantId/events/' => "events#index"
+							post '/events/' => "events#create"
+							match "/events" => "events#get_events", via: [:get, :options]
+							get '/events/:id' => "events#show"
+							put '/events/:id' => "events#update"
+
+							#To Upload event media
+							post '/media' => "media#add_media"
+							get '/media/:id' => "media#get_media"
+
+							#To Accept RSVP of an event
+							post '/events/:id/attend' => "events#add_rsvp"
+						end
 					end
 				end
-			end   
-		end
+      end
+    end
+	end
 
 		namespace :com , path: nil do
 			namespace :nbos, path: nil do

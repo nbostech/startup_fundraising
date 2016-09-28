@@ -18,11 +18,15 @@ class Api::Events::V0::EventsBaseController < ApplicationController
 		token = request.headers.env["HTTP_AUTHORIZATION"]
 		if token.present? && @events_module_auth_token.present?
 			token_id = token.split(" ")[1]
-			res = token_id.present? ? getAuthApi.is_token_valid(token_id, @events_module_auth_token) : { status: -1, message: "Invalid Token" }
+			res = token_id.present? ? getAuthApi.is_token_valid(token_id, @events_module_auth_token, ENV['EVENTS_MODULE_M_KEY']) : { status: -1, message: "Invalid Token" }
 			if res[:status] == 200
 				@token_details = res[:token]
 				if !res[:token].expired
-					true
+					if  @token_details.modules.present? && @token_details.get_modules.include?("events")
+						true
+					else
+						render json: {"messageCode": "module.unauthorized", "message": "You are not SubScrided To Events Module"}
+					end
 				else
 					render :json => {status: res[:status], message: "Token Expired"}, status: res[:status]
 				end

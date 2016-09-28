@@ -1,0 +1,27 @@
+# This Configuration file is to setup the IDN client details & IDN module's client details
+# which will be used to register with IDS & communicate with IDN API Server  
+
+app:
+  host_url: "http://api.qa1.nbos.in"
+  client_key: "1e97b418-a4a2-413e-acd7-0f2f7fbb1adf"
+  client_secret: "ror-module-api-secret"
+    
+modules:
+  identity:
+    host: "http://api.qa1.nbos.in"
+    client_key: "1e97b418-a4a2-413e-acd7-0f2f7fbb1adf"
+    client_secret: "ror-module-api-secret"
+    module_key: "null"
+    scope: "null"
+  media:
+    host: "http://api.qa1.nbos.in"
+    client_key: "1e97b418-a4a2-413e-acd7-0f2f7fbb1adf"
+    client_secret: "ror-module-api-secret"
+    module_key: "null"
+    scope: "null"
+  RoR-events:
+    host: "http://api.qa1.nbos.in"
+    client_key: "9eaeed30-09cb-493b-86ba-9ffafcb2151e"
+    client_secret: "ror-events-module-secret"
+    module_key: "MODK:8e24eea4-da4c-4285-af96-3c1a12a73d07"
+    scope: "scope:oauth.token.verify"
