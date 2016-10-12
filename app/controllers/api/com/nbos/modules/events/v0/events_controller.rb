@@ -1,8 +1,8 @@
 class Api::Com::Nbos::Modules::Events::V0::EventsController < Api::Com::Nbos::Modules::Events::V0::BaseController
-
+  
+  skip_before_action :has_authorization, :only => [:cros_op]
+  skip_before_action :get_identity_api, :only => [:cros_op]
   skip_before_action :only => [:cros_op] do
-    has_authorization
-    get_identity_api
     module_verify("RoR-events")
   end
 
