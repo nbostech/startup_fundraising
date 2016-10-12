@@ -156,7 +156,8 @@ Rails.application.routes.draw do
 						namespace :v0, path: 'v0' do
 							get '/:tenantId/events/' => "events#index"
 							post '/events/' => "events#create"
-							match "/events" => "events#get_events", via: [:get, :options]
+							match "/events" => "events#get_events", via: [:get]
+							match "/events" => "events#cros_op", via: [:options]
 							get '/events/:id' => "events#show"
 							put '/events/:id' => "events#update"
 

@@ -1,5 +1,12 @@
 class Api::Com::Nbos::Modules::Events::V0::EventsController < Api::Com::Nbos::Modules::Events::V0::BaseController
 
+  skip_before_action :only => [:cros_op] do
+    has_authorization
+    get_identity_api
+    module_verify("RoR-events")
+  end
+
+
   # This method will return tenant based events
   # If the token is user token it will return user's todos
   # If the token is client token it will return it's tenant public todos
@@ -12,6 +19,10 @@ class Api::Com::Nbos::Modules::Events::V0::EventsController < Api::Com::Nbos::Mo
       render :json => {messageCode: "bad.request", message: "Bad Request"}, status: 400
     end
   end
+
+  def cros_op
+    render :json => {messageCode: "Success", message: "Success"}, status: 200
+  end  
 
 
   # Method to get token based tenant events
