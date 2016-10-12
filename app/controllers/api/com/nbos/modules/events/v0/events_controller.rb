@@ -20,7 +20,7 @@ class Api::Com::Nbos::Modules::Events::V0::EventsController < Api::Com::Nbos::Mo
       @events = @user.events.active_events.page(params[:page])
       paginate json: @events, per_page: params[:per_page]
     elsif @user.uuid == "guest"
-      @events = Com::Nbos::Events::Event.active_events.where(tenant_id: tenantId)
+      @events = Com::Nbos::Events::Event.active_events.where(tenant_id: @user.tenant_id)
       render json: @events
     else
       render :json => {messageCode: "bad.request", message: "Bad Request"}, status: 400
