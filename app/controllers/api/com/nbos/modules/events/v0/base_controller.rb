@@ -86,7 +86,7 @@ class Api::Com::Nbos::Modules::Events::V0::BaseController < ApplicationControlle
         true
       end
     else
-      render json: {"messageCode": "module.unauthorized", "message": "You are not SubScrided To #{moduleName} Module"}
+      render json: {"messageCode": "module.unauthorized", "message": "You are not SubScrided To #{moduleName} Module"}, status: 401
     end
   end
 
