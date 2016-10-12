@@ -26,19 +26,23 @@ class Api::Com::Nbos::Modules::Events::V0::BaseController < ApplicationControlle
   # This method is to check module subscription of the requested token.
   # And also enable the Redis cache based on configuration in config/application.yml
   def module_verify(moduleName)
-    if @access_token.present?
-      if ENV["CACHE_ENABLED"] == "true"
-        cache_module_token_verify_details(moduleName)
+    if !request.options?
+      if @access_token.present?
+        if ENV["CACHE_ENABLED"] == "true"
+          cache_module_token_verify_details(moduleName)
+        else
+          @module_token_details = get_module_token_details(moduleName)
+        end
+        if @module_token_details.present?
+          verify_module_token(moduleName)
+          find_or_create_user
+        end
       else
-        @module_token_details = get_module_token_details(moduleName)
-      end
-      if @module_token_details.present?
-        verify_module_token(moduleName)
-        find_or_create_user
+        render :json => {messageCode: "Unauthorized", message: "Unauthorized Access."}, status: 401
       end
     else
-      render :json => {messageCode: "Unauthorized", message: "Unauthorized Access."}, status: 401
-    end
+      return true
+    end  
   end
 
   # Tis method is to set & get module token details from Redis Server

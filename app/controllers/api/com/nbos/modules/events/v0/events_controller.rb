@@ -2,10 +2,6 @@ class Api::Com::Nbos::Modules::Events::V0::EventsController < Api::Com::Nbos::Mo
   
   skip_before_action :has_authorization, :only => [:cros_op]
   skip_before_action :get_identity_api, :only => [:cros_op]
-  skip_before_action :only => [:cros_op] do
-    module_verify("RoR-events")
-  end
-
 
   # This method will return tenant based events
   # If the token is user token it will return user's todos
